@@ -58,6 +58,10 @@
   .tag-deposit_paid{ background:#FBEFD6; color:#8a6a1f; }
   .tag-paid_in_full{ background:#DCEFE0; color:var(--ok); }
   select.inline{ font-size:12px; padding:4px 6px; border-radius:6px; border:1px solid var(--line); }
+  .amount-field{ display:flex; align-items:center; gap:6px; margin-bottom:6px; }
+  .amount-field:last-child{ margin-bottom:0; }
+  .amount-field label{ font-size:11px; color:var(--ink-soft); width:28px; flex:0 0 auto; }
+  input.amount-input{ width:72px; font-size:12px; padding:4px 6px; border-radius:6px; border:1px solid var(--line); font-family:inherit; }
   .desc-cell{ max-width:220px; color:var(--ink-soft); }
   .muted{ color:var(--ink-soft); font-size:12px; }
   #loadErr{ color:var(--danger); font-size:13px; margin-top:10px; }
@@ -263,8 +267,14 @@
           </select>
         </td>
         <td>
-          <div class="muted">Paid: $${(b.amount_paid || 0).toFixed(2)}</div>
-          <div class="muted">Due: ${b.amount_due != null ? '$'+Number(b.amount_due).toFixed(2) : '—'}</div>
+          <div class="amount-field">
+            <label>Paid</label>
+            <input type="number" class="amount-input amount-paid-input" min="0" step="0.01" value="${(b.amount_paid || 0).toFixed(2)}"/>
+          </div>
+          <div class="amount-field">
+            <label>Due</label>
+            <input type="number" class="amount-input amount-due-input" min="0" step="0.01" placeholder="—" value="${b.amount_due != null ? Number(b.amount_due).toFixed(2) : ''}"/>
+          </div>
         </td>
       </tr>
     `).join('');
@@ -274,6 +284,29 @@
       const id = tr.getAttribute('data-id');
       tr.querySelector('.status-select').addEventListener('change', (e) => updateBooking(id, { status: e.target.value }));
       tr.querySelector('.payment-select').addEventListener('change', (e) => updateBooking(id, { payment_status: e.target.value }));
+
+      tr.querySelector('.amount-paid-input').addEventListener('change', (e) => {
+        const val = e.target.value.trim() === '' ? 0 : Number(e.target.value);
+        if(isNaN(val) || val < 0){
+          alert('Enter a valid, non-negative amount paid.');
+          const existing = allBookings.find(b => String(b.id) === String(id));
+          e.target.value = (existing ? existing.amount_paid || 0 : 0).toFixed(2);
+          return;
+        }
+        updateBooking(id, { amount_paid: val });
+      });
+
+      tr.querySelector('.amount-due-input').addEventListener('change', (e) => {
+        const raw = e.target.value.trim();
+        const val = raw === '' ? null : Number(raw);
+        if(raw !== '' && (isNaN(val) || val < 0)){
+          alert('Enter a valid, non-negative amount due, or leave it blank.');
+          const existing = allBookings.find(b => String(b.id) === String(id));
+          e.target.value = existing && existing.amount_due != null ? Number(existing.amount_due).toFixed(2) : '';
+          return;
+        }
+        updateBooking(id, { amount_due: val });
+      });
     });
   }
 
