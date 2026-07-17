@@ -137,6 +137,26 @@
       <div class="empty" id="emptyState" style="display:none;">No bookings match these filters.</div>
     </div>
     <div id="loadErr"></div>
+
+    <div class="card" style="padding:0; overflow-x:auto; margin-top:28px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 16px 0;">
+        <h2 style="font-family:'Fraunces',serif; font-style:italic; font-size:16px; margin:0;">Leads</h2>
+        <button class="btn-ghost" id="refreshLeadsBtn">Refresh</button>
+      </div>
+      <table id="leadsTable" style="margin-top:12px;">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Received</th>
+          </tr>
+        </thead>
+        <tbody id="leadsBody"></tbody>
+      </table>
+      <div class="empty" id="leadsEmptyState" style="display:none;">No leads yet.</div>
+    </div>
+    <div id="leadsLoadErr"></div>
   </div>
 
 </main>
@@ -191,6 +211,7 @@
   async function afterLogin(){
     showDash(true);
     await loadBookings();
+    await loadLeads();
   }
 
   // Restore session on reload
@@ -354,10 +375,42 @@
     return String(str ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 
+  // ---- leads (visitors who left contact details but haven't booked) ----
+  let allLeads = [];
+
+  async function loadLeads(){
+    const errEl = document.getElementById('leadsLoadErr');
+    errEl.textContent = '';
+    const { data, error } = await sb
+      .from('leads')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if(error){
+      errEl.textContent = 'Could not load leads: ' + error.message;
+      return;
+    }
+    allLeads = data || [];
+    renderLeads();
+  }
+
+  function renderLeads(){
+    const body = document.getElementById('leadsBody');
+    document.getElementById('leadsEmptyState').style.display = allLeads.length ? 'none' : 'block';
+    body.innerHTML = allLeads.map(l => `
+      <tr>
+        <td>${escapeHtml(l.name)}</td>
+        <td>${escapeHtml(l.email)}</td>
+        <td>${escapeHtml(l.phone || '—')}</td>
+        <td class="muted">${new Date(l.created_at).toLocaleString()}</td>
+      </tr>
+    `).join('');
+  }
+
   document.getElementById('statusFilter').addEventListener('change', renderTable);
   document.getElementById('paymentFilter').addEventListener('change', renderTable);
   document.getElementById('searchBox').addEventListener('input', renderTable);
   document.getElementById('refreshBtn').addEventListener('click', loadBookings);
+  document.getElementById('refreshLeadsBtn').addEventListener('click', loadLeads);
 </script>
 </body>
 </html>

@@ -1595,6 +1595,26 @@
 <a class="wa-btn" href="https://wa.me/12818665159" rel="noopener" target="_blank">WhatsApp: 281-866-5159</a>
 <p class="contact-note">You may submit a booking request through this website. The session becomes confirmed only after Naabi Kamalam reviews the request and sends written confirmation.</p>
 </div>
+<div class="contact-card" style="margin-top:20px;">
+<h3>Not ready to book yet?</h3>
+<p>Leave your details and we'll reach out directly — no pressure, no obligation.</p>
+<form id="leadForm" novalidate="" onsubmit="return submitLead(event)" style="text-align:left;">
+<div class="bk-field">
+<label for="leadName">Name <span class="bk-required">*</span></label>
+<input id="leadName" name="name" required="" type="text"/>
+</div>
+<div class="bk-field">
+<label for="leadEmail">Email <span class="bk-required">*</span></label>
+<input id="leadEmail" name="email" required="" type="email"/>
+</div>
+<div class="bk-field">
+<label for="leadPhone">Phone</label>
+<input id="leadPhone" name="phone" placeholder="Optional" type="tel"/>
+</div>
+<button class="bk-submit" id="leadSubmitBtn" type="submit">Send My Details</button>
+<div class="bk-status" id="leadStatus"></div>
+</form>
+</div>
 </section>
 </div>
 </div>
@@ -2278,6 +2298,53 @@
 
     btn.disabled = false;
     btn.textContent = 'Request This Time';
+    return false;
+  }
+
+  // Lead capture — for visitors who aren't ready to book a slot yet.
+  // Saved to its own `leads` table (separate from `bookings`) so the
+  // admin dashboard can list them without mixing them into the booking
+  // calendar/availability logic.
+  async function submitLead(e){
+    e.preventDefault();
+    const statusEl = document.getElementById('leadStatus');
+    const btn = document.getElementById('leadSubmitBtn');
+    const name = document.getElementById('leadName').value.trim();
+    const email = document.getElementById('leadEmail').value.trim();
+    const phone = document.getElementById('leadPhone').value.trim();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    statusEl.className = 'bk-status bk-status-err';
+    if(!name){
+      statusEl.textContent = 'Please enter your name.';
+      return false;
+    }
+    if(!email || !emailPattern.test(email)){
+      statusEl.textContent = 'Please enter a valid email address.';
+      return false;
+    }
+
+    if(!supabaseClient){
+      statusEl.textContent = 'We could not connect right now. Please message us on WhatsApp instead.';
+      return false;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    try{
+      const { error } = await supabaseClient.from('leads').insert({ name, email, phone: phone || null });
+      if(error) throw error;
+      statusEl.className = 'bk-status bk-status-ok';
+      statusEl.textContent = 'Thanks! We\'ve got your details and will reach out soon.';
+      document.getElementById('leadForm').reset();
+    } catch(err){
+      statusEl.className = 'bk-status bk-status-err';
+      statusEl.textContent = 'Something went wrong. Please try again, or message us on WhatsApp.';
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Send My Details';
     return false;
   }
 
