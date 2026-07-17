@@ -148,15 +148,13 @@
 
   /* ============================================================
      STATUS-CHANGE EMAILS — same EmailJS account/public key as the
-     main site's booking form. Create two more templates in the
-     EmailJS dashboard (one for "confirmed", one for "cancelled")
-     and paste their template IDs in below; until then, sending is
-     skipped silently.
+     main site's booking form. "Session confirmed" and "Session
+     cancelled" templates live in the EmailJS dashboard.
      ============================================================ */
   if(window.emailjs){ emailjs.init({ publicKey: 'OR1X1g_m-mh3CFcKy' }); }
   const EMAILJS_SERVICE_ID = 'service_irth0t6';
-  const EMAILJS_TEMPLATE_ID_CONFIRMED = 'template_confirmed_id_here';
-  const EMAILJS_TEMPLATE_ID_CANCELLED = 'template_cancelled_id_here';
+  const EMAILJS_TEMPLATE_ID_CONFIRMED = 'template_96jaro7';
+  const EMAILJS_TEMPLATE_ID_CANCELLED = 'template_ruua5qp';
 
   let allBookings = [];
 
