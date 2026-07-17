@@ -1,0 +1,2568 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Naabi Kamalam — Transformation Coaching with Deepa Sattu</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&amp;family=Work+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --ink:#241A28;
+    --ink-soft:#5C4E5F;
+    --paper:#F7F1F0;
+    --band:#4B3648;
+    --band-2:#6E4C60;
+    --nav-band:#332536;
+    --nav-links-band:#402E3E;
+    --band-text:#F7F1F0;
+    --gold:#C98A9C;
+    --card:#FFFFFF;
+    --rule: rgba(36,26,40,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{ margin:0; background:var(--paper); font-family:'Work Sans', sans-serif; color:var(--ink); }
+  a{ text-decoration:none; color:inherit; }
+  .wrap{ max-width:900px; margin:0 auto; padding:0 28px; }
+
+  nav{ position:sticky; top:0; z-index:10; background:var(--nav-band); color:var(--band-text); }
+  .nav-top .wrap{ display:flex; align-items:center; justify-content:space-between; padding:14px 28px; }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand .name{ font-family:'Fraunces', serif; font-weight:600; font-size:16px; }
+  .nav-links-bar{ background:var(--nav-links-band); border-top:1px solid rgba(255,255,255,0.08); }
+  .nav-links-bar .wrap{ padding:0 28px; }
+  .navlinks{ display:flex; gap:0; flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; justify-content:center; }
+  .navlinks::-webkit-scrollbar{ display:none; }
+  .navlinks a{ font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:15.5px; letter-spacing:0.04em; text-transform:uppercase; color:#E4D2DB; padding:13px 16px; white-space:nowrap; border-right:1px solid rgba(255,255,255,0.10); border-bottom:2px solid transparent; }
+  .navlinks a:last-child{ border-right:none; }
+  .navlinks a.active, .navlinks a:hover{ color:var(--gold); border-color:var(--gold); font-weight:600; }
+  .menu-toggle{ display:none; background:none; border:none; color:var(--band-text); font-size:22px; cursor:pointer; }
+
+  .page{ display:none; }
+  .page.active{ display:block; }
+
+  .hero{ background:linear-gradient(160deg, #FBF3EF 0%, #F5DFD6 100%); color:var(--ink); padding:40px 0 34px; }
+  .eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#8E7C8F; margin-bottom:12px; }
+  h1.big{ font-family:'Fraunces', serif; font-weight:700; font-size:34px; margin:0 0 4px; line-height:1.15; }
+  .subtitle-line{ font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin:0 0 18px; }
+  .explainer{ font-family:'Work Sans', sans-serif; font-size:14.5px; line-height:1.6; color:var(--ink-soft); max-width:620px; margin:0 0 18px; }
+  .confidence-open{ font-family:'Fraunces', serif; font-weight:700; font-style:italic; font-size:15.5px; line-height:1.55; color:var(--ink); max-width:600px; margin:16px 0 24px; }
+  .confidence-open .accent{ color:var(--gold); font-weight:700; }
+  .contact-line{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--gold); margin:0 0 14px; }
+
+  .explainer p{ margin:0 0 22px; }
+  .embed{ color:var(--gold); font-style:normal; font-weight:700; }
+
+
+  /* TALKING FIGURES */
+
+  /* TALKING FIGURES */
+  .talk-figures{ display:flex; justify-content:center; align-items:flex-end; gap:56px; margin:4px 0 26px; }
+  .figure{ display:flex; flex-direction:column; align-items:center; }
+  .figure-svg{ width:52px; height:70px; animation: figureBob 3.4s ease-in-out infinite; }
+  .client-figure .figure-svg{ animation-delay:0s; }
+  .coach-figure .figure-svg{ animation-delay:0.35s; }
+  @keyframes figureBob{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(-3px); }
+  }
+  .figure-label{ font-family:'IBM Plex Mono', monospace; font-size:9.5px; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-soft); margin-top:6px; }
+  .chat-bubble{
+    display:flex; gap:3px; align-items:center; justify-content:center;
+    background:rgba(201,138,156,0.16); border:1px solid rgba(201,138,156,0.4);
+    border-radius:14px; padding:6px 10px; margin-bottom:6px;
+    animation: bubblePulse 2s ease-in-out infinite;
+  }
+  .bubble-dot{ width:4px; height:4px; border-radius:50%; background:var(--gold); display:inline-block; }
+  @keyframes bubblePulse{
+    0%,100%{ opacity:0.55; transform:scale(0.94); }
+    50%{ opacity:1; transform:scale(1); }
+  }
+  .mic-icon{ width:22px; height:22px; margin-bottom:4px; animation: micGlow 2.2s ease-in-out infinite; }
+  @keyframes micGlow{
+    0%,100%{ opacity:0.55; }
+    50%{ opacity:1; }
+  }
+
+
+
+  /* POSTER-STYLE INTERACTIVE COACHING CONVERSATION */
+  .poster-conversation{
+    position:relative; max-width:680px; margin:14px 0 28px; padding:24px 22px 20px;
+    border:1px solid rgba(201,138,156,.4); border-radius:18px;
+    background:linear-gradient(145deg,rgba(255,255,255,.65),rgba(201,138,156,.10));
+    box-shadow:0 18px 42px rgba(75,54,72,.10); overflow:hidden; cursor:pointer;
+  }
+  .poster-conversation::before{
+    content:''; position:absolute; right:-48px; bottom:-65px; width:190px; height:190px;
+    border-radius:50%; border:1px solid rgba(201,138,156,.22); box-shadow:0 0 0 28px rgba(201,138,156,.035),0 0 0 55px rgba(201,138,156,.025);
+  }
+  .conversation-kicker{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:6px;}
+  .conversation-title{font-family:'Fraunces',serif;font-size:20px;font-style:italic;text-align:center;color:var(--ink);margin:0 0 20px;}
+  .conversation-stage{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:end;position:relative;z-index:1;}
+  .cartoon-person{position:relative;display:flex;flex-direction:column;align-items:center;min-height:210px;justify-content:flex-end;}
+  .speech-card{position:absolute;top:0;width:94%;min-height:74px;padding:12px 14px;border-radius:16px;background:#FFF9F7;color:var(--ink);font-size:12.5px;line-height:1.45;box-shadow:0 10px 24px rgba(0,0,0,.16);opacity:0;transform:translateY(8px) scale(.98);transition:.35s ease;}
+  .speech-card::after{content:'';position:absolute;bottom:-9px;width:18px;height:18px;background:#FFF9F7;transform:rotate(45deg);}
+  .client-side .speech-card::after{left:34px}.coach-side .speech-card::after{right:34px}
+  .speech-card.active{opacity:1;transform:translateY(0) scale(1)}
+  .speech-card b{color:#B85C6B;font-weight:600}
+  .cartoon-svg{width:128px;height:128px;filter:drop-shadow(0 10px 12px rgba(0,0,0,.14));animation:gentleFloat 3.4s ease-in-out infinite;}
+  .coach-side .cartoon-svg{animation-delay:.45s}
+  @keyframes gentleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  .person-name{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-top:7px;}
+  .conversation-prompt{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);margin-top:17px;position:relative;z-index:1;}
+  .conversation-dots{display:flex;justify-content:center;gap:7px;margin-top:10px;position:relative;z-index:1;}
+  .conversation-dots span{width:7px;height:7px;border-radius:50%;background:rgba(201,138,156,.28);transition:.25s ease}.conversation-dots span.active{background:var(--gold);transform:scale(1.25)}
+  @media(max-width:560px){
+    .poster-conversation{padding:20px 14px 17px}.conversation-stage{gap:10px}.speech-card{font-size:11px;padding:10px;min-height:82px;width:100%}.cartoon-svg{width:105px;height:115px}.cartoon-person{min-height:205px}.conversation-title{font-size:17px}
+  }
+
+
+  /* ONE-SPEAKER-AT-A-TIME CONVERSATION */
+  .speech-card:not(.active){
+    display:none !important;
+    opacity:0 !important;
+    visibility:hidden !important;
+    pointer-events:none !important;
+  }
+  .speech-card.active{
+    display:block !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    transform:translateY(0) scale(1);
+  }
+  .cartoon-person{transition:opacity .3s ease,transform .3s ease;}
+  .cartoon-person.is-listening{opacity:.48;transform:scale(.97);}
+  .cartoon-person.is-speaking{opacity:1;transform:scale(1);}
+
+  /* MINI SELF-REFLECTION DEMO */
+  .mini-demo{
+    background:rgba(255,255,255,0.55); border:1px solid rgba(201,138,156,0.35); border-radius:12px;
+    padding:22px 20px; margin:0 0 26px;
+  }
+  .mini-demo-label{ font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin:0 0 8px; }
+  .mini-demo-title{ font-family:'Fraunces', serif; font-weight:500; font-size:16px; color:var(--ink); margin:0 0 16px; }
+  .mini-demo-options{ display:flex; flex-wrap:wrap; gap:8px; }
+  .mini-demo-options button{
+    background:rgba(201,138,156,0.10); border:1px solid rgba(201,138,156,0.4); color:var(--ink-soft);
+    font-family:'Work Sans', sans-serif; font-size:12px; padding:9px 14px; border-radius:20px; cursor:pointer;
+  }
+  .mini-demo-options button:hover{ border-color:var(--gold); background:rgba(201,138,156,0.22); }
+  .mini-demo-result{ display:none; }
+  .mini-demo-result.open{ display:block; }
+  .mini-demo-pain{
+    font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-soft);
+    margin:0 0 6px;
+  }
+  .mini-demo-pain::before{ content:'You said: '; color:#8E7C8F; }
+  .mini-demo-reframe{
+    font-family:'Fraunces', serif; font-style:italic; font-size:14.5px; line-height:1.65; color:var(--ink); margin:0 0 16px;
+  }
+  .mini-demo-actions{ display:flex; flex-direction:column; gap:10px; align-items:flex-start; }
+  .mini-demo-again{
+    background:none; border:none; color:var(--gold); font-family:'IBM Plex Mono', monospace; font-size:10.5px;
+    letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; padding:0;
+  }
+  .mini-demo-cta{
+    display:inline-block; background:var(--gold); color:#fff; font-family:'IBM Plex Mono', monospace; font-size:11px;
+    letter-spacing:0.04em; padding:11px 18px; border-radius:8px; text-decoration:none;
+  }
+  @media (max-width:480px){
+    .pain-donut-wrap{ flex-direction:column; align-items:flex-start; }
+  }
+
+
+
+  section{ padding:34px 0; }
+  h2.section-title{ font-family:'Fraunces', serif; font-weight:500; font-size:14px; text-transform:uppercase; letter-spacing:0.06em; margin:0 0 18px; border-bottom:1px solid var(--rule); padding-bottom:9px; }
+
+  .qhw{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .qhw .q{ background:var(--card); border:1px solid var(--rule); border-top:3px solid var(--gold); padding:16px 15px; }
+  .qhw .label{ display:block; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+  .qhw .question{ font-family:'Fraunces', serif; font-style:italic; font-size:14px; line-height:1.35; margin:0 0 8px; }
+  .qhw .answer{ font-size:11.5px; line-height:1.5; color:var(--ink-soft); margin:0; }
+
+  .bullets{ margin:0; padding:0; list-style:none; max-width:640px; }
+  .bullets li{ position:relative; padding-left:18px; font-size:13px; color:var(--ink-soft); line-height:1.55; margin-bottom:10px; }
+  .bullets li::before{ content:"—"; position:absolute; left:0; color:var(--gold); }
+  .bullets b{ color:var(--ink); font-weight:600; }
+  .future-pace-home{ font-family:'Fraunces', serif; font-style:italic; font-size:15px; line-height:1.7; color:var(--ink); max-width:620px; margin:22px 0 18px; }
+
+  .familiar-list{ margin:0 0 20px; padding:0; list-style:none; max-width:680px; }
+  .familiar-list li{ position:relative; padding-left:20px; font-size:14.5px; color:var(--ink-soft); line-height:1.6; margin-bottom:14px; }
+  .familiar-list li::before{ content:"—"; position:absolute; left:0; color:var(--gold); }
+  .familiar-close{ font-family:'Fraunces', serif; font-style:italic; font-weight:600; font-size:16px; color:var(--ink); border-top:1px solid var(--rule); padding-top:18px; margin-bottom:8px; }
+  .familiar-next{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold); }
+  .familiar-milton{ font-family:'Fraunces', serif; font-style:italic; font-size:14.5px; line-height:1.75; color:var(--ink-soft); max-width:620px; margin:0 0 8px; }
+
+  /* PATTERN COMPARISON CHART */
+  .pattern-chart{ margin-top:36px; max-width:640px; }
+  .pattern-chart-legend{ display:flex; gap:22px; margin-bottom:20px; flex-wrap:wrap; }
+  .legend-item{ display:flex; align-items:center; gap:7px; font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:0.04em; text-transform:uppercase; color:var(--ink-soft); }
+  .legend-swatch{ width:12px; height:12px; border-radius:3px; display:inline-block; }
+  .legend-swatch.before{ background:#B9A5B0; }
+  .legend-swatch.after{ background:linear-gradient(90deg, var(--gold), #E3B4C0); }
+  .chart-row{ margin-bottom:18px; }
+  .chart-row .chart-label{ font-family:'Fraunces', serif; font-size:13.5px; font-weight:500; color:var(--ink); margin-bottom:6px; }
+  .bar-track{ background:rgba(36,26,40,0.06); border-radius:5px; height:16px; margin-bottom:5px; overflow:hidden; }
+  .bar-track .bar{ height:100%; border-radius:5px; display:flex; align-items:center; justify-content:flex-end; padding-right:8px; font-family:'IBM Plex Mono', monospace; font-size:9px; color:#fff; white-space:nowrap; transition:width 1.1s ease; width:0;}
+  .bar-track.in-view .bar-before{ width:var(--pct); }
+  .bar-track.in-view .bar-after{ width:var(--pct); }
+  .bar-before{ background:#B9A5B0; }
+  .bar-after{ background:linear-gradient(90deg, var(--gold), #E3B4C0); }
+
+  .services{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .svc{ background:var(--card); border:1px solid var(--rule); padding:16px; }
+  .svc .name{ font-family:'Fraunces', serif; font-size:15px; font-weight:500; margin-bottom:8px; }
+  .svc-icon{ width:26px; height:26px; color:var(--gold); display:block; margin-bottom:10px; }
+  .svc ul{ margin:0; padding:0; list-style:none; }
+  .svc li{ position:relative; padding-left:13px; font-size:12px; color:var(--ink-soft); line-height:1.55; margin-bottom:3px; }
+  .svc li::before{ content:"–"; position:absolute; left:0; color:var(--gold); }
+  .svc.wide{ grid-column:1/-1; }
+  .svc li a{ color:var(--ink-soft); border-bottom:1px dotted rgba(201,138,156,0.6); transition:color 0.15s ease, border-color 0.15s ease; }
+  .svc li a:hover{ color:var(--gold); border-color:var(--gold); }
+  .svc.wide ul{ columns:2; column-gap:22px; }
+
+  /* TOPIC DETAIL MODAL */
+  .topic-modal-overlay{
+    display:none; position:fixed; inset:0; z-index:100;
+    background:rgba(30,22,33,0.72); -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+    align-items:center; justify-content:center; padding:20px;
+  }
+  .topic-modal-overlay.open{ display:flex; }
+  .topic-modal{
+    background:var(--paper); max-width:520px; width:100%; max-height:86vh; overflow-y:auto;
+    border-radius:10px; padding:30px 26px 26px; position:relative;
+    box-shadow:0 30px 70px rgba(0,0,0,0.4);
+  }
+  .topic-modal-close{
+    position:absolute; top:14px; right:14px; width:30px; height:30px; border-radius:50%;
+    background:rgba(36,26,40,0.06); border:none; color:var(--ink-soft); font-size:18px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; line-height:1;
+  }
+  .topic-modal-close:hover{ background:rgba(201,138,156,0.25); color:var(--ink); }
+  .modal-eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+  .topic-modal h3{ font-family:'Fraunces', serif; font-weight:600; font-size:21px; margin:0 0 18px; color:var(--ink); line-height:1.25; }
+  .modal-section-label{ font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-soft); margin:16px 0 6px; }
+  .modal-section-label:first-of-type{ margin-top:0; }
+  .topic-modal p.modal-copy{ font-size:13.5px; line-height:1.7; color:var(--ink-soft); margin:0; }
+  .modal-copy.pain{ border-left:2px solid #B9A5B0; padding-left:12px; }
+  .modal-copy.shift{ border-left:2px solid var(--gold); padding-left:12px; font-family:'Fraunces', serif; font-style:italic; color:var(--ink); }
+  .modal-chart{ margin-top:20px; padding-top:16px; border-top:1px solid var(--rule); }
+  .modal-chart .chart-label{ font-family:'Fraunces', serif; font-size:13px; font-weight:500; color:var(--ink); margin-bottom:10px; }
+  .modal-chart .bar-track{ height:14px; }
+  .modal-chart .bar-row-tag{ font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:0.04em; text-transform:uppercase; color:var(--ink-soft); margin:0 0 4px; }
+  .booking-confirm-modal{ text-align:center; }
+  .booking-confirm-icon{
+    width:52px; height:52px; border-radius:50%; background:rgba(124,152,133,0.16); color:#5C8A63;
+    display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:700;
+    margin:0 auto 18px;
+  }
+  .booking-confirm-modal h3{ text-align:center; }
+  .booking-confirm-modal .modal-copy{ border-left:none; padding-left:0; text-align:left; }
+  .booking-confirm-detail{
+    text-align:center; font-family:'Fraunces', serif; font-weight:600; font-size:15px;
+    color:var(--ink); background:rgba(201,138,156,0.10); border-radius:8px; padding:10px 14px; margin:0 0 14px;
+  }
+  .booking-confirm-wa-btn{
+    display:inline-block; margin-top:10px; background:var(--gold); color:#fff; font-family:'IBM Plex Mono', monospace;
+    font-size:11px; letter-spacing:0.06em; text-transform:uppercase; padding:12px 20px; border-radius:8px; text-decoration:none;
+  }
+  .booking-confirm-cal-btn{
+    display:inline-block; margin-top:18px; background:var(--band); color:var(--band-text); font-family:'IBM Plex Mono', monospace;
+    font-size:11px; letter-spacing:0.06em; text-transform:uppercase; padding:12px 20px; border-radius:8px; text-decoration:none;
+  }
+  .not-available-modal{ text-align:center; }
+  .not-available-modal h3{ text-align:center; }
+  .not-available-modal .modal-copy{ border-left:none; padding-left:0; text-align:center; color:var(--ink-soft); }
+  .not-available-icon{
+    width:52px; height:52px; border-radius:50%; background:rgba(184,92,107,0.15); color:#B85C6B;
+    display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:700;
+    margin:0 auto 18px;
+  }
+  .not-available-ok-btn{
+    margin-top:18px; background:var(--band); color:var(--band-text); border:none; font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px; letter-spacing:0.06em; text-transform:uppercase; padding:12px 40px; border-radius:8px; cursor:pointer;
+  }
+
+  .bio{ max-width:680px; }
+  .bio p{ font-size:13px; line-height:1.75; color:var(--ink-soft); margin:0 0 16px; }
+  .bio p.bio-highlight{
+    border-left:2px solid var(--gold); background:rgba(201,138,156,0.08);
+    padding:14px 16px; margin:0 0 16px; border-radius:0 8px 8px 0;
+    font-family:'Fraunces', serif; font-style:italic; font-size:13.5px; line-height:1.75; color:var(--ink);
+  }
+
+  /* TERMS & CONDITIONS */
+  .legal{ max-width:720px; }
+  .legal .legal-note{
+    border-left:2px solid var(--gold); background:rgba(201,138,156,0.08);
+    padding:14px 16px; margin:0 0 26px;
+    font-family:'Fraunces', serif; font-style:italic; font-size:13.5px; line-height:1.65; color:var(--ink);
+  }
+  .legal h3{ font-family:'Fraunces', serif; font-weight:600; font-size:15px; margin:26px 0 10px; color:var(--ink); }
+  .legal h3:first-of-type{ margin-top:0; }
+  .legal p{ font-size:12.5px; line-height:1.75; color:var(--ink-soft); margin:0 0 12px; }
+  .legal ul, .legal ol{ margin:0 0 14px; padding-left:18px; }
+  .legal li{ font-size:12.5px; line-height:1.7; color:var(--ink-soft); margin-bottom:6px; }
+  .legal .legal-updated{ font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:22px; }
+  .terms-back-btn{
+    display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:22px; border-bottom:1px solid var(--gold); padding-bottom:2px;
+  }
+  .terms-back-btn-bottom{
+    display:inline-block; text-align:center; background:var(--band); color:var(--band-text); border:none;
+    border-bottom:none; border-radius:8px; padding:12px 28px; margin:28px auto 0; text-transform:uppercase; font-size:11.5px;
+  }
+  .terms-back-btn-bottom-wrap{ text-align:center; }
+  .about-portrait{
+    width:96px; height:96px; border-radius:50%;
+    background:linear-gradient(155deg, var(--band) 0%, var(--band-2) 100%);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--gold); font-family:'Fraunces', serif; font-style:italic; font-size:26px;
+    box-shadow:0 8px 20px rgba(36,26,40,0.18); margin-bottom:20px;
+  }
+
+  /* FEEDBACK PAGE */
+  .fb-hero{
+    background: radial-gradient(circle at 50% 0%, #5C4155 0%, #4B3648 45%, #3A2A38 100%);
+    color:var(--band-text); padding:48px 0 34px; text-align:center;
+  }
+  .fb-hero .logo{ margin-bottom:18px; }
+  .fb-hero .eyebrow2{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:#C9B7C2; margin-bottom:10px; }
+  .fb-hero h1{ font-family:'Fraunces', serif; font-weight:500; font-size:36px; margin:0 0 16px; }
+  .fb-hero h1 em{ font-style:italic; font-weight:600; color:#EADDE1; }
+  .fb-hero p.desc{ font-size:13.5px; color:#C9B7C2; max-width:560px; margin:0 auto 30px; line-height:1.6; }
+  .fb-stats{ display:flex; justify-content:center; gap:60px; }
+  .fb-stats .stat-num{ font-family:'Fraunces', serif; font-size:30px; color:#F7F1F0; }
+  .fb-stats .stat-label{ font-family:'IBM Plex Mono', monospace; font-size:9.5px; letter-spacing:0.08em; text-transform:uppercase; color:#A9909D; margin-top:2px; }
+
+  .testimonials{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .t-card{ background:var(--card); border:1px solid var(--rule); border-top:3px solid var(--gold); padding:20px; }
+  .t-stars{ color:var(--gold); font-size:13px; margin-bottom:4px; letter-spacing:1px; }
+  .t-quote-mark{ font-family:'Fraunces', serif; font-size:26px; color:var(--gold); line-height:0.5; display:block; margin-bottom:6px; }
+  .t-card p{ font-size:12.5px; line-height:1.6; color:var(--ink-soft); margin:0 0 12px; }
+  .t-card .t-attr{ font-family:'Fraunces', serif; font-style:italic; font-size:12px; color:var(--ink); border-top:1px solid var(--rule); padding-top:10px; }
+
+  .case-card{ background:var(--card); border:1px solid var(--rule); border-top:3px solid var(--gold); padding:20px; }
+  .case-card .case-label{ font-family:'IBM Plex Mono', monospace; font-size:9.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin-bottom:6px; }
+  .case-card p{ font-size:12.5px; line-height:1.6; color:var(--ink-soft); margin:0 0 14px; }
+  .case-card ul{ margin:0 0 14px; padding-left:16px; }
+  .case-card li{ font-size:12.5px; line-height:1.6; color:var(--ink-soft); margin-bottom:4px; }
+  .case-card .t-attr{ font-family:'Fraunces', serif; font-style:italic; font-size:12px; color:var(--ink); border-top:1px solid var(--rule); padding-top:10px; }
+
+  .pull-quote{ text-align:center; padding:50px 20px 10px; }
+  .pull-quote p{ font-family:'Fraunces', serif; font-style:italic; font-size:22px; line-height:1.5; max-width:640px; margin:0 auto 14px; color:var(--ink); }
+  .pull-quote .attr{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.06em; color:var(--gold); }
+
+  /* CONTACT */
+  .contact-card{ background:var(--card); border:1px solid var(--rule); padding:28px; text-align:center; max-width:520px; margin:0 auto; }
+  .contact-card h3{ font-family:'Fraunces', serif; font-weight:500; font-size:20px; margin:0 0 10px; }
+  .contact-card p{ font-size:13px; color:var(--ink-soft); line-height:1.6; margin:0 0 20px; }
+  .wa-btn{ display:inline-block; background:var(--ink); color:var(--paper); font-family:'IBM Plex Mono', monospace; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; padding:13px 22px; }
+  .contact-note{ font-size:11.5px; color:var(--ink-soft); margin-top:18px; line-height:1.6; }
+
+  footer{ padding:24px 0 40px; text-align:center; font-family:'IBM Plex Mono', monospace; font-size:10px; color:var(--ink-soft); }
+
+  @media (max-width:680px){
+    .nav-links-bar{ height:0; border:none; overflow:visible; }
+    .nav-links-bar .wrap{ padding:0; }
+    .navlinks{ position:fixed; top:60px; left:0; right:0; background:var(--nav-band); flex-direction:column; gap:0; padding:8px 0; transform:translateY(-120%); transition:transform 0.2s ease; overflow-x:visible; }
+    .navlinks.open{ transform:translateY(0); }
+    .navlinks a{ padding:12px 28px; border-bottom:1px solid rgba(255,255,255,0.06); border-right:none; width:100%; font-size:14px; }
+    .navlinks a:first-child{ padding-left:28px; }
+    .menu-toggle{ display:block; }
+    h1.big{ font-size:26px; }
+    .qhw{ grid-template-columns:1fr; }
+    .services{ grid-template-columns:1fr; }
+    .svc.wide ul{ columns:1; }
+    .testimonials{ grid-template-columns:1fr; }
+    .fb-stats{ gap:32px; }
+  }
+
+  /* ---- Design refresh: depth, motion, texture ---- */
+
+  /* 1. Card depth + hover lift, softened corners */
+  .qhw .q, .t-card, .svc, .case-card, .contact-card{
+    border-radius:10px;
+    box-shadow:0 2px 6px rgba(36,26,40,0.05);
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .qhw .q:hover, .t-card:hover, .svc:hover, .case-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 14px 28px rgba(36,26,40,0.12);
+  }
+
+  /* 2. Bento-style asymmetric grid — varied card sizes instead of a uniform grid */
+  .testimonials{ grid-auto-flow:dense; }
+  .testimonials .t-card:nth-child(4n+1){ grid-column:span 2; }
+  @media (max-width:680px){ .testimonials .t-card:nth-child(4n+1){ grid-column:span 1; } }
+
+  .services{ grid-auto-flow:row; align-items:stretch; }
+  .svc{ display:flex; flex-direction:column; }
+
+  /* 3. Hero texture — subtle grain + soft glow instead of flat fill */
+  .hero, .fb-hero{ position:relative; overflow:hidden; }
+  .hero::before, .fb-hero::before{
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+  }
+  .hero::after{
+    content:''; position:absolute; top:-30%; right:-10%; width:60%; height:140%;
+    background:radial-gradient(circle, rgba(201,138,156,0.14) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero .wrap, .fb-hero .wrap{ position:relative; z-index:1; }
+  .untangle-motif{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+  .circles-motif{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+  .loop-motif, .entangle-motif, .reach-motif{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+
+  /* Video-ready hero — inactive until a <video> tag is uncommented in the HTML */
+  .hero-video{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; z-index:0;
+  }
+  .hero-video-overlay{
+    position:absolute; inset:0; z-index:0;
+    background:linear-gradient(180deg, rgba(43,30,51,0.55) 0%, rgba(43,30,51,0.82) 100%);
+  }
+
+  /* Reusable photo slot for any page — soft rounded frame + brand-tinted duotone */
+  .photo-block{
+    margin:26px 0; border-radius:12px; overflow:hidden;
+    box-shadow:0 14px 30px rgba(36,26,40,0.14);
+  }
+  .photo-block img{
+    display:block; width:100%; height:auto;
+    filter:saturate(0.85) sepia(0.12) hue-rotate(300deg);
+  }
+
+  /* 4. Scroll-reveal — elements fade/rise into view as you scroll */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+
+  /* 5. Glass nav on scroll */
+  .nav-top, .nav-links-bar{ transition:background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease; }
+  nav.scrolled .nav-top{
+    background:rgba(51,37,54,0.86);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    box-shadow:0 4px 20px rgba(0,0,0,0.15);
+  }
+  nav.scrolled .nav-links-bar{
+    background:rgba(64,46,62,0.86);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+  }
+
+  /* 6. Button hover physics */
+  .wa-btn, .familiar-next{ display:inline-block; transition:transform 0.2s ease, box-shadow 0.2s ease; }
+  .wa-btn:hover{ transform:translateY(-2px); box-shadow:0 10px 22px rgba(36,26,40,0.25); }
+  .familiar-next:hover{ transform:translateX(3px); }
+
+/* ============================================================
+   BOOKING PAGE — calendar, time slots, intake form
+   ============================================================ */
+.booking-wrap{ max-width:640px; }
+.booking-step-label{ font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin:0 0 10px; }
+.bk-tz-note{ color:var(--ink-soft); text-transform:none; letter-spacing:0.02em; font-weight:400; }
+.cal-card{ background:var(--card); border:1px solid var(--rule); border-radius:10px; padding:20px; margin-bottom:24px; }
+.cal-header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.cal-header .cal-month{ font-family:'Fraunces', serif; font-weight:600; font-size:15px; color:var(--ink); }
+.cal-nav-btn{ background:none; border:1px solid var(--rule); border-radius:6px; width:30px; height:30px; font-size:14px; color:var(--ink-soft); cursor:pointer; }
+.cal-nav-btn:hover{ border-color:var(--gold); color:var(--gold); }
+.cal-weekdays{ display:grid; grid-template-columns:repeat(7,1fr); margin-bottom:6px; }
+.cal-weekdays span{ font-family:'IBM Plex Mono', monospace; font-size:9.5px; letter-spacing:0.04em; text-transform:uppercase; color:var(--ink-soft); text-align:center; }
+.cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+.cal-day{
+  aspect-ratio:1; display:flex; align-items:center; justify-content:center;
+  font-family:'Work Sans', sans-serif; font-size:12.5px; color:var(--ink);
+  border-radius:8px; cursor:pointer; border:1px solid transparent; background:none;
+}
+.cal-day:hover:not(.cal-disabled):not(.cal-blank){ border-color:var(--gold); }
+.cal-day.cal-blank{ visibility:hidden; cursor:default; }
+.cal-day.cal-disabled{ color:var(--rule); cursor:not-allowed; }
+.cal-day.cal-today{ font-weight:700; color:var(--gold); }
+.cal-day.cal-selected{ background:var(--gold); color:#fff; font-weight:600; }
+.time-slots{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:24px; }
+.time-slot{
+  font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.03em;
+  background:var(--card); border:1px solid var(--rule); border-radius:8px;
+  padding:10px 6px; text-align:center; cursor:pointer; color:var(--ink-soft);
+}
+.time-slot:hover{ border-color:var(--gold); color:var(--ink); }
+.time-slot.slot-selected{ background:var(--gold); border-color:var(--gold); color:#fff; font-weight:600; }
+.time-slot{ display:flex; align-items:center; justify-content:center; gap:6px; }
+.slot-num{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:16px; height:16px; border-radius:50%; background:rgba(201,138,156,0.25);
+  color:var(--gold); font-size:9px; font-weight:700; flex:0 0 auto;
+}
+.time-slot.slot-selected .slot-num{ background:rgba(255,255,255,0.3); color:#fff; }
+.time-slot.cal-disabled{ color:var(--rule); cursor:not-allowed; background:rgba(36,26,40,0.03); text-decoration:line-through; }
+.time-slot.cal-disabled .slot-num{ opacity:0.4; }
+.booking-selected-summary{ font-family:'Fraunces', serif; font-style:italic; font-size:13.5px; color:var(--ink-soft); margin:0 0 24px; min-height:20px; }
+.booking-selected-summary b{ color:var(--ink); font-style:normal; }
+.bk-field{ margin-bottom:16px; }
+.bk-field label{ display:block; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px; }
+.bk-required{ color:var(--gold); font-weight:700; }
+.bk-required-note{ font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.05em; color:var(--ink-soft); margin:0 0 14px; }
+.bk-field input, .bk-field textarea{
+  width:100%; font-family:'Work Sans', sans-serif; font-size:13.5px; color:var(--ink);
+  background:var(--card); border:1px solid var(--rule); border-radius:8px; padding:11px 12px;
+}
+.bk-field input:focus, .bk-field textarea:focus{ outline:none; border-color:var(--gold); }
+.bk-phone-group{ display:flex; gap:8px; }
+.bk-phone-group select{
+  width:88px; flex:0 0 auto; font-family:'Work Sans', sans-serif; font-size:12.5px; color:var(--ink);
+  background:var(--card); border:1px solid var(--rule); border-radius:8px; padding:11px 6px;
+}
+.bk-phone-group input{ flex:1 1 auto; min-width:0; }
+.bk-phone-group select:focus{ outline:none; border-color:var(--gold); }
+.bk-phone-group select.field-error{ border-color:#B85C6B; background:rgba(184,92,107,0.07); }
+.bk-field input.field-error, .bk-field textarea.field-error{ border-color:#B85C6B; background:rgba(184,92,107,0.07); }
+.bk-terms-field.field-error label{ color:#B85C6B; }
+.bk-terms-field.field-error input[type="checkbox"]{ outline:2px solid #B85C6B; outline-offset:2px; }
+.bk-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.bk-field textarea{ resize:vertical; min-height:90px; font-family:inherit; }
+.bk-terms-field{ margin:18px 0 14px; }
+.bk-terms-field label{
+  display:flex; align-items:flex-start; gap:9px; font-family:'Work Sans', sans-serif;
+  font-size:12.5px; line-height:1.5; color:var(--ink-soft); cursor:pointer;
+}
+.bk-terms-field input[type="checkbox"]{ width:16px; height:16px; margin-top:2px; flex:0 0 auto; accent-color:var(--gold); }
+.bk-terms-field a{ color:var(--gold); text-decoration:underline; }
+.bk-submit{
+  width:100%; background:var(--band); color:var(--band-text); border:none; border-radius:8px;
+  padding:14px; font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:0.08em;
+  text-transform:uppercase; cursor:pointer; margin-top:6px;
+}
+.bk-submit:hover{ background:#3a2940; }
+.bk-submit:disabled{ opacity:0.5; cursor:not-allowed; }
+.bk-status{ margin-top:16px; font-size:13px; line-height:1.6; padding:14px 16px; border-radius:8px; display:none; }
+.bk-status.bk-status-ok{ display:block; background:rgba(124,152,133,0.14); color:#3f5a45; }
+.bk-status.bk-status-err{ display:block; background:rgba(184,92,107,0.12); color:#8a3a45; }
+@media (max-width:480px){
+  .time-slots{ grid-template-columns:repeat(2,1fr); }
+  .bk-row{ grid-template-columns:1fr; }
+}
+
+/* ============================================================
+   HELP / FAQ WIDGET — floating on every page
+   ============================================================ */
+.help-fab{
+  position:fixed; bottom:20px; right:20px; z-index:90;
+  width:52px; height:52px; border-radius:50%; background:var(--band); color:var(--band-text);
+  display:flex; align-items:center; justify-content:center; font-size:22px; font-family:'Fraunces', serif; font-weight:600;
+  border:none; cursor:pointer; box-shadow:0 8px 22px rgba(0,0,0,0.28);
+}
+.help-fab:hover{ background:#3a2940; }
+.help-panel{
+  position:fixed; bottom:82px; right:20px; z-index:91; width:min(340px, calc(100vw - 40px));
+  max-height:70vh; overflow-y:auto; background:var(--card); border-radius:14px; border:1px solid var(--rule);
+  box-shadow:0 20px 50px rgba(0,0,0,0.25); display:none; flex-direction:column;
+}
+.help-panel.open{ display:flex; }
+.help-panel-header{
+  background:var(--band); color:var(--band-text); padding:16px 18px; border-radius:14px 14px 0 0;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.help-panel-header h4{ margin:0; font-family:'Fraunces', serif; font-weight:600; font-size:15px; }
+.help-panel-header button{ background:none; border:none; color:var(--band-text); font-size:18px; cursor:pointer; }
+.help-panel-body{ padding:16px 18px; }
+.help-intro{ font-size:12px; color:var(--ink-soft); margin:0 0 14px; line-height:1.5; }
+.help-faq-list{ display:flex; flex-direction:column; gap:8px; }
+.help-faq-q{
+  text-align:left; background:rgba(201,138,156,0.08); border:1px solid var(--rule); border-radius:8px;
+  padding:10px 12px; font-size:12.5px; color:var(--ink); cursor:pointer; font-family:'Work Sans', sans-serif;
+}
+.help-faq-q:hover{ border-color:var(--gold); }
+.help-answer-box{ display:none; }
+.help-answer-box.open{ display:block; }
+.help-back-link{ font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:var(--gold); cursor:pointer; display:inline-block; margin-bottom:12px; background:none; border:none; padding:0; }
+.help-answer-text{ font-size:12.5px; line-height:1.6; color:var(--ink-soft); margin:0 0 6px; }
+.help-answer-q{ font-family:'Fraunces', serif; font-weight:600; font-size:13.5px; color:var(--ink); margin:0 0 10px; }
+.help-wa-footer{
+  border-top:1px solid var(--rule); padding:12px 18px; text-align:center;
+}
+.help-wa-footer a{ color:var(--gold); font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:0.05em; text-transform:uppercase; }
+@media (max-width:480px){
+  .help-fab{ bottom:16px; right:16px; }
+  .help-panel{ bottom:76px; right:16px; }
+}
+
+  /* CLEAN, SHORT HOME PAGE */
+  #page-home .hero{padding:54px 0 48px;}
+  #page-home .hero .wrap{max-width:980px;}
+  #page-home .explainer{max-width:760px;margin-bottom:30px;}
+  #page-home .explainer > p:first-child{
+    max-width:720px;
+    font-size:15px;
+    line-height:1.75;
+    margin-bottom:30px;
+  }
+  #page-home .poster-conversation{
+    max-width:760px;
+    margin:26px auto 28px;
+  }
+  #page-home .mini-demo{
+    max-width:760px;
+    margin:0 auto;
+    padding:26px 24px;
+  }
+  #page-home > .wrap{
+    max-width:980px;
+    padding-top:16px;
+  }
+  #page-home > .wrap section{
+    padding:44px 0;
+  }
+  #page-home .qhw{
+    gap:20px;
+  }
+  #page-home .qhw .q{
+    padding:22px 20px;
+    min-height:210px;
+  }
+  #page-home .qhw .question{
+    font-size:16px;
+    line-height:1.45;
+  }
+  #page-home .qhw .answer{
+    font-size:13px;
+    line-height:1.65;
+  }
+  .home-cta{
+    padding:18px 0 54px !important;
+  }
+  .home-cta-inner{
+    max-width:760px;
+    margin:0 auto;
+    padding:34px 28px;
+    text-align:center;
+    border:1px solid var(--rule);
+    border-radius:16px;
+    background:linear-gradient(145deg,#fff,rgba(201,138,156,.08));
+    box-shadow:0 14px 34px rgba(36,26,40,.08);
+  }
+  .home-cta-kicker{
+    margin:0 0 8px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  .home-cta h2{
+    margin:0 0 22px;
+    font-family:'Fraunces',serif;
+    font-size:26px;
+    font-weight:600;
+  }
+  .home-cta-actions{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .home-cta-primary,.home-cta-secondary{
+    padding:12px 18px;
+    border-radius:8px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+  }
+  .home-cta-primary{
+    background:var(--band);
+    color:var(--band-text);
+  }
+  .home-cta-secondary{
+    border:1px solid var(--gold);
+    color:var(--ink);
+    background:#fff;
+  }
+  @media(max-width:680px){
+    #page-home .hero{padding:34px 0 30px;}
+    #page-home .poster-conversation{margin-top:22px;}
+    #page-home .qhw .q{min-height:auto;}
+    .home-cta-inner{padding:28px 20px;}
+    .home-cta h2{font-size:22px;}
+    .home-cta-actions{flex-direction:column;}
+    .home-cta-primary,.home-cta-secondary{width:100%;}
+  }
+
+  /* NAABI KAMALAM LOGO WATERMARK — applied to every website page */
+  .page{
+    position:relative;
+    isolation:isolate;
+  }
+  .page::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%20fill%3D%22none%22%3E%0A%3Cg%20stroke%3D%22%23C98A9C%22%20stroke-width%3D%223%22%3E%0A%3Cellipse%20cx%3D%2250%22%20cy%3D%2250%22%20rx%3D%2244%22%20ry%3D%2217%22/%3E%0A%3Cellipse%20cx%3D%2250%22%20cy%3D%2250%22%20rx%3D%2244%22%20ry%3D%2217%22%20transform%3D%22rotate%2860%2050%2050%29%22/%3E%0A%3Cellipse%20cx%3D%2250%22%20cy%3D%2250%22%20rx%3D%2244%22%20ry%3D%2217%22%20transform%3D%22rotate%28120%2050%2050%29%22/%3E%0A%3C/g%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%23C98A9C%22%20stroke-width%3D%221.3%22%20transform%3D%22translate%2842%2C41.6%29%20scale%280.4%29%22%3E%0A%3Cpath%20d%3D%22M20%2C34%20C13%2C28%2013%2C16%2020%2C8%20C27%2C16%2027%2C28%2020%2C34%20Z%22/%3E%0A%3Cpath%20d%3D%22M20%2C34%20C13%2C28%2013%2C16%2020%2C8%20C27%2C16%2027%2C28%2020%2C34%20Z%22%20opacity%3D%220.8%22%20transform%3D%22rotate%28-30%2020%2034%29%22/%3E%0A%3Cpath%20d%3D%22M20%2C34%20C13%2C28%2013%2C16%2020%2C8%20C27%2C16%2027%2C28%2020%2C34%20Z%22%20opacity%3D%220.8%22%20transform%3D%22rotate%2830%2020%2034%29%22/%3E%0A%3C/g%3E%0A%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%223%22%20fill%3D%22%23C98A9C%22/%3E%0A%3C/svg%3E");
+    background-repeat:repeat;
+    background-size:180px 180px;
+    background-position:36px 42px;
+    opacity:0.045;
+  }
+  .page > *{
+    position:relative;
+    z-index:1;
+  }
+  @media(max-width:680px){
+    .page::before{
+      background-size:145px 145px;
+      opacity:0.04;
+    }
+  }
+
+
+/* ============================================================
+   FINAL RESPONSIVE + NAVIGATION + WATERMARK CHECK
+   ============================================================ */
+
+/* Keep the faded Naabi Kamalam mark elegant and unobtrusive. */
+.page::before{
+  background-size:340px 340px !important;
+  background-position:70px 70px !important;
+  opacity:0.022 !important;
+}
+
+/* Navigation links should read as distinct tabs/buttons, not a clipped line. */
+.nav-links-bar{
+  padding:9px 0;
+}
+.nav-links-bar .wrap{
+  max-width:1180px;
+  padding:0 18px;
+}
+.navlinks{
+  justify-content:center;
+  align-items:center;
+  gap:7px;
+  overflow:visible;
+}
+.navlinks a{
+  border:1px solid rgba(255,255,255,0.16) !important;
+  border-radius:7px;
+  background:rgba(255,255,255,0.055);
+  padding:10px 12px !important;
+  font-size:11px;
+  line-height:1;
+  letter-spacing:0.045em;
+  transition:background .2s ease, border-color .2s ease, color .2s ease,
+             transform .2s ease, box-shadow .2s ease;
+}
+.navlinks a:hover,
+.navlinks a.active{
+  color:#FFF4F7;
+  background:rgba(201,138,156,0.26);
+  border-color:var(--gold) !important;
+  box-shadow:0 5px 14px rgba(0,0,0,.16);
+  transform:translateY(-1px);
+}
+
+/* Make the clickable conversation cue unmistakable. */
+.conversation-kicker{
+  display:table;
+  margin:0 auto 12px;
+  padding:9px 15px;
+  border:1px solid rgba(201,138,156,.65);
+  border-radius:999px;
+  background:var(--gold);
+  color:#fff;
+  font-size:10.5px;
+  letter-spacing:.11em;
+  box-shadow:0 7px 18px rgba(201,138,156,.28);
+  animation:kickerPulse 2.4s ease-in-out infinite;
+}
+@keyframes kickerPulse{
+  0%,100%{ transform:translateY(0); box-shadow:0 7px 18px rgba(201,138,156,.22); }
+  50%{ transform:translateY(-2px); box-shadow:0 10px 24px rgba(201,138,156,.38); }
+}
+.poster-conversation:hover .conversation-kicker{
+  background:#B96F86;
+}
+.poster-conversation:focus-visible{
+  outline:3px solid rgba(201,138,156,.42);
+  outline-offset:4px;
+}
+
+/* Prevent tiny-looking text and preserve the intended spacious desktop layout. */
+#page-home .explainer > p:first-child{
+  font-size:15.5px;
+}
+#page-home .qhw .answer{
+  font-size:13.2px;
+}
+#page-home .qhw .question{
+  font-size:16px;
+}
+
+/* Switch to the hamburger before the row becomes crowded.
+   This keeps HOME visible and prevents the first/last tabs from being cut off. */
+@media(max-width:1080px){
+  .nav-links-bar{
+    height:0;
+    padding:0;
+    border:none;
+    overflow:visible;
+  }
+  .nav-links-bar .wrap{
+    padding:0;
+  }
+  .navlinks{
+    position:fixed;
+    top:58px;
+    left:12px;
+    right:12px;
+    z-index:50;
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap:7px;
+    padding:12px;
+    max-height:calc(100vh - 78px);
+    overflow-y:auto;
+    background:rgba(51,37,54,.97);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:12px;
+    box-shadow:0 18px 44px rgba(0,0,0,.34);
+    transform:translateY(-130%);
+    opacity:0;
+    visibility:hidden;
+    transition:transform .22s ease, opacity .22s ease, visibility .22s ease;
+  }
+  .navlinks.open{
+    transform:translateY(0);
+    opacity:1;
+    visibility:visible;
+  }
+  .navlinks a,
+  .navlinks a:first-child{
+    width:100%;
+    padding:13px 16px !important;
+    font-size:12px;
+    text-align:left;
+  }
+  .menu-toggle{
+    display:block;
+  }
+}
+
+/* Mobile refinements. */
+@media(max-width:680px){
+  .page::before{
+    background-size:250px 250px !important;
+    background-position:35px 55px !important;
+    opacity:0.019 !important;
+  }
+  .nav-top .wrap{
+    padding:12px 18px;
+  }
+  .brand .name{
+    font-size:15px;
+  }
+  h1.big{
+    font-size:29px;
+  }
+  #page-home .hero{
+    padding:34px 0 30px;
+  }
+  #page-home .hero .wrap,
+  #page-home > .wrap,
+  .wrap{
+    padding-left:20px;
+    padding-right:20px;
+  }
+  .poster-conversation{
+    border-radius:14px;
+  }
+  .conversation-kicker{
+    font-size:9.5px;
+    padding:8px 12px;
+  }
+}
+
+/* Ensure content always stays above the watermark. */
+.page > *{
+  position:relative;
+  z-index:1;
+}
+
+
+/* ============================================================
+   FINAL MOBILE MENU POSITION — RIGHT-ALIGNED, COMPACT DROPDOWN
+   ============================================================ */
+@media(max-width:1080px){
+  .navlinks{
+    top:64px !important;
+    left:auto !important;
+    right:14px !important;
+    width:min(340px, calc(100vw - 28px)) !important;
+    max-height:72vh !important;
+    padding:10px !important;
+    border-radius:12px !important;
+    transform:translateY(-18px) scale(.98) !important;
+    transform-origin:top right !important;
+  }
+
+  .navlinks.open{
+    transform:translateY(0) scale(1) !important;
+  }
+
+  .navlinks a,
+  .navlinks a:first-child{
+    padding:12px 14px !important;
+    text-align:left !important;
+  }
+}
+
+@media(max-width:480px){
+  .navlinks{
+    right:10px !important;
+    width:min(320px, calc(100vw - 20px)) !important;
+    max-height:68vh !important;
+  }
+}
+
+
+/* ============================================================
+   FINAL HEADER + FAR-RIGHT MENU ADJUSTMENTS
+   ============================================================ */
+
+/* Center the Naabi Kamalam brand horizontally and vertically. */
+.nav-top{
+  position:relative;
+}
+.nav-top .wrap{
+  position:relative;
+  min-height:68px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 72px;
+}
+.brand{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  white-space:nowrap;
+}
+.brand svg{
+  width:40px;
+  height:40px;
+}
+.brand .name{
+  font-size:26px !important;
+  font-weight:700 !important;
+  line-height:1;
+  letter-spacing:.01em;
+}
+.menu-toggle{
+  position:absolute;
+  right:16px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:27px;
+  line-height:1;
+}
+
+/* Move the expanded menu as far right as possible and keep menu text bold. */
+@media(max-width:1080px){
+  .navlinks{
+    top:70px !important;
+    left:auto !important;
+    right:0 !important;
+    width:min(245px, calc(100vw - 6px)) !important;
+    max-height:68vh !important;
+    padding:9px !important;
+    gap:6px !important;
+    border-radius:12px 0 0 12px !important;
+    transform-origin:top right !important;
+  }
+
+  .navlinks a,
+  .navlinks a:first-child{
+    font-weight:700 !important;
+    font-size:12.5px !important;
+    letter-spacing:.055em !important;
+    padding:12px 13px !important;
+    text-align:left !important;
+  }
+}
+
+@media(max-width:480px){
+  .nav-top .wrap{
+    min-height:66px;
+    padding:9px 58px;
+  }
+  .brand{
+    gap:10px;
+  }
+  .brand svg{
+    width:36px;
+    height:36px;
+  }
+  .brand .name{
+    font-size:22px !important;
+  }
+  .menu-toggle{
+    right:12px;
+  }
+  .navlinks{
+    right:0 !important;
+    width:min(235px, calc(100vw - 4px)) !important;
+  }
+}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  (function(){
+    // EmailJS free-tier autoresponder: sends the client a real confirmation
+    // email the instant they book. The booking record itself is stored in
+    // Supabase; you (the admin) see new requests in /admin/, not by email.
+    // Public key is safe to expose
+    // client-side by design (EmailJS docs) -- it only allows sending through
+    // templates you've already configured, not reading your account.
+    if(window.emailjs){ emailjs.init({ publicKey: 'OR1X1g_m-mh3CFcKy' }); }
+  })();
+</script>
+</head>
+<body>
+<nav>
+<div class="nav-top">
+<div class="wrap">
+<a class="brand" href="#home" onclick="go('home')">
+<svg fill="none" height="30" viewbox="0 0 100 100" width="30">
+<g stroke="#C98A9C" stroke-width="3">
+<ellipse cx="50" cy="50" rx="44" ry="17"></ellipse>
+<ellipse cx="50" cy="50" rx="44" ry="17" transform="rotate(60 50 50)"></ellipse>
+<ellipse cx="50" cy="50" rx="44" ry="17" transform="rotate(120 50 50)"></ellipse>
+</g>
+<g fill="none" stroke="#C98A9C" stroke-width="1.3" transform="translate(42,41.6) scale(0.4)">
+<path d="M20,34 C13,28 13,16 20,8 C27,16 27,28 20,34 Z"></path>
+<path d="M20,34 C13,28 13,16 20,8 C27,16 27,28 20,34 Z" opacity="0.8" transform="rotate(-30 20 34)"></path>
+<path d="M20,34 C13,28 13,16 20,8 C27,16 27,28 20,34 Z" opacity="0.8" transform="rotate(30 20 34)"></path>
+</g>
+<circle cx="50" cy="50" fill="#C98A9C" r="3" stroke="none"></circle>
+</svg>
+<span class="name">Naabi Kamalam</span>
+</a>
+<button class="menu-toggle" onclick="document.getElementById('navlinks').classList.toggle('open')">☰</button>
+</div>
+</div>
+<div class="nav-links-bar">
+<div class="wrap">
+<div class="navlinks" id="navlinks">
+<a href="#home" onclick="go('home')">Home</a>
+<a href="#for" onclick="go('for')">Who's This For</a>
+<a href="#services" onclick="go('services')">Services</a>
+<a href="#booking" onclick="go('booking')">Book a Session</a>
+<a href="#about" onclick="go('about')">About</a>
+<a href="#feedback" onclick="go('feedback')">Testimonials</a>
+<a href="#contact" onclick="go('contact')">Contact</a>
+<a href="#terms" onclick="go('terms')">Terms &amp; Conditions</a>
+</div>
+</div>
+</div>
+</nav>
+<!-- HOME -->
+<div class="page" id="page-home">
+<div class="hero hero-media">
+<!--
+      VIDEO BACKGROUND — ready to go, currently off.
+      To activate: 1) host your video file (e.g. Netlify serves /videos/hero.mp4 fine),
+      2) uncomment the <video> block below and set its src,
+      3) delete/comment the <svg class="untangle-motif"> line so it doesn't double up.
+      Recommended: 15–30 sec silent loop, 1280px wide, under 5MB for fast mobile load.
+    -->
+<!--
+    <video class="hero-video" autoplay muted loop playsinline poster="images/hero-poster.jpg">
+      <source src="videos/hero.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-overlay"></div>
+    -->
+<svg class="circles-motif" preserveaspectratio="xMidYMid slice" viewbox="0 0 400 260">
+<circle cx="340" cy="70" fill="none" opacity="0.28" r="50" stroke="#C98A9C" stroke-width="1.3"></circle>
+<circle cx="340" cy="70" fill="none" opacity="0.2" r="30" stroke="#C98A9C" stroke-width="1.1"></circle>
+<circle cx="40" cy="200" fill="none" opacity="0.22" r="65" stroke="#C98A9C" stroke-width="1.3"></circle>
+<circle cx="90" cy="40" fill="none" opacity="0.18" r="18" stroke="#C98A9C" stroke-width="1"></circle>
+</svg>
+<div class="wrap">
+<h1 class="big">Transformation Coaching</h1>
+<p class="subtitle-line">With Deepa Sattu | Mob 281-866-5159 | naabikamalam@gmail.com</p>
+<p class="confidence-open">You've searched. You've tried. You've almost given up on this more than once. And somewhere in you, right now, reading this — <span class="accent">you already know</span>: this is the one that's going to work.</p>
+<div class="explainer">
+<p>Like a doctor treats the body, a transformation coach treats the stuck feelings running through your mind — self-doubt, "I'm not good enough," peer pressure, comparison, criticism, competition, feeling guilty after decisions, always being the good one, always adjusting, and everything else that keeps repeating.</p>
+
+
+
+<div aria-label="Interactive coaching conversation. Tap to continue." class="poster-conversation" id="posterConversation" onclick="nextConversation()" role="button" tabindex="0">
+<div class="conversation-kicker">Tap to Begin · Notice · Discover</div>
+<p class="conversation-title">Sometimes one honest conversation changes what you can see.</p>
+<div class="conversation-stage">
+<div class="cartoon-person client-side">
+<div class="speech-card client-speech active">“I keep thinking I’m not good enough.”</div>
+<svg aria-hidden="true" class="cartoon-svg" viewbox="0 0 150 150">
+<circle cx="75" cy="75" fill="rgba(201,138,156,.10)" r="68"></circle>
+<path d="M49 58 Q50 31 75 29 Q103 32 102 59" fill="#4B3648"></path>
+<circle cx="75" cy="61" fill="#D9A584" r="29"></circle>
+<path d="M48 58 Q58 45 74 47 Q90 44 103 58 Q101 34 76 31 Q51 32 48 58" fill="#35263A"></path>
+<circle cx="65" cy="62" fill="#35263A" r="2.4"></circle><circle cx="85" cy="62" fill="#35263A" r="2.4"></circle>
+<path d="M68 75 Q75 79 82 75" fill="none" stroke="#7B4D4D" stroke-linecap="round" stroke-width="2"></path>
+<path d="M38 136 Q42 93 75 92 Q109 93 113 136" fill="#B85C6B"></path>
+<path d="M55 101 Q75 116 95 101" fill="none" opacity=".7" stroke="#F7F1F0" stroke-width="2"></path>
+</svg>
+<span class="person-name">You</span>
+</div>
+<div class="cartoon-person coach-side">
+<div class="speech-card coach-speech">“What if that is a learned story—not your identity?”</div>
+<svg aria-hidden="true" class="cartoon-svg" viewbox="0 0 150 150">
+<circle cx="75" cy="75" fill="rgba(201,138,156,.10)" r="68"></circle>
+<circle cx="75" cy="60" fill="#C98F70" r="29"></circle>
+<path d="M45 58 Q46 27 76 27 Q108 30 105 62 Q98 47 81 44 Q60 45 45 58" fill="#2F2132"></path>
+<path d="M47 53 Q42 67 50 80" fill="none" stroke="#2F2132" stroke-linecap="round" stroke-width="8"></path>
+<path d="M103 52 Q110 68 101 82" fill="none" stroke="#2F2132" stroke-linecap="round" stroke-width="8"></path>
+<circle cx="65" cy="61" fill="#35263A" r="2.4"></circle><circle cx="85" cy="61" fill="#35263A" r="2.4"></circle>
+<path d="M67 74 Q75 81 84 74" fill="none" stroke="#7B4D4D" stroke-linecap="round" stroke-width="2"></path>
+<path d="M36 136 Q41 92 75 91 Q110 92 115 136" fill="#6E4C60"></path>
+<path d="M58 98 Q75 111 92 98" fill="none" stroke="#C98A9C" stroke-width="3"></path>
+</svg>
+<span class="person-name">Deepa</span>
+</div>
+</div>
+<div class="conversation-dots"><span class="active"></span><span></span><span></span></div>
+<div class="conversation-prompt">Tap the conversation to continue →</div>
+</div>
+<div class="mini-demo">
+<p class="mini-demo-label">Try It — 15 Seconds</p>
+<h3 class="mini-demo-title">What's been quietly weighing on you?</h3>
+<div class="mini-demo-options" id="miniDemoOptions">
+<button onclick="miniDemoShow('selfdoubt')">Self-Doubt</button>
+<button onclick="miniDemoShow('comparison')">Comparison</button>
+<button onclick="miniDemoShow('peerpressure')">Peer Pressure</button>
+<button onclick="miniDemoShow('criticism')">Criticism</button>
+<button onclick="miniDemoShow('competition')">Competition</button>
+<button onclick="miniDemoShow('guilt')">Guilt &amp; Over-Adjusting</button>
+</div>
+<div class="mini-demo-result" id="miniDemoResult">
+<p class="mini-demo-pain" id="miniDemoPain"></p>
+<p class="mini-demo-reframe" id="miniDemoReframe"></p>
+<div class="mini-demo-actions">
+<button class="mini-demo-again" onclick="miniDemoReset()">← Try another</button>
+<a class="mini-demo-cta" href="#booking" onclick="go('booking')">This is just a glimpse — have the real conversation →</a>
+</div>
+</div>
+</div>
+
+
+</div>
+
+
+
+
+</div>
+</div>
+<!--
+    PHOTO SECTIONS — ready-made slots for real images anywhere on this
+    page. Copy this block, set the src, and drop it wherever you want
+    a photo to break up the text. Safe to leave unused until you have
+    photos — it renders nothing when commented out like this.
+
+    <div class="photo-block">
+      <img src="images/your-photo.jpg" alt="Describe the photo here">
+    </div>
+  -->
+<div class="wrap">
+<section>
+<h2 class="section-title">The Questions You're Already Asking</h2>
+<div class="qhw">
+<div class="q"><span class="label">Why</span><p class="question">Why do I feel stuck, even when everything looks fine on paper?</p><p class="answer">Because the noise — comparison, competition, self-criticism — doesn't show up on paper. It shows up in you. And somewhere, you already know that.</p></div>
+<div class="q"><span class="label">How</span><p class="question">How do I actually change, not just talk about it?</p><p class="answer">One honest framework, one-on-one sessions, paced entirely to you. You don't need a script — you just need to begin.</p></div>
+<div class="q"><span class="label">What</span><p class="question">What would it feel like to trust my own voice again?</p><p class="answer">Coaching across career, relationships, confidence, and everyday wellbeing — built so that, slowly, that voice starts to sound like yours again.</p></div>
+</div>
+</section><section class="home-cta">
+<div class="home-cta-inner">
+<p class="home-cta-kicker">Ready when you are</p>
+<h2>You don't have to figure it out alone.</h2>
+<div class="home-cta-actions">
+<a class="home-cta-primary" href="#booking" onclick="go('booking')">Book a Discovery Call</a>
+<a class="home-cta-secondary" href="https://wa.me/12818665159" rel="noopener" target="_blank">WhatsApp Deepa</a>
+</div>
+</div>
+</section>
+
+</div>
+</div>
+<!-- WHO'S THIS FOR -->
+<div class="page" id="page-for">
+<div class="hero">
+<svg class="loop-motif" preserveaspectratio="xMidYMid slice" viewbox="0 0 400 260">
+<circle cx="330" cy="60" fill="none" opacity="0.4" r="46" stroke="#C98A9C" stroke-dasharray="4 6" stroke-width="1.4"></circle>
+<circle cx="330" cy="60" fill="none" opacity="0.25" r="30" stroke="#C98A9C" stroke-width="1.2"></circle>
+<circle cx="50" cy="210" fill="none" opacity="0.3" r="60" stroke="#C98A9C" stroke-dasharray="4 6" stroke-width="1.4"></circle>
+</svg>
+<div class="wrap">
+<h1 class="big">Who's This For?</h1>
+<p class="tagline">Are you stuck in a pattern — does this keep happening to you, again and again?</p>
+<p class="sub" style="font-style:italic;">You don't have to name it yet. You might just notice how many times it's already happened — and how much lighter it would feel to finally see it clearly.</p>
+</div>
+</div>
+<div class="wrap">
+<section>
+<h2 class="section-title">This Might Sound Familiar</h2>
+<ul class="familiar-list">
+<li>You promise yourself this year will be different — and somehow it isn't.</li>
+<li>You know exactly what's wrong, but it keeps happening anyway.</li>
+<li>You snap, apologize, and do it again next week.</li>
+<li>You keep ending up in the same kind of fight, with different people.</li>
+<li>You're tired of being the strong one for everyone but yourself.</li>
+<li>You say "I'm fine" so often you've stopped checking if it's true.</li>
+<li>You feel like you're always the one being used.</li>
+<li>You catch yourself replaying the same conversation, months later.</li>
+<li>You know the pattern. You just don't know how to break it.</li>
+</ul>
+<p class="familiar-close">If any of this sounds familiar, you can let yourself feel it — this is what we're here to resolve.</p>
+<p class="familiar-milton">It sounds like what you're really longing for is to feel <span class="embed">lighter</span> — not to have every answer, just enough clarity to breathe again. And as you keep reading, you may already begin to sense that this pattern, whatever it is for you, isn't fixed. It's just familiar. And familiar things can be <span class="embed">gently relearned</span>.</p>
+<h2 class="section-title" style="margin-top:30px;">Staying In It vs. Coming Out Of It</h2>
+<div class="pattern-chart">
+<div class="pattern-chart-legend">
+<span class="legend-item"><span class="legend-swatch before"></span>Staying in the pattern</span>
+<span class="legend-item"><span class="legend-swatch after"></span>After breaking the pattern</span>
+</div>
+<div class="chart-row">
+<div class="chart-label">Peace of Mind</div>
+<div class="bar-track" style="--pct:28%;"><div class="bar bar-before"></div></div>
+<div class="bar-track" style="--pct:88%;"><div class="bar bar-after"></div></div>
+</div>
+<div class="chart-row">
+<div class="chart-label">Clarity in Decisions</div>
+<div class="bar-track" style="--pct:32%;"><div class="bar bar-before"></div></div>
+<div class="bar-track" style="--pct:85%;"><div class="bar bar-after"></div></div>
+</div>
+<div class="chart-row">
+<div class="chart-label">Confidence Speaking Up</div>
+<div class="bar-track" style="--pct:25%;"><div class="bar bar-before"></div></div>
+<div class="bar-track" style="--pct:80%;"><div class="bar bar-after"></div></div>
+</div>
+<div class="chart-row">
+<div class="chart-label">Energy Left at the End of the Day</div>
+<div class="bar-track" style="--pct:22%;"><div class="bar bar-before"></div></div>
+<div class="bar-track" style="--pct:78%;"><div class="bar bar-after"></div></div>
+</div>
+<div class="chart-row">
+<div class="chart-label">Feeling Understood in Relationships</div>
+<div class="bar-track" style="--pct:30%;"><div class="bar bar-before"></div></div>
+<div class="bar-track" style="--pct:82%;"><div class="bar bar-after"></div></div>
+</div>
+<p style="font-size:11px; color:var(--ink-soft); font-style:italic; margin-top:10px;">Illustrative, based on common shifts clients describe — not a clinical measurement.</p>
+</div>
+<a class="familiar-next" href="#services" onclick="go('services')">Where It Shows Up, Next →</a>
+</section>
+</div>
+</div>
+<!-- SERVICES -->
+<div class="page" id="page-services">
+<div class="hero">
+<div class="wrap">
+<h1 class="big">Where It Shows Up</h1>
+<p class="tagline">Pick the place it's loudest right now — we'll follow it from there.</p>
+<p class="sub" style="font-style:italic; max-width:560px; margin-top:6px;">You don't have to know the exact name for it yet — just notice which one <span class="embed">pulls at you</span> as you read, and start there.</p>
+</div>
+</div>
+<div class="wrap">
+<section>
+<div class="services">
+<div class="svc"><svg class="svc-icon" fill="none" stroke="currentColor" stroke-width="1.4" viewbox="0 0 24 24"><rect height="12" rx="1.5" width="18" x="3" y="8"></rect><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="3" x2="21" y1="13" y2="13"></line></svg><div class="name">Career &amp; Work</div><ul><li><a href="javascript:void(0)" onclick="openTopic('cw1')">Career clarity &amp; transitions</a></li><li><a href="javascript:void(0)" onclick="openTopic('cw2')">Workplace confidence</a></li><li><a href="javascript:void(0)" onclick="openTopic('cw3')">Decision-making under pressure</a></li><li><a href="javascript:void(0)" onclick="openTopic('cw4')">Managing conflict at work</a></li><li><a href="javascript:void(0)" onclick="openTopic('cw5')">Direction after a setback</a></li><li><a href="javascript:void(0)" onclick="openTopic('cw6')">Burnout from overperforming</a></li><li><a href="javascript:void(0)" onclick="openTopic('cw7')">Navigating a promotion or new role</a></li></ul></div>
+<div class="svc"><svg class="svc-icon" fill="none" stroke="currentColor" stroke-width="1.4" viewbox="0 0 24 24"><path d="M12 21s-7-4.6-9.5-9C1 8.4 2.6 5 6 5c2 0 3.2 1 4.5 2.6C11.8 6 13 5 15 5c3.4 0 5 3.4 3.5 7-2.5 4.4-9.5 9-9.5 9"></path><path d="M12 12c1.6-3 4-2 4-2"></path></svg><div class="name">Kids' Learning &amp; Growth</div><ul><li><a href="javascript:void(0)" onclick="openTopic('kd1')">Study &amp; memory strategies</a></li><li><a href="javascript:void(0)" onclick="openTopic('kd2')">Homework focus &amp; routines</a></li><li><a href="javascript:void(0)" onclick="openTopic('kd3')">Test &amp; performance anxiety</a></li><li><a href="javascript:void(0)" onclick="openTopic('kd4')">Confidence in new skills</a></li><li><a href="javascript:void(0)" onclick="openTopic('kd5')">Building on existing strengths</a></li><li><a href="javascript:void(0)" onclick="openTopic('kd6')">Managing screen time &amp; distraction</a></li><li><a href="javascript:void(0)" onclick="openTopic('kd7')">Bouncing back after failure</a></li></ul></div>
+<div class="svc wide"><svg class="svc-icon" fill="none" stroke="currentColor" stroke-width="1.4" viewbox="0 0 24 24"><circle cx="9" cy="12" r="6"></circle><circle cx="15" cy="12" r="6"></circle></svg><div class="name">Relationships (Family, Relatives, Friends, Office Peers &amp; Romantic)</div><ul><li><a href="javascript:void(0)" onclick="openTopic('rl1')">Peer pressure that never really goes away</a></li><li><a href="javascript:void(0)" onclick="openTopic('rl2')">Constantly comparing your life to everyone else's</a></li><li><a href="javascript:void(0)" onclick="openTopic('rl3')">Competing with people you're supposed to love</a></li><li><a href="javascript:void(0)" onclick="openTopic('rl4')">Criticism that sticks longer than it should</a></li><li><a href="javascript:void(0)" onclick="openTopic('rl5')">Walking on eggshells around family</a></li><li><a href="javascript:void(0)" onclick="openTopic('rl6')">Saying yes when you mean no</a></li><li><a href="javascript:void(0)" onclick="openTopic('rl7')">Feeling guilty for setting a boundary</a></li><li><a href="javascript:void(0)" onclick="openTopic('rl8')">Trust that broke and never got rebuilt</a></li><li><a href="javascript:void(0)" onclick="openTopic('rl9')">Always feeling like you're the one being used</a></li><li><a href="javascript:void(0)" onclick="openTopic('rl10')">Office relationships that quietly drain you</a></li></ul></div>
+<div class="svc"><svg class="svc-icon" fill="none" stroke="currentColor" stroke-width="1.4" viewbox="0 0 24 24"><path d="M3 12c2-4 4-6 5-6s2 8 4 8 2-10 4-10 2 8 5 8"></path></svg><div class="name">Emotional Wellbeing</div><ul><li><a href="javascript:void(0)" onclick="openTopic('ew1')">Anger management</a></li><li><a href="javascript:void(0)" onclick="openTopic('ew2')">Guilt-free decision making</a></li><li><a href="javascript:void(0)" onclick="openTopic('ew3')">Sadness &amp; grief coping mechanisms</a></li><li><a href="javascript:void(0)" onclick="openTopic('ew4')">Anxiety &amp; overwhelm coping</a></li><li><a href="javascript:void(0)" onclick="openTopic('ew5')">Fear &amp; self-doubt management</a></li><li><a href="javascript:void(0)" onclick="openTopic('ew6')">Processing difficult emotions safely</a></li><li><a href="javascript:void(0)" onclick="openTopic('ew7')">Building day-to-day emotional resilience</a></li></ul></div>
+<div class="svc"><svg class="svc-icon" fill="none" stroke="currentColor" stroke-width="1.4" viewbox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"></path><circle cx="12" cy="12" r="2.6"></circle></svg><div class="name">Emotional Intelligence</div><ul><li><a href="javascript:void(0)" onclick="openTopic('eq1')">Reading your own emotional triggers</a></li><li><a href="javascript:void(0)" onclick="openTopic('eq2')">Empathy without losing your boundaries</a></li><li><a href="javascript:void(0)" onclick="openTopic('eq3')">Regulating in the moment, not after</a></li><li><a href="javascript:void(0)" onclick="openTopic('eq4')">Reading the room &amp; others' cues</a></li><li><a href="javascript:void(0)" onclick="openTopic('eq5')">Turning emotion into information, not instruction</a></li><li><a href="javascript:void(0)" onclick="openTopic('eq6')">Building rapport quickly</a></li><li><a href="javascript:void(0)" onclick="openTopic('eq7')">Navigating difficult conversations calmly</a></li></ul></div>
+<div class="svc"><svg class="svc-icon" fill="none" stroke="currentColor" stroke-width="1.4" viewbox="0 0 24 24"><path d="M12 3l2.4 5.8L20 11l-5.6 2.2L12 19l-2.4-5.8L4 11l5.6-2.2L12 3Z"></path></svg><div class="name">Confidence &amp; Self-Image</div><ul><li><a href="javascript:void(0)" onclick="openTopic('cf1')">Quieting self-criticism</a></li><li><a href="javascript:void(0)" onclick="openTopic('cf2')">Owning your voice</a></li><li><a href="javascript:void(0)" onclick="openTopic('cf3')">Trusting your own decisions</a></li><li><a href="javascript:void(0)" onclick="openTopic('cf4')">Body image &amp; self-perception</a></li><li><a href="javascript:void(0)" onclick="openTopic('cf5')">Speaking up when it matters</a></li><li><a href="javascript:void(0)" onclick="openTopic('cf6')">Overcoming imposter syndrome</a></li><li><a href="javascript:void(0)" onclick="openTopic('cf7')">Standing firm under criticism</a></li></ul></div>
+<div class="svc"><svg class="svc-icon" fill="none" stroke="currentColor" stroke-width="1.4" viewbox="0 0 24 24"><path d="M12 21c-4-3-7-6.5-7-10.5A5.5 5.5 0 0 1 12 5a5.5 5.5 0 0 1 7 5.5C19 14.5 16 18 12 21Z"></path><path d="M12 21V9"></path></svg><div class="name">Health &amp; Energy</div><ul><li><a href="javascript:void(0)" onclick="openTopic('hl1')">Sustainable routines</a></li><li><a href="javascript:void(0)" onclick="openTopic('hl2')">Work-life balance</a></li><li><a href="javascript:void(0)" onclick="openTopic('hl3')">Rest that actually restores</a></li><li><a href="javascript:void(0)" onclick="openTopic('hl4')">Breaking burnout cycles</a></li><li><a href="javascript:void(0)" onclick="openTopic('hl5')">Energy management, not just time</a></li><li><a href="javascript:void(0)" onclick="openTopic('hl6')">Listening to your body's signals</a></li><li><a href="javascript:void(0)" onclick="openTopic('hl7')">Building consistency without burnout</a></li></ul></div>
+<div class="svc"><svg class="svc-icon" fill="none" stroke="currentColor" stroke-width="1.4" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M15.5 8.5 13 13l-4.5 2.5L11 11l4.5-2.5Z"></path></svg><div class="name">Purpose &amp; Direction</div><ul><li><a href="javascript:void(0)" onclick="openTopic('pu1')">Life &amp; career clarity</a></li><li><a href="javascript:void(0)" onclick="openTopic('pu2')">Personal growth practice</a></li><li><a href="javascript:void(0)" onclick="openTopic('pu3')">Defining your own version of success</a></li><li><a href="javascript:void(0)" onclick="openTopic('pu4')">Reconnecting with what matters</a></li><li><a href="javascript:void(0)" onclick="openTopic('pu5')">Making peace with uncertainty</a></li><li><a href="javascript:void(0)" onclick="openTopic('pu6')">Aligning daily choices with long-term goals</a></li><li><a href="javascript:void(0)" onclick="openTopic('pu7')">Finding meaning during a life transition</a></li></ul></div>
+</div>
+</section>
+</div>
+</div>
+<!-- BOOKING -->
+<div class="page" id="page-booking">
+<div class="hero">
+<div class="wrap">
+<h1 class="big">Book a Session</h1>
+<p class="tagline">Pick a time that works — we'll take it from there.</p>
+</div>
+</div>
+<div class="wrap">
+<section>
+<div class="booking-wrap">
+<p class="booking-step-label">Step 1 — Pick a Date</p>
+<div class="cal-card">
+<div class="cal-header">
+<button aria-label="Previous month" class="cal-nav-btn" onclick="calShiftMonth(-1)" type="button">‹</button>
+<span class="cal-month" id="calMonthLabel"></span>
+<button aria-label="Next month" class="cal-nav-btn" onclick="calShiftMonth(1)" type="button">›</button>
+</div>
+<div class="cal-weekdays">
+<span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+</div>
+<div class="cal-grid" id="calGrid"></div>
+</div>
+<p class="booking-step-label">Step 2 — Pick a Time <span class="bk-tz-note">(Arizona Time — MST, UTC-7)</span></p>
+<div class="time-slots" id="timeSlots">
+<p style="grid-column:1/-1; font-size:12.5px; color:var(--ink-soft); font-style:italic;">Pick a date above first.</p>
+</div>
+<p class="booking-selected-summary" id="bkSummary">No date or time selected yet.</p>
+<p class="booking-step-label">Step 3 — Your Details</p>
+<p class="bk-required-note"><span class="bk-required">*</span> Required</p>
+<form id="bookingForm" novalidate="" onsubmit="return submitBooking(event)">
+<div class="bk-row">
+<div class="bk-field">
+<label for="bkFirst">First Name <span class="bk-required">*</span></label>
+<input id="bkFirst" name="firstName" required="" type="text"/>
+</div>
+<div class="bk-field">
+<label for="bkLast">Last Name <span class="bk-required">*</span></label>
+<input id="bkLast" name="lastName" required="" type="text"/>
+</div>
+</div>
+<div class="bk-field">
+<label for="bkAge">Age <span style="opacity:0.6; text-transform:none; letter-spacing:0;">(optional)</span></label>
+<input id="bkAge" max="120" min="1" name="age" type="number"/>
+</div>
+<div class="bk-row">
+<div class="bk-field">
+<label for="bkEmail">Email <span class="bk-required">*</span></label>
+<input id="bkEmail" name="email" placeholder="you@email.com" required="" type="email"/>
+</div>
+<div class="bk-field">
+<label for="bkPhone">Phone <span class="bk-required">*</span></label>
+<div class="bk-phone-group">
+<select id="bkCountryCode" name="countryCode" required="">
+<option disabled="" selected="" value="">Code</option>
+<option value="+1">+1 US/Canada</option>
+<option value="+91">+91 India</option>
+<option value="+44">+44 UK</option>
+<option value="+61">+61 Australia</option>
+<option value="+971">+971 UAE</option>
+<option value="+65">+65 Singapore</option>
+<option value="+81">+81 Japan</option>
+<option value="+86">+86 China</option>
+<option value="+49">+49 Germany</option>
+<option value="+33">+33 France</option>
+<option value="+52">+52 Mexico</option>
+<option value="+55">+55 Brazil</option>
+<option value="+27">+27 South Africa</option>
+<option value="+234">+234 Nigeria</option>
+<option value="+92">+92 Pakistan</option>
+<option value="+880">+880 Bangladesh</option>
+<option value="+94">+94 Sri Lanka</option>
+<option value="+60">+60 Malaysia</option>
+<option value="+63">+63 Philippines</option>
+<option value="+84">+84 Vietnam</option>
+<option value="+82">+82 South Korea</option>
+<option value="+966">+966 Saudi Arabia</option>
+<option value="+20">+20 Egypt</option>
+<option value="+353">+353 Ireland</option>
+<option value="+64">+64 New Zealand</option>
+</select>
+<input id="bkPhone" name="phone" placeholder="555 555 5555" required="" type="tel"/>
+</div>
+</div>
+</div>
+<div class="bk-field">
+<label for="bkDesc">What's going on — what area are you looking for support with? <span class="bk-required">*</span></label>
+<textarea id="bkDesc" name="description" placeholder="A few sentences is plenty. Whatever you're comfortable sharing." required=""></textarea>
+</div>
+<div class="bk-terms-field">
+<label for="bkTerms">
+<input id="bkTerms" name="agreedToTerms" type="checkbox"/>
+              I understand and agree to the <a href="#terms" onclick="go('terms')">Terms &amp; Conditions</a>
+</label>
+</div>
+<button class="bk-submit" id="bkSubmitBtn" type="submit">Request This Time</button>
+<div class="bk-status" id="bkStatus"></div>
+</form>
+</div>
+</section>
+</div>
+</div>
+<!-- ABOUT -->
+<div class="page" id="page-about">
+<div class="hero">
+<svg class="entangle-motif" preserveaspectratio="xMidYMid slice" viewbox="0 0 400 260">
+<ellipse cx="300" cy="90" fill="none" opacity="0.3" rx="70" ry="24" stroke="#C98A9C" stroke-width="1.3" transform="rotate(-18 300 90)"></ellipse>
+<ellipse cx="300" cy="90" fill="none" opacity="0.3" rx="70" ry="24" stroke="#C98A9C" stroke-width="1.3" transform="rotate(30 300 90)"></ellipse>
+<circle cx="300" cy="90" fill="#C98A9C" opacity="0.6" r="3.5"></circle>
+<circle cx="60" cy="200" fill="#C98A9C" opacity="0.4" r="2.5"></circle>
+<circle cx="110" cy="180" fill="#C98A9C" opacity="0.3" r="2"></circle>
+</svg>
+<div class="wrap">
+<h1 class="big">Deepa Sattu</h1>
+<p class="tagline">The person behind Naabi Kamalam</p>
+</div>
+</div>
+<div class="wrap">
+<section>
+<div class="about-portrait" title="Swap this for your own photo — see the img src comment in the code">
+<!-- Replace src below with your own photo (e.g. images/deepa.jpg) once you have one hosted -->
+<span>DS</span>
+</div>
+<p style="font-size:13.5px; line-height:1.7; color:var(--ink-soft); max-width:680px; margin:0 0 26px;">Naabi Kamalam exists for people who are functioning fine on the outside but feel stuck, noisy, or reactive on the inside — in a relationship, a career decision, a confidence gap, or just a general sense of "not myself." No diagnosis or crisis is required to start — just a willingness to look at the pattern honestly, and someone to look at it with you.</p>
+<h2 class="section-title">My Story</h2>
+<div class="bio">
+<p>My path to this work wasn't a straight line. It came from twelve years in corporate IT, and from growing up in a traditional Indian family navigating a Western world.</p>
+<p>I moved often growing up — for work, for marriage — raised inside diversity from childhood. Different cities, different expectations of who I was supposed to be in each one. You learn to read a room fast when the room keeps changing.</p>
+<p>Along the way came achievements, leadership roles — rooms full of people I was responsible for. And it was there, watching how people responded under pressure, that a question started following me: why do people behave so differently than I expect them to?</p>
+<p>Underneath it all, the weight just felt like stress — the kind most of us carry so quietly we forget to name it.</p>
+<p>Then came a health struggle that stopped me and asked me to look at everything honestly. What it gave back was trust — in the process of my own life, and a faith in something larger than my own certainty.</p>
+<p class="bio-highlight">And one decision changed everything: I stopped blaming the system, the culture, the people around me, and instead looked at the whole picture clearly and honestly. Not as a victim of circumstance, but as someone willing to rise and see it for what it was.<br/><br/>That clarity built something real — self-earned confidence. And underneath it, eventually, peace.</p>
+<p>My academic background is in physics and computer science. Physics gave me superposition — many possibilities can exist at once, until you choose. It gave me entanglement, too — a name for the threads that keep us bound to old patterns long after we've outgrown them, and the reminder that they can be gently traced and undone. Computer science gave me another lens: the subconscious as a running program, replaying the same loop until something interrupts it — a loop most of us never notice, and just call "stress."</p>
+<p>All of it — the moving, the leading, the illness, the faith, the science — is what shapes how I coach you now. Not borrowed theory. A framework built from having actually lived the tangle, and found a way through it.</p>
+</div>
+</section>
+</div>
+</div>
+<!-- FEEDBACK -->
+<div class="page" id="page-feedback">
+<div class="fb-hero">
+<div class="wrap">
+<svg class="logo" fill="none" height="72" viewbox="0 0 120 120" width="72">
+<g stroke="#C98A9C" stroke-width="2.5">
+<ellipse cx="60" cy="62" rx="52" ry="20"></ellipse>
+<ellipse cx="60" cy="62" rx="52" ry="20" transform="rotate(60 60 62)"></ellipse>
+<ellipse cx="60" cy="62" rx="52" ry="20" transform="rotate(120 60 62)"></ellipse>
+</g>
+<g fill="none" stroke="#C98A9C" stroke-width="1.3" transform="translate(49,50.45) scale(0.55)">
+<path d="M20,34 C13,28 13,16 20,8 C27,16 27,28 20,34 Z"></path>
+<path d="M20,34 C13,28 13,16 20,8 C27,16 27,28 20,34 Z" opacity="0.8" transform="rotate(-30 20 34)"></path>
+<path d="M20,34 C13,28 13,16 20,8 C27,16 27,28 20,34 Z" opacity="0.8" transform="rotate(30 20 34)"></path>
+<path d="M20,34 C14,30 14,20 20,14 C26,20 26,30 20,34 Z" opacity="0.55" transform="rotate(-55 20 34)"></path>
+<path d="M20,34 C14,30 14,20 20,14 C26,20 26,30 20,34 Z" opacity="0.55" transform="rotate(55 20 34)"></path>
+</g>
+<circle cx="60" cy="62" fill="#C98A9C" r="4.5" stroke="none"></circle>
+</svg>
+<div class="eyebrow2">Naabi Kamalam</div>
+<h1>Client <em>Testimonials</em></h1>
+<p class="desc">These are unedited moments, in clients' own words, from the middle of their work — not the polished after. Names are kept private; the voice is kept exactly as it was given.</p>
+<div class="fb-stats">
+<div><div class="stat-num">5.0</div><div class="stat-label">Average Rating</div></div>
+<div><div class="stat-num">100%</div><div class="stat-label">In Their Own Words</div></div>
+</div>
+</div>
+</div>
+<div class="wrap">
+<section>
+<div class="testimonials">
+<div class="t-card"><div class="t-stars">★★★★★</div><span class="t-quote-mark">"</span><p>I chose her because she understands our Indian culture and what I was going through. At first, I wasn't sure the sessions would help — the first one didn't feel like much. But after the second, something just clicked. She didn't directly give me the answers, but helped me realize them on my own. Now I feel free, at peace, and so much lighter.</p><div class="t-attr">— Mother of two, 20 years married</div></div>
+<div class="t-card"><div class="t-stars">★★★★★</div><span class="t-quote-mark">"</span><p>For months I had hesitation I couldn't explain — I wasn't able to express my feelings, even to my own family. Deepa helped me clearly identify where the block was. What had been bothering me for months was cleared in a few hours of sitting with her. I understand now the problem wasn't around me, it was within me to rectify. That distance from my thoughts helps me express myself with clarity and confidence.</p><div class="t-attr">— On learning to speak what she felt</div></div>
+<div class="t-card"><div class="t-stars">★★★★★</div><span class="t-quote-mark">"</span><p>After starting my session with Deepa, I came to know more about myself and feeling calm and cool. My mind is now getting lighter, feeling from heaviness. In further classes I am sure I will feel more better. Thank you so much Deepa.</p><div class="t-attr">— Early in her sessions</div></div>
+<div class="t-card"><div class="t-stars">★★★★★</div><span class="t-quote-mark">"</span><p>I was in real confusion, seeing things very miserable day to day. Deepa worked really hard addressing the things I saw as problematic — figuring out the root cause and the patterns and triggers behind them. Thank you for all the time, dedication, and compassion. I'm blessed to find a coach like this in my lifetime. What I see today is way different from day one.</p><div class="t-attr">— On finding the root cause</div></div>
+<div class="t-card"><div class="t-stars">★★★★★</div><span class="t-quote-mark">"</span><p>From today's class I got to learn that the mind is very powerful — for the conscious mind and unconscious mind, whatever we tell them, they revive it strongly. So we should always feed the mind the way we want to be, and then it will automatically work on us.</p><div class="t-attr">— A lesson she took home with her</div></div>
+<div class="t-card"><div class="t-stars">★★★★★</div><span class="t-quote-mark">"</span><p>As a mom, wife, and self, I am being calm and peaceful automatically — the environment in my house also started changing peaceful. Sending that message strongly to my unconscious and conscious mind, I lose my self doubt. I feel confident, totally. Today I don't even feel sad or bothered if people don't care for me.</p><div class="t-attr">— On the ripple effect at home</div></div>
+<div class="t-card"><div class="t-stars">★★★★★</div><span class="t-quote-mark">"</span><p>I got reminded about the backyard again — feeling stressed out, sad, a lot of pressure on my head, still not wanting to do it at all. I didn't do it. Very forcefully I got up and went, cleaning the leaves, and the pressure started feeling a little less. I finished everything. Still had pressure and sadness on me, but after coming inside I had a small smile on my face. A little relaxed.</p><div class="t-attr">— A small act, followed through anyway</div></div>
+<div class="t-card"><div class="t-stars">★★★★★</div><span class="t-quote-mark">"</span><p>Before starting the session I wasn't even able to think what would happen to my life — every moment felt hopeless. Just after the session I still didn't think my life would transform. But after four months I found some friends and some hope that good things will happen. I don't know what they are or how, but I believe something big, positive, will happen in my life. Thank you Deepa, all this transformation is because of your sessions.</p><div class="t-attr">— From hopeless to hopeful, over months</div></div>
+<div class="t-card"><div class="t-stars">★★★★★</div><span class="t-quote-mark">"</span><p>Deepa is a wonderful person, full of positivity and enthusiasm. I went to her to overcome my fear of communication in public. She was very patient, listened to me calmly, and kept asking questions that took me back into my childhood to help me identify the problem. After the session I felt relieved — the next day I could do my video recording assignments with so much ease.</p><div class="t-attr">— On overcoming a fear of public speaking</div></div>
+<div class="t-card"><div class="t-stars">★★★★★</div><span class="t-quote-mark">"</span><p>I really enjoyed our session. I liked the use of questions to lead me into reflection and thought. It felt like I was taking a personal journey while you guided me through my thoughts and prompted deeper thinking.</p><div class="t-attr">— On the coaching process itself</div></div>
+<div class="t-card"><div class="t-stars">★★★★★</div><span class="t-quote-mark">"</span><p>Today is my second session and I am very thankful to you, Ms Deepa, for making me aware of my emotional trap. The way you asked questions and analyzed my answers is awesome. Circumstances in my life made my heart hard and emotionless — I had forgotten emotions, and feared feeling them. Even my body health was affected. You did amazing work getting my emotions back, and identifying what stage of life I got stuck in.</p><div class="t-attr">— On reconnecting with her emotions</div></div>
+<div class="t-card"><div class="t-stars">★★★★★</div><span class="t-quote-mark">"</span><p>I met Deepa for a traumatic condition in my life. I am a single mother raising two daughters, and my married life has been a disaster, causing a lot of stress and trauma. After meeting her I got hope for my life. She asked multiple questions, listened to all my problems, and helped me understand why it happened. Finally she gave me hope to come out of all this trauma.</p><div class="t-attr">— A single mother, on finding hope again</div></div>
+<div class="t-card"><div class="t-stars">★★★★★</div><span class="t-quote-mark">"</span><p>The session allowed me to focus my thoughts on specific aspects of my worries rather than the overall feeling. It let me name my concerns and use that to make better decisions moving forward. My migraine from the stress was even alleviated, since my stress and breathing were tied to it. The session helped me feel more in control of my actions and emotions.</p><div class="t-attr">— On turning vague stress into something workable</div></div>
+<div class="t-card"><div class="t-stars">★★★★★</div><span class="t-quote-mark">"</span><p>I was struggling with low self-confidence. Deepa gave me a patient hearing and shared techniques to build my confidence — she took me back to a time I was confident in the past. I felt very comfortable sharing my problems with her, since she's friendly and respects client confidentiality. After my session I felt more confident and able to manage upcoming anxiety or stress in a better way.</p><div class="t-attr">— On rebuilding self-confidence</div></div>
+<div class="t-card"><div class="t-stars">★★★★★</div><span class="t-quote-mark">"</span><p>I had an issue going on with my family for some time — I was totally stressed and not able to handle it myself. I approached Deepa to get relief from it. The first session was great; I went in heavy-hearted, and she quietly listened and gave clear answers. After my second session, I felt really light-hearted and happy — I didn't want the session to end. She's an amazing coach, and I highly recommend her.</p><div class="t-attr">— On working through a family issue</div></div>
+<div class="case-card">
+<div class="case-label">The Problem</div>
+<p>Understood it was important, but couldn't do home chores — it felt pressured, and preference kept pulling toward reels and beauty content. Feeling sad, guilty, and stuck.</p>
+<div class="case-label">Coached For</div>
+<ul>
+<li>Doing home chores without pressure in the head</li>
+<li>Bringing family preference up with love, not obligation</li>
+<li>Releasing the sadness and guilt</li>
+</ul>
+<div class="t-attr">— A short case snapshot</div>
+</div>
+</div>
+<div class="pull-quote">
+<p>"The problems were not around me, but within me to rectify — and once I saw that, I had the power to resolve it too."</p>
+<div class="attr">Naabi Kamalam · Transformation Coaching — Deepa Sattu</div>
+</div>
+</section>
+</div>
+</div>
+<!-- CONTACT -->
+<!-- TERMS & CONDITIONS -->
+<div class="page" id="page-terms">
+<div class="hero">
+<div class="wrap">
+<h1 class="big">Terms &amp; Conditions</h1>
+<p class="tagline">Please read before booking a session.</p>
+</div>
+</div>
+<div class="wrap">
+<section>
+<div class="legal">
+<a class="terms-back-btn" href="#booking" onclick="go('booking')">← Back to Book a Session</a>
+<p class="legal-updated">Naabi Kamalam LLC, an Arizona limited liability company</p>
+<div class="legal-note">
+<p style="margin:0;">By submitting a booking request, signing the Client Acceptance Form, making a payment, or participating in a session, you ("Client") confirm that you have received, read, understood, and agreed to these Terms &amp; Conditions, including the payment, cancellation, rescheduling, and no-refund provisions. A booking request is not fully confirmed until Naabi Kamalam issues written confirmation containing a unique Booking ID.</p>
+</div>
+<h3>1. Nature of Services — Coaching, Not Medical or Mental Health Care</h3>
+<p>Naabi Kamalam LLC ("NK," "we," "us") provides personal transformation and life coaching services. Coaching is a non-clinical, non-diagnostic service intended to support self-awareness, personal growth, and goal-setting.</p>
+<ul>
+<li>Deepa Sattu is a coach and pattern guide. She is <b>not</b> a licensed psychologist, psychiatrist, counselor, therapist, social worker, physician, or other licensed healthcare or mental health provider in the State of Arizona or any other jurisdiction.</li>
+<li>Coaching services are <b>not</b> psychotherapy, counseling, medical treatment, or any form of diagnosis, treatment, cure, or prevention of any physical illness, mental health condition, or disease.</li>
+<li>Nothing said, written, or provided in a session — including frameworks, exercises, or reflections — constitutes medical, psychological, psychiatric, legal, or financial advice.</li>
+<li>NK does not provide crisis intervention. If you are experiencing a medical or mental health emergency, thoughts of self-harm, or a crisis of any kind, please contact 911, go to your nearest emergency room, or contact the 988 Suicide &amp; Crisis Lifeline immediately.</li>
+<li>Clients with an existing or suspected mental health condition are encouraged to work with a licensed mental health professional. Coaching may complement, but never replaces, licensed medical or mental health care.</li>
+</ul>
+<h3>2. Coaching Is a Partnership, Not a Formula</h3>
+<p>Real change takes real effort — yours and mine, together. What you experience in coaching depends heavily on your own openness, honesty, and follow-through between sessions, which means every client's path looks a little different. Because of that, I'm not able to promise a specific result, timeline, or emotional outcome for any individual client. The stories and feedback shared on this site are real, but they reflect each client's own personal journey — not a guarantee that yours will unfold the same way. What I can promise is my full presence, care, and skill in walking that path alongside you.</p>
+<h3>3. No Liability for Client Decisions or Actions</h3>
+<p>The Client retains full and sole responsibility for all decisions, actions, and choices made during and after coaching, including but not limited to decisions about relationships, employment, finances, parenting, or health. Deepa Sattu and Naabi Kamalam LLC accept no responsibility or liability for the consequences of any decision or action the Client takes based on a coaching conversation.</p>
+<h3>4. Fees, Payment, Booking, Cancellation, Rescheduling, and No-Refund Policy</h3>
+<ul>
+<li><b>Booking ID:</b> Every submitted booking request is assigned a unique Booking ID. The Client should include this Booking ID in payments, signed forms, cancellation or rescheduling requests, and future communication concerning the booking.</li>
+<li><b>Booking confirmation:</b> Submitting a request does not by itself guarantee or fully confirm a session. A session is confirmed only after Naabi Kamalam sends written confirmation containing the Booking ID and session details.</li>
+<li><b>Acceptance of Terms:</b> Before the first session, the Client must read, sign, and return the Client Acceptance Form confirming acceptance of these Terms &amp; Conditions. Naabi Kamalam may postpone or cancel a session if the signed form is not received by the stated deadline.</li>
+<li><b>Payment requirement:</b> Seventy-five percent (75%) of the agreed coaching fee must be received before the first session or by the due date stated in the confirmation email. The remaining twenty-five percent (25%) must be paid by the date communicated by Naabi Kamalam.</li>
+<li><b>No-refund policy:</b> All deposits, advance payments, partial payments, and full payments are final and non-refundable, except where a refund is required by applicable law. No refund will be issued because of a change of mind, dissatisfaction with the coaching approach, early termination by the Client, failure to complete the process, or non-attendance.</li>
+<li><b>Client cancellation or rescheduling:</b> The Client must provide at least twenty-four (24) hours' notice and include the Booking ID when requesting cancellation or rescheduling.</li>
+<li><b>Late cancellation and non-attendance:</b> A cancellation made less than twenty-four (24) hours before the scheduled start time, or failure to attend without notice, may be treated as a used session and does not create a right to a refund, credit, replacement session, or extension.</li>
+<li><b>Rescheduling:</b> A timely request may be accommodated subject to availability and at Naabi Kamalam's discretion. Rescheduling does not create an entitlement to a refund, and repeated rescheduling may be declined.</li>
+<li><b>Cancellation or rescheduling by Naabi Kamalam:</b> If Naabi Kamalam must cancel or reschedule a session, the Client will be notified and offered a mutually convenient replacement time. If Naabi Kamalam is unable to provide a paid service, the parties will discuss an appropriate resolution consistent with applicable law.</li>
+<li><b>Records:</b> The Booking ID, booking confirmation, payment record, signed Acceptance Form, and cancellation or rescheduling communications may be retained as part of the Client's booking record.</li>
+</ul>
+<h3>5. Confidentiality</h3>
+<p>NK treats what Clients share in session as confidential and will not disclose it to third parties without the Client's consent, except where disclosure is required by law — including, without limitation, situations involving a credible threat of serious harm to the Client or another identifiable person, suspected abuse or neglect of a child or vulnerable adult, or a valid court order or legal process. Because NK is not a licensed therapeutic provider, communications with NK are not protected by therapist-client or physician-patient privilege under Arizona law.</p>
+<h3>6. Assumption of Risk and Release of Liability</h3>
+<p>The Client voluntarily participates in coaching with full understanding that it is a self-directed developmental process. To the fullest extent permitted under Arizona law, the Client releases and holds harmless Naabi Kamalam LLC and Deepa Sattu from any and all claims, liabilities, damages, losses, or expenses arising out of or related to participation in coaching services, except to the extent caused by NK's gross negligence or willful misconduct.</p>
+<h3>7. Limitation of Liability</h3>
+<p>To the maximum extent permitted by Arizona law, Naabi Kamalam LLC's total liability arising out of or relating to the coaching relationship — under any theory of liability (contract, tort, or otherwise) — shall not exceed the total amount the Client paid to NK in the three (3) months preceding the claim. In no event shall NK be liable for indirect, incidental, consequential, special, or punitive damages.</p>
+<h3>8. Intellectual Property</h3>
+<p>All frameworks, materials, worksheets, and site content are the intellectual property of Naabi Kamalam LLC and are provided for the Client's personal use only. They may not be reproduced, resold, or distributed without written permission.</p>
+<h3>9. Termination</h3>
+<p>Either party may end the coaching relationship at any time. Termination by the Client does not entitle the Client to a refund for sessions already paid for, per Section 4 above.</p>
+<h3>10. Governing Law and Venue</h3>
+<p>These Terms are governed by the laws of the State of Arizona, without regard to conflict-of-law principles. Any dispute arising from these Terms or the coaching relationship shall be subject to the exclusive jurisdiction of the state or federal courts located in Arizona, and the parties agree to attempt good-faith informal resolution or mediation before pursuing formal legal action.</p>
+<h3>11. Severability</h3>
+<p>If any provision of these Terms is found unenforceable under Arizona or federal law, that provision will be limited or removed to the minimum extent necessary, and the remaining provisions will continue in full force and effect.</p>
+<h3>12. Changes to These Terms</h3>
+<p>NK may update these Terms from time to time. Continued use of this site or continued engagement of coaching services after changes are posted constitutes acceptance of the updated Terms.</p>
+<h3>13. Contact</h3>
+<p>Questions about these Terms can be sent via WhatsApp to 281-866-5159.</p>
+<div class="legal-note">
+<p style="margin:0;">This page provides general information about how NK's services operate and is not a substitute for independent legal counsel. Naabi Kamalam LLC recommends having these Terms reviewed by a licensed Arizona attorney before relying on them.</p>
+</div>
+<div class="terms-back-btn-bottom-wrap">
+<a class="terms-back-btn terms-back-btn-bottom" href="#booking" onclick="go('booking')">Okay, I Agree</a>
+</div>
+</div>
+</section>
+</div>
+</div>
+<div class="page" id="page-contact">
+<div class="hero">
+<svg class="reach-motif" preserveaspectratio="xMidYMid slice" viewbox="0 0 400 260">
+<path d="M120,150 C150,130 180,140 200,130 C220,120 250,90 280,80" fill="none" opacity="0.3" stroke="#C98A9C" stroke-width="1.4"></path>
+<circle cx="120" cy="150" fill="#C98A9C" opacity="0.45" r="3"></circle>
+<circle cx="280" cy="80" fill="#C98A9C" opacity="0.45" r="3"></circle>
+<path d="M200,130 l0,-10 M200,130 l8,-6 M200,130 l-8,-6" opacity="0.25" stroke="#C98A9C" stroke-width="1.2"></path>
+</svg>
+<div class="wrap">
+<h1 class="big">Come as you are.</h1>
+<p class="tagline">Bring your questions — nothing needs to be figured out yet.</p>
+</div>
+</div>
+<div class="wrap">
+<section style="padding-top:20px;">
+<div class="contact-card">
+<h3>Start with a free discovery call</h3>
+<p>Message on WhatsApp to say what's going on — no pressure, no pitch. We'll figure out together whether coaching is the right fit.</p>
+<a class="wa-btn" href="https://wa.me/12818665159" rel="noopener" target="_blank">WhatsApp: 281-866-5159</a>
+<p class="contact-note">You may submit a booking request through this website. The session becomes confirmed only after Naabi Kamalam reviews the request and sends written confirmation.</p>
+</div>
+</section>
+</div>
+</div>
+<!-- TOPIC DETAIL MODAL -->
+<div class="topic-modal-overlay" id="topicModalOverlay" onclick="if(event.target===this) closeTopicModal()">
+<div class="topic-modal">
+<button aria-label="Close" class="topic-modal-close" onclick="closeTopicModal()">×</button>
+<div class="modal-eyebrow" id="tmCategory"></div>
+<h3 id="tmTitle"></h3>
+<div class="modal-section-label">The Pain Point</div>
+<p class="modal-copy pain" id="tmPain"></p>
+<div class="modal-section-label">How It Shifts</div>
+<p class="modal-copy shift" id="tmShift"></p>
+<div class="modal-chart">
+<div class="chart-label" id="tmMetricLabel"></div>
+<p class="bar-row-tag">Now</p>
+<div class="bar-track"><div class="bar bar-before" id="tmBarBefore"></div></div>
+<p class="bar-row-tag">After the Shift</p>
+<div class="bar-track"><div class="bar bar-after" id="tmBarAfter"></div></div>
+</div>
+</div>
+</div>
+<!-- SLOT NOT AVAILABLE MODAL -->
+<div class="topic-modal-overlay" id="notAvailableModal" onclick="if(event.target===this) closeNotAvailableModal()">
+<div class="topic-modal not-available-modal">
+<div class="not-available-icon">✕</div>
+<h3>Not Available</h3>
+<p class="modal-copy shift" id="notAvailableMessage">Someone just booked this exact time, a few seconds before you. Please pick another date or time — everything else is still open.</p>
+<button class="not-available-ok-btn" onclick="closeNotAvailableModal()">OK</button>
+</div>
+</div>
+<!-- BOOKING CONFIRMATION MODAL -->
+<div class="topic-modal-overlay" id="bookingModalOverlay" onclick="if(event.target===this) closeBookingModal()">
+<div class="topic-modal booking-confirm-modal">
+<button aria-label="Close" class="topic-modal-close" onclick="closeBookingModal()">×</button>
+<div class="booking-confirm-icon">✓</div>
+<h3>Your booking request has been received</h3>
+<p class="booking-confirm-detail" id="bookingModalDetail"></p>
+<p class="modal-copy shift">Please save your Booking ID. This is a booking request, not final confirmation. Naabi Kamalam will review the request and email you with the next steps, payment details, and final confirmation.</p>
+<div id="bookingModalCalWrap"></div>
+</div>
+</div>
+<!-- HELP / FAQ WIDGET -->
+<button aria-label="Help" class="help-fab" onclick="toggleHelpPanel()">?</button>
+<div class="help-panel" id="helpPanel">
+<div class="help-panel-header">
+<h4>Need Help?</h4>
+<button aria-label="Close" onclick="toggleHelpPanel()">×</button>
+</div>
+<div class="help-panel-body" id="helpPanelBody"></div>
+<div class="help-wa-footer">
+    Still stuck? <a href="https://wa.me/12818665159" rel="noopener" target="_blank">Message us on WhatsApp →</a>
+</div>
+</div>
+<footer>© 2026 Naabi Kamalam LLC · <a href="#terms" onclick="go('terms')">Terms &amp; Conditions</a> · <a href="/admin/" rel="nofollow">Admin Login</a></footer>
+<script>
+  const topicData = {
+    cw1:{cat:"Career & Work", title:"Career clarity & transitions", pain:"You feel pulled in different directions, unsure whether to stay, switch, or start over.", shift:"You gain a clear read on what actually matters to you, and choices stop feeling so heavy.", metric:"Clarity About Next Steps", before:25, after:82},
+    cw2:{cat:"Career & Work", title:"Workplace confidence", pain:"You shrink in meetings, second-guess your ideas, or let others take the credit.", shift:"You speak up with steadiness, trusting your own judgment in the room.", metric:"Confidence Speaking Up at Work", before:30, after:85},
+    cw3:{cat:"Career & Work", title:"Decision-making under pressure", pain:"Deadlines and high stakes send you into overthinking loops instead of action.", shift:"You learn to decide quickly and calmly, even when the pressure is real.", metric:"Calm Under Pressure", before:28, after:80},
+    cw4:{cat:"Career & Work", title:"Managing conflict at work", pain:"Disagreements with colleagues leave you either avoiding them or replaying the fight for days.", shift:"You handle friction directly and respectfully, then let it go.", metric:"Ease Resolving Workplace Conflict", before:22, after:78},
+    cw5:{cat:"Career & Work", title:"Direction after a setback", pain:"A layoff, rejection, or failed project leaves you questioning your whole path.", shift:"You rebuild a sense of direction that feels like yours again, not a fallback.", metric:"Sense of Direction", before:20, after:83},
+    cw6:{cat:"Career & Work", title:"Burnout from overperforming", pain:"You keep proving your worth through output, until there's nothing left at the end of the day.", shift:"You find a pace that's sustainable, without losing your drive.", metric:"Energy Left After Work", before:18, after:76},
+    cw7:{cat:"Career & Work", title:"Navigating a promotion or new role", pain:"New responsibility brings imposter feelings instead of excitement.", shift:"You step into the role from a grounded, capable place.", metric:"Confidence In New Responsibility", before:27, after:84},
+
+    kd1:{cat:"Kids' Learning & Growth", title:"Study & memory strategies", pain:"Your child studies for hours but forgets it all by test day.", shift:"They learn methods that actually stick, and studying stops feeling like a losing battle.", metric:"Retention After Studying", before:30, after:85},
+    kd2:{cat:"Kids' Learning & Growth", title:"Homework focus & routines", pain:"Homework time turns into a nightly battle of distraction and delay.", shift:"A simple, repeatable routine replaces the daily fight.", metric:"Focus During Homework", before:25, after:80},
+    kd3:{cat:"Kids' Learning & Growth", title:"Test & performance anxiety", pain:"Your child freezes up or blanks during tests, even when they know the material.", shift:"They walk in steadier, and their real knowledge shows up on the page.", metric:"Calm Going Into Tests", before:22, after:78},
+    kd4:{cat:"Kids' Learning & Growth", title:"Confidence in new skills", pain:"They give up quickly on anything unfamiliar, afraid of getting it wrong.", shift:"They stay with new things longer, and start to enjoy the challenge.", metric:"Willingness to Try New Things", before:28, after:82},
+    kd5:{cat:"Kids' Learning & Growth", title:"Building on existing strengths", pain:"Effort goes entirely into fixing weak spots, while natural strengths go unnoticed.", shift:"Strengths get named and built on, which lifts everything else too.", metric:"Sense of Their Own Strengths", before:32, after:86},
+    kd6:{cat:"Kids' Learning & Growth", title:"Managing screen time & distraction", pain:"Screens pull focus away from everything else, and limits turn into daily arguments.", shift:"Boundaries hold more easily once they come from agreement, not just rules.", metric:"Ease Managing Screen Time", before:20, after:75},
+    kd7:{cat:"Kids' Learning & Growth", title:"Bouncing back after failure", pain:"One bad grade or loss can spiral into \u2018I'm just not good at this.\u2019", shift:"They learn to see setbacks as information, not identity.", metric:"Resilience After Setbacks", before:24, after:81},
+
+    rl1:{cat:"Relationships", title:"Peer pressure that never really goes away", pain:"You still shape choices around what others will think, even as an adult.", shift:"You act from your own values first, and the pressure loses its grip.", metric:"Freedom From Peer Pressure", before:25, after:80},
+    rl2:{cat:"Relationships", title:"Constantly comparing your life to everyone else's", pain:"Every scroll or catch-up conversation leaves you feeling behind.", shift:"Your own timeline starts to feel like enough.", metric:"Peace With Your Own Path", before:22, after:83},
+    rl3:{cat:"Relationships", title:"Competing with people you're supposed to love", pain:"Love and rivalry get tangled with siblings, cousins, or close friends.", shift:"Connection stops feeling like a scoreboard.", metric:"Ease In Close Relationships", before:20, after:78},
+    rl4:{cat:"Relationships", title:"Criticism that sticks longer than it should", pain:"One offhand comment from family replays in your head for weeks.", shift:"Criticism starts passing through instead of lodging in.", metric:"Recovery Speed After Criticism", before:18, after:76},
+    rl5:{cat:"Relationships", title:"Walking on eggshells around family", pain:"You edit yourself constantly to avoid setting someone off.", shift:"You find you can be more yourself, more often, around them.", metric:"Ease Being Yourself Around Family", before:20, after:79},
+    rl6:{cat:"Relationships", title:"Saying yes when you mean no", pain:"You agree to things you don't want, then resent it afterward.", shift:"No becomes a full sentence you can say without guilt.", metric:"Comfort Saying No", before:18, after:80},
+    rl7:{cat:"Relationships", title:"Feeling guilty for setting a boundary", pain:"Every boundary comes with a wave of guilt that makes you want to take it back.", shift:"Boundaries start to feel like care, not cruelty.", metric:"Guilt-Free Boundaries", before:22, after:81},
+    rl8:{cat:"Relationships", title:"Trust that broke and never got rebuilt", pain:"You keep the relationship going, but the trust never fully came back.", shift:"You find a way to either genuinely rebuild it, or make peace with what it is now.", metric:"Clarity About the Relationship", before:24, after:78},
+    rl9:{cat:"Relationships", title:"Always feeling like you're the one being used", pain:"You give more than you get, and it's starting to wear you down.", shift:"You learn to notice the imbalance early, and respond to it.", metric:"Balance In Give and Take", before:20, after:77},
+    rl10:{cat:"Relationships", title:"Office relationships that quietly drain you", pain:"One coworker or dynamic quietly eats your energy every single day.", shift:"You build a way to work alongside them without it costing you so much.", metric:"Energy Preserved At Work", before:22, after:79},
+
+    ew1:{cat:"Emotional Wellbeing", title:"Anger management", pain:"Small things set you off, and the aftermath costs more than the trigger was worth.", shift:"You catch the rise earlier, and respond instead of react.", metric:"Calm Response to Triggers", before:25, after:82},
+    ew2:{cat:"Emotional Wellbeing", title:"Guilt-free decision making", pain:"Every choice comes wrapped in guilt about who it might disappoint.", shift:"You decide from your own values, with guilt no longer driving the wheel.", metric:"Ease Making Decisions", before:22, after:80},
+    ew3:{cat:"Emotional Wellbeing", title:"Sadness & grief coping mechanisms", pain:"Grief gets pushed down because there's no space made for it.", shift:"You find healthy ways to feel it and move through it, not around it.", metric:"Healthy Processing of Grief", before:20, after:78},
+    ew4:{cat:"Emotional Wellbeing", title:"Anxiety & overwhelm coping", pain:"Your mind runs ahead into worst-case scenarios before anything's even happened.", shift:"You build tools to bring your mind back to the present, on demand.", metric:"Calm Under Overwhelm", before:24, after:81},
+    ew5:{cat:"Emotional Wellbeing", title:"Fear & self-doubt management", pain:"Fear quietly talks you out of things you actually want.", shift:"You learn to act alongside the fear instead of waiting for it to disappear.", metric:"Action Despite Fear", before:22, after:79},
+    ew6:{cat:"Emotional Wellbeing", title:"Processing difficult emotions safely", pain:"Hard emotions get avoided, numbed, or bottled until they leak out sideways.", shift:"You build a safe, steady way to actually feel and release them.", metric:"Comfort Feeling Hard Emotions", before:20, after:77},
+    ew7:{cat:"Emotional Wellbeing", title:"Building day-to-day emotional resilience", pain:"Every bad day feels like it could knock you off course entirely.", shift:"You build a baseline steadiness that bad days don't shake as easily.", metric:"Daily Emotional Steadiness", before:26, after:83},
+
+    eq1:{cat:"Emotional Intelligence", title:"Reading your own emotional triggers", pain:"You don't notice you're triggered until you've already reacted.", shift:"You start to catch the trigger in real time, before it runs the show.", metric:"Early Trigger Awareness", before:24, after:82},
+    eq2:{cat:"Emotional Intelligence", title:"Empathy without losing your boundaries", pain:"You absorb everyone else's emotions until there's nothing left of your own.", shift:"You stay caring without carrying what isn't yours to carry.", metric:"Empathy With Boundaries", before:22, after:80},
+    eq3:{cat:"Emotional Intelligence", title:"Regulating in the moment, not after", pain:"You cool down eventually, but usually after the damage is already done.", shift:"You learn to regulate while it's happening, not just clean up afterward.", metric:"In-the-Moment Regulation", before:20, after:78},
+    eq4:{cat:"Emotional Intelligence", title:"Reading the room & others' cues", pain:"You miss the shift in someone's tone until they're already upset.", shift:"You start to catch the small cues sooner, and adjust in real time.", metric:"Reading Others' Cues", before:25, after:81},
+    eq5:{cat:"Emotional Intelligence", title:"Turning emotion into information, not instruction", pain:"A feeling shows up and you obey it instantly, without questioning it.", shift:"You learn to treat emotion as useful data, not a command.", metric:"Emotion as Information", before:23, after:80},
+    eq6:{cat:"Emotional Intelligence", title:"Building rapport quickly", pain:"New people or rooms leave you feeling like an outsider looking in.", shift:"You build genuine connection faster, without forcing it.", metric:"Ease Building New Connections", before:21, after:79},
+    eq7:{cat:"Emotional Intelligence", title:"Navigating difficult conversations calmly", pain:"Hard conversations get avoided entirely, or handled in a rush of emotion.", shift:"You learn to stay in the room, and say the hard thing clearly.", metric:"Calm In Hard Conversations", before:20, after:78},
+
+    cf1:{cat:"Confidence & Self-Image", title:"Quieting self-criticism", pain:"The loudest voice in your head is the one tearing you down.", shift:"That voice gets quieter, and a steadier one takes its place.", metric:"Reduction In Self-Criticism", before:22, after:80},
+    cf2:{cat:"Confidence & Self-Image", title:"Owning your voice", pain:"You hold back your real opinion, worried it'll land wrong.", shift:"You speak from your own voice, and trust it to be enough.", metric:"Comfort Owning Your Voice", before:24, after:81},
+    cf3:{cat:"Confidence & Self-Image", title:"Trusting your own decisions", pain:"You second-guess every choice, and lean on others to validate it first.", shift:"You start trusting your own read on things, without needing constant approval.", metric:"Trust In Own Decisions", before:25, after:82},
+    cf4:{cat:"Confidence & Self-Image", title:"Body image & self-perception", pain:"The mirror gets read through a harsh, critical lens.", shift:"Self-perception softens into something more honest and kind.", metric:"Kindness In Self-Perception", before:20, after:76},
+    cf5:{cat:"Confidence & Self-Image", title:"Speaking up when it matters", pain:"You stay quiet in the exact moments you most wanted to speak.", shift:"You find the words, and say them, when it counts.", metric:"Speaking Up When It Matters", before:22, after:80},
+    cf6:{cat:"Confidence & Self-Image", title:"Overcoming imposter syndrome", pain:"Even real achievements feel like luck that's about to run out.", shift:"You start to actually own your own competence.", metric:"Ownership of Achievements", before:23, after:79},
+    cf7:{cat:"Confidence & Self-Image", title:"Standing firm under criticism", pain:"One critical comment can undo a week of confidence.", shift:"Criticism gets weighed fairly, without toppling your sense of self.", metric:"Stability Under Criticism", before:21, after:78},
+
+    hl1:{cat:"Health & Energy", title:"Sustainable routines", pain:"You start strong and burn out two weeks in, every time.", shift:"You build routines that actually fit your real life, so they stick.", metric:"Routine Consistency", before:24, after:82},
+    hl2:{cat:"Health & Energy", title:"Work-life balance", pain:"Work quietly eats every other part of your life.", shift:"Boundaries around time start to hold, on both sides.", metric:"Balance Between Work and Life", before:20, after:78},
+    hl3:{cat:"Health & Energy", title:"Rest that actually restores", pain:"You rest, but somehow still wake up tired.", shift:"You learn what real rest looks like for you, specifically.", metric:"Quality of Rest", before:22, after:80},
+    hl4:{cat:"Health & Energy", title:"Breaking burnout cycles", pain:"You crash, recover just enough, then burn out again.", shift:"You catch the cycle earlier and interrupt it before it repeats.", metric:"Distance From Burnout", before:18, after:76},
+    hl5:{cat:"Health & Energy", title:"Energy management, not just time", pain:"You manage your calendar, but not your actual energy \u2014 and it shows.", shift:"You start planning around energy, and the day feels lighter.", metric:"Energy Management", before:21, after:79},
+    hl6:{cat:"Health & Energy", title:"Listening to your body's signals", pain:"You push through your body's warning signs until they become bigger problems.", shift:"You start catching the early signals, and actually respond to them.", metric:"Responsiveness To Body Signals", before:23, after:81},
+    hl7:{cat:"Health & Energy", title:"Building consistency without burnout", pain:"Consistency always seems to come at the cost of your energy.", shift:"You find a pace you can actually sustain, week after week.", metric:"Sustainable Consistency", before:22, after:80},
+
+    pu1:{cat:"Purpose & Direction", title:"Life & career clarity", pain:"You're achieving things, but not sure any of it is actually yours.", shift:"A clearer picture of what you actually want starts to emerge.", metric:"Clarity About What You Want", before:24, after:83},
+    pu2:{cat:"Purpose & Direction", title:"Personal growth practice", pain:"Growth happens in bursts, then stalls out completely.", shift:"You build a steady practice that keeps moving, even in quiet seasons.", metric:"Consistency Of Growth", before:22, after:80},
+    pu3:{cat:"Purpose & Direction", title:"Defining your own version of success", pain:"You're chasing a definition of success that was never really yours.", shift:"You define success on your own terms, and it finally feels right.", metric:"Alignment With Your Own Success", before:20, after:82},
+    pu4:{cat:"Purpose & Direction", title:"Reconnecting with what matters", pain:"You've lost touch with what actually mattered to you before the noise took over.", shift:"You find your way back to it, clearer than before.", metric:"Connection To What Matters", before:23, after:81},
+    pu5:{cat:"Purpose & Direction", title:"Making peace with uncertainty", pain:"Not knowing what's next keeps you stuck instead of moving.", shift:"You learn to move forward without needing every answer first.", metric:"Comfort With Uncertainty", before:19, after:77},
+    pu6:{cat:"Purpose & Direction", title:"Aligning daily choices with long-term goals", pain:"Your daily choices and your bigger goals seem to be pulling in different directions.", shift:"Small daily choices start to actually add up to where you want to go.", metric:"Alignment Of Daily Choices", before:21, after:79},
+    pu7:{cat:"Purpose & Direction", title:"Finding meaning during a life transition", pain:"A big life change leaves you unsure of who you are in it.", shift:"You find meaning and footing again, even in the middle of change.", metric:"Sense of Meaning In Transition", before:20, after:78}
+  };
+
+  function openTopic(key){
+    const d = topicData[key];
+    if(!d) return;
+    document.getElementById('tmCategory').textContent = d.cat;
+    document.getElementById('tmTitle').textContent = d.title;
+    document.getElementById('tmPain').textContent = d.pain;
+    document.getElementById('tmShift').textContent = d.shift;
+    document.getElementById('tmMetricLabel').textContent = d.metric;
+    const barBefore = document.getElementById('tmBarBefore');
+    const barAfter = document.getElementById('tmBarAfter');
+    barBefore.style.width = '0%';
+    barAfter.style.width = '0%';
+    document.getElementById('topicModalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        barBefore.style.width = d.before + '%';
+        barAfter.style.width = d.after + '%';
+      }, 60);
+    });
+  }
+  function closeTopicModal(){
+    document.getElementById('topicModalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape'){ closeTopicModal(); closeBookingModal(); }
+  });
+
+  /* ============================================================
+     BOOKING — calendar, time slot, and form submission logic.
+
+     DATABASE / STORAGE SETUP (do this once):
+     Every submission (date, time, slot #, name, age, email, phone,
+     description) is saved directly to a Supabase Postgres database
+     — this is the real "database" for bookings, and it's what
+     /admin/ reads from.
+
+     1) Create a free project at supabase.com.
+     2) Open SQL Editor, paste in the contents of supabase_schema.sql
+        (in this same folder), and run it once.
+     3) Project Settings > API — copy the Project URL and anon
+        public key, and paste them into the SUPABASE_URL /
+        SUPABASE_ANON_KEY constants a few lines below.
+     4) Authentication > Users > Add User — create the login you'll
+        use to sign into /admin/.
+     Full walkthrough in SETUP_INSTRUCTIONS.md.
+
+     CLIENT CONFIRMATION — live on two channels:
+     1) EMAIL: EmailJS (free tier, 200 emails/month) sends the client
+        an actual confirmation email the moment they book, using the
+        "Order Confirmation" template (ID below) connected to the
+        naabikamalam@gmail.com Gmail. Nothing further to set up.
+     2) WHATSAPP: the pre-filled WhatsApp message opens automatically
+        in a new tab as soon as the booking is submitted. The button
+        in the popup still works too as a backup, in case the
+        auto-open gets blocked by the browser or the client
+        accidentally closes the tab.
+     ============================================================ */
+  const BOOKING_WHATSAPP_NUMBER = '12818665159';
+  const EMAILJS_SERVICE_ID = 'service_irth0t6';
+  const EMAILJS_TEMPLATE_ID = 'template_mh0t7ts';
+
+  /* ============================================================
+     SELF-BLOCKING — mark yourself unavailable, four ways.
+     Edit these lists whenever your availability changes. No
+     coding needed beyond typing dates/numbers, following the
+     examples exactly (same format, commas between entries).
+
+     Current bookable slots each day (renumbered after trimming
+     to a lighter, more curated daily schedule):
+        1 = 9–10 AM   2 = 11–12 PM   3 = 2–3 PM
+        4 = 3–4 PM    5 = 4–5 PM
+     The gaps (10–11 AM, 12–2 PM, after 5 PM) are intentionally
+     not offered at all — that's real breathing room, not a fake
+     "booked" label.
+
+     1) BLOCKED_WEEKDAYS — days of the week you never take
+        sessions, every week. 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu,
+        5=Fri, 6=Sat.
+        Example: [0, 6]  blocks every Saturday and Sunday.
+        Empty [ ] means no recurring day-off.
+
+     2) BLOCKED_DATES — specific single days you're fully out
+        (vacation, a holiday, a one-off appointment). Format is
+        'YYYY-MM-DD'.
+        Example: ['2026-08-03', '2026-08-04']
+
+     3) BLOCKED_SLOTS_BY_DATE — block only SOME slots on a
+        specific date, leaving the rest of that day open.
+        Example: { '2026-08-10': [1] }  blocks only the 9–10 AM
+        slot on August 10, everything else that day stays open.
+
+     4) DAILY_RECURRING_BLOCKED_SLOTS — real personal time that
+        repeats every single day (an existing standing
+        appointment, admin time, anything genuinely fixed).
+        Example: [2]  removes the 11–12 PM slot from every day,
+        permanently, until you change it.
+        Empty [ ] means nothing recurring beyond the slots
+        already excluded above.
+     ============================================================ */
+  const BLOCKED_WEEKDAYS = [];
+  const BLOCKED_DATES = [];
+  const BLOCKED_SLOTS_BY_DATE = {};
+  const DAILY_RECURRING_BLOCKED_SLOTS = [];
+
+  const ALL_TIME_SLOTS = [
+    { num:1, label:'9 – 10 AM',  startHour:9,  endHour:10 },
+    { num:2, label:'11 – 12 PM', startHour:11, endHour:12 },
+    { num:3, label:'2 – 3 PM',   startHour:14, endHour:15 },
+    { num:4, label:'3 – 4 PM',   startHour:15, endHour:16 },
+    { num:5, label:'4 – 5 PM',   startHour:16, endHour:17 }
+  ];
+
+  function dateKey(d){
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+
+  // All booking validation uses Arizona wall-clock time rather than the
+  // visitor's phone/computer timezone. Arizona stays on UTC-7 year-round.
+  function getArizonaNowParts(){
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone:'America/Phoenix', year:'numeric', month:'2-digit', day:'2-digit',
+      hour:'2-digit', minute:'2-digit', second:'2-digit', hourCycle:'h23'
+    }).formatToParts(new Date()).reduce((acc,p) => { acc[p.type] = p.value; return acc; }, {});
+    return {
+      year:Number(parts.year), month:Number(parts.month), day:Number(parts.day),
+      hour:Number(parts.hour), minute:Number(parts.minute), second:Number(parts.second)
+    };
+  }
+  function arizonaTodayDate(){
+    const p = getArizonaNowParts();
+    return new Date(p.year, p.month-1, p.day, 0, 0, 0, 0);
+  }
+  function isPastArizonaSlot(dateObj, slotDef){
+    if(!dateObj || !slotDef) return true;
+    const now = getArizonaNowParts();
+    const selectedKey = dateKey(dateObj);
+    const todayKey = now.year + '-' + String(now.month).padStart(2,'0') + '-' + String(now.day).padStart(2,'0');
+    if(selectedKey < todayKey) return true;
+    if(selectedKey > todayKey) return false;
+    return slotDef.startHour < now.hour || (slotDef.startHour === now.hour && now.minute > 0);
+  }
+  function generateBookingIdCandidate(dateObj){
+    const compactDate = dateKey(dateObj).replaceAll('-','');
+    const randomPart = String(Math.floor(100000 + Math.random()*900000));
+    return 'NK-' + compactDate + '-' + randomPart;
+  }
+  function generateUniqueBookingId(dateObj, bookings){
+    const existing = new Set((bookings || []).map(b => b.bookingId).filter(Boolean));
+    for(let i=0; i<20; i++){
+      const candidate = generateBookingIdCandidate(dateObj);
+      if(!existing.has(candidate)) return candidate;
+    }
+    return 'NK-' + dateKey(dateObj).replaceAll('-','') + '-' + Date.now().toString().slice(-8);
+  }
+  function isDateFullyBlocked(d){
+    if(BLOCKED_WEEKDAYS.includes(d.getDay())) return true;
+    if(BLOCKED_DATES.includes(dateKey(d))) return true;
+    return false;
+  }
+
+  /* ============================================================
+     LIVE DOUBLE-BOOKING PREVENTION — backed by Supabase.
+     Reads/writes the shared `bookings` table so a slot taken by
+     one visitor shows as unavailable to everyone else. The public
+     site uses the anon key, which (per supabase_schema.sql) can
+     only INSERT rows and read the public_slot_availability view —
+     it can never read or edit anyone's personal details.
+
+     SETUP: paste your Project URL and anon public key below
+     (Supabase dashboard > Project Settings > API). Both are safe
+     to expose in client-side code — that's what the anon key and
+     Row Level Security policies are designed for.
+     ============================================================ */
+  const SUPABASE_URL = 'https://nyksittvgbwinlycsncm.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_I8L0RzRveqbvWPN6BfmjSQ_oSr41AgZ';
+  const supabaseClient = (typeof window.supabase !== 'undefined' && !SUPABASE_URL.includes('YOUR_SUPABASE'))
+    ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+    : null;
+
+  let liveBookedSlots = [];   // [{date:'YYYY-MM-DD', slot:1}, ...]
+  let liveBookingsReady = false;
+
+  async function fetchLiveBookings(){
+    if(!supabaseClient){ liveBookingsReady = false; calRender(); renderTimeSlots(); return; }
+    try{
+      const { data, error } = await supabaseClient
+        .from('public_slot_availability')
+        .select('requested_date, session_slot_number');
+      if(error) throw error;
+      liveBookedSlots = (data || []).map(r => ({ date: r.requested_date, slot: r.session_slot_number }));
+      liveBookingsReady = true;
+    } catch(err){
+      liveBookingsReady = false; // fail closed: do not offer slots until shared availability is verified
+    }
+    calRender();
+    renderTimeSlots();
+  }
+
+  function isSlotLiveBooked(dateObj, slotNum){
+    const key = dateKey(dateObj);
+    return liveBookedSlots.some(b => b.date === key && b.slot === slotNum);
+  }
+
+  function isDateFullyBooked(dateObj){
+    const key = dateKey(dateObj);
+    const takenNums = new Set(liveBookedSlots.filter(b => b.date === key).map(b => b.slot));
+    (BLOCKED_SLOTS_BY_DATE[key] || []).forEach(n => takenNums.add(n));
+    DAILY_RECURRING_BLOCKED_SLOTS.forEach(n => takenNums.add(n));
+    return takenNums.size >= ALL_TIME_SLOTS.length;
+  }
+
+  // Re-check right before actually saving — closes the gap where two
+  // people pick the same open slot within seconds of each other.
+  async function recheckSlotStillOpen(dateObj, slotNum){
+    if(!supabaseClient) return false;
+    try{
+      const key = dateKey(dateObj);
+      const { data, error } = await supabaseClient
+        .from('public_slot_availability')
+        .select('requested_date, session_slot_number')
+        .eq('requested_date', key)
+        .eq('session_slot_number', slotNum);
+      if(error) throw error;
+      return (data || []).length === 0;
+    } catch(err){
+      return false; // fail closed
+    }
+  }
+
+  // Reserves the slot AND stores the full booking record in one insert.
+  // Returns the inserted row's id (for rollback) or null on failure.
+  // The unique index in supabase_schema.sql (date+slot, status pending/
+  // confirmed) is the real guard against a race between two submits —
+  // Postgres rejects the second insert outright even if both passed the
+  // recheck above at nearly the same instant.
+  async function saveLiveBooking(dateObj, slotNum, name, bookingId, email, extra){
+    if(!supabaseClient) return false;
+    try{
+      const key = dateKey(dateObj);
+      // No .select() chained here on purpose: the anon key can INSERT
+      // but cannot SELECT (see supabase_schema.sql RLS policies), so
+      // asking Postgrest to return the inserted row would fail even
+      // though the insert itself succeeds.
+      const { error } = await supabaseClient
+        .from('bookings')
+        .insert({
+          booking_id: bookingId,
+          requested_date: key,
+          session_slot_number: slotNum,
+          requested_time_label: extra.timeLabel,
+          first_name: extra.firstName,
+          last_name: extra.lastName,
+          age: extra.age ? Number(extra.age) : null,
+          email: email,
+          phone: extra.phone,
+          description: extra.description
+        });
+      if(error) throw error;
+      liveBookedSlots.push({ date:key, slot:slotNum });
+      liveBookingsReady = true;
+      return true;
+    } catch(err){
+      console.error('Booking save failed:', err);
+      return false;
+    }
+  }
+
+  // Cancels the just-created row if sending the notification fails. The
+  // booking_id (a long, effectively-unguessable token) is also this
+  // request's receipt, so allowing a delete keyed to it is the same
+  // trust model as e.g. a password-reset link — not a public "delete
+  // any booking" hole. See the matching RLS policy in supabase_schema.sql.
+  async function rollbackLiveBooking(bookingId){
+    if(!supabaseClient) return false;
+    try{
+      const { error } = await supabaseClient
+        .from('bookings')
+        .delete()
+        .eq('booking_id', bookingId)
+        .eq('status', 'pending');
+      if(error) return false;
+      return true;
+    } catch(err){
+      console.error('Booking rollback failed:', err);
+      return false;
+    }
+  }
+
+  function showNotAvailableModal(customMessage){
+    document.getElementById('notAvailableMessage').textContent = customMessage
+      || 'Someone just booked this exact time, a few seconds before you. Please pick another date or time — everything else is still open.';
+    document.getElementById('notAvailableModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeNotAvailableModal(){
+    document.getElementById('notAvailableModal').classList.remove('open');
+    document.body.style.overflow = '';
+    bkSelectedTime = null;
+    bkSelectedSlotNum = null;
+    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('slot-selected'));
+    renderTimeSlots();
+    updateBookingSummary();
+  }
+
+  let calViewDate = new Date();
+  calViewDate.setDate(1);
+  let calSelectedDate = null; // Date object
+  let bkSelectedTime = null;  // string
+  let bkSelectedSlotNum = null; // 1-8, which numbered session slot
+
+  function calRender(){
+    const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    document.getElementById('calMonthLabel').textContent = monthNames[calViewDate.getMonth()] + ' ' + calViewDate.getFullYear();
+
+    const grid = document.getElementById('calGrid');
+    grid.innerHTML = '';
+
+    const firstDay = new Date(calViewDate.getFullYear(), calViewDate.getMonth(), 1);
+    const daysInMonth = new Date(calViewDate.getFullYear(), calViewDate.getMonth() + 1, 0).getDate();
+    const startWeekday = firstDay.getDay();
+
+    const today = arizonaTodayDate();
+
+    for(let i = 0; i < startWeekday; i++){
+      const blank = document.createElement('div');
+      blank.className = 'cal-day cal-blank';
+      grid.appendChild(blank);
+    }
+
+    for(let d = 1; d <= daysInMonth; d++){
+      const cellDate = new Date(calViewDate.getFullYear(), calViewDate.getMonth(), d);
+      cellDate.setHours(0,0,0,0);
+      const cell = document.createElement('div');
+      cell.className = 'cal-day';
+      cell.textContent = d;
+
+      if(cellDate.getTime() === today.getTime()) cell.classList.add('cal-today');
+      if(cellDate < today || isDateFullyBlocked(cellDate) || isDateFullyBooked(cellDate)){
+        cell.classList.add('cal-disabled');
+      } else {
+        cell.onclick = () => calSelectDate(cellDate, cell);
+      }
+      if(calSelectedDate && cellDate.getTime() === calSelectedDate.getTime()){
+        cell.classList.add('cal-selected');
+      }
+      grid.appendChild(cell);
+    }
+  }
+
+  function calShiftMonth(delta){
+    const candidate = new Date(calViewDate.getFullYear(), calViewDate.getMonth() + delta, 1);
+    const azToday = arizonaTodayDate();
+    const currentAzMonth = new Date(azToday.getFullYear(), azToday.getMonth(), 1);
+    if(candidate < currentAzMonth) return;
+    calViewDate = candidate;
+    calRender();
+  }
+
+  function calSelectDate(dateObj, cellEl){
+    calSelectedDate = dateObj;
+    bkSelectedTime = null;
+    bkSelectedSlotNum = null;
+    document.querySelectorAll('.cal-day').forEach(c => c.classList.remove('cal-selected'));
+    cellEl.classList.add('cal-selected');
+    renderTimeSlots();
+    updateBookingSummary();
+  }
+
+  function renderTimeSlots(){
+    const wrap = document.getElementById('timeSlots');
+    wrap.innerHTML = '';
+    if(!calSelectedDate){
+      wrap.innerHTML = '<p style="grid-column:1/-1; font-size:12.5px; color:var(--ink-soft); font-style:italic;">Pick a date above first.</p>';
+      return;
+    }
+    if(!liveBookingsReady){
+      wrap.innerHTML = '<p style="grid-column:1/-1; font-size:12.5px; color:#8a3a45; line-height:1.6;">We could not verify live availability right now. Please refresh the page or try again shortly. No booking will be accepted until availability is verified.</p>';
+      return;
+    }
+    const ownerBlockedNums = (BLOCKED_SLOTS_BY_DATE[dateKey(calSelectedDate)] || []).concat(DAILY_RECURRING_BLOCKED_SLOTS);
+    ALL_TIME_SLOTS.forEach(slot => {
+      const el = document.createElement('div');
+      const ownerBlocked = ownerBlockedNums.includes(slot.num);
+      const liveBooked = isSlotLiveBooked(calSelectedDate, slot.num);
+      const pastInArizona = isPastArizonaSlot(calSelectedDate, slot);
+      const isBlocked = ownerBlocked || liveBooked || pastInArizona;
+      const tag = liveBooked ? 'booked' : (pastInArizona ? 'time passed' : (ownerBlocked ? 'unavailable' : ''));
+      el.className = 'time-slot' + (isBlocked ? ' cal-disabled' : '');
+      el.innerHTML = '<span class="slot-num">' + slot.num + '</span>' + slot.label + (tag ? ' <span style="font-size:9px;">(' + tag + ')</span>' : '');
+      if(!isBlocked){
+        el.onclick = () => selectTime(el, slot.label, slot.num);
+      } else {
+        el.onclick = () => showNotAvailableModal(liveBooked
+          ? 'This exact time slot is already booked by someone else. Please pick a different one below.'
+          : (pastInArizona ? 'This time has already passed in Arizona. Please select a future time.' : 'This time isn\'t open right now. Please pick a different one below.'));
+      }
+      wrap.appendChild(el);
+    });
+  }
+
+  function selectTime(el, timeStr, slotNum){
+    bkSelectedTime = timeStr;
+    bkSelectedSlotNum = slotNum;
+    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('slot-selected'));
+    el.classList.add('slot-selected');
+    updateBookingSummary();
+  }
+
+  function updateBookingSummary(){
+    const summaryEl = document.getElementById('bkSummary');
+    if(!calSelectedDate && !bkSelectedTime){
+      summaryEl.innerHTML = 'No date or time selected yet.';
+      return;
+    }
+    const dateStr = calSelectedDate ? calSelectedDate.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' }) : 'a date';
+    const timeStr = bkSelectedTime || 'a time';
+    summaryEl.innerHTML = 'You\'re requesting <b>' + dateStr + '</b> at <b>' + timeStr + '</b> <span class="bk-tz-note">(Arizona Time — MST)</span>.';
+  }
+
+  const BK_FIELD_IDS = ['bkFirst','bkLast','bkAge','bkCountryCode','bkPhone','bkEmail','bkDesc'];
+  function clearFieldErrors(){
+    BK_FIELD_IDS.forEach(id => document.getElementById(id).classList.remove('field-error'));
+    document.getElementById('bkTerms').closest('.bk-terms-field').classList.remove('field-error');
+  }
+  function markFieldError(id){
+    if(id === 'bkTerms'){
+      document.getElementById('bkTerms').closest('.bk-terms-field').classList.add('field-error');
+    } else {
+      document.getElementById(id).classList.add('field-error');
+    }
+  }
+
+  async function submitBooking(e){
+    e.preventDefault();
+    const statusEl = document.getElementById('bkStatus');
+    const btn = document.getElementById('bkSubmitBtn');
+    statusEl.className = 'bk-status bk-status-err';
+    clearFieldErrors();
+
+    if(!calSelectedDate || !bkSelectedTime){
+      statusEl.textContent = 'Please select both a date and a time above before submitting.';
+      return false;
+    }
+    const selectedSlotDef = ALL_TIME_SLOTS.find(s => s.num === bkSelectedSlotNum);
+    if(isPastArizonaSlot(calSelectedDate, selectedSlotDef)){
+      statusEl.textContent = 'That date or time has already passed in Arizona. Please choose a future appointment time.';
+      renderTimeSlots();
+      return false;
+    }
+
+    const dateLabel = calSelectedDate.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+    const firstName = document.getElementById('bkFirst').value.trim();
+    const lastName = document.getElementById('bkLast').value.trim();
+    const age = document.getElementById('bkAge').value.trim();
+    const email = document.getElementById('bkEmail').value.trim();
+    const countryCode = document.getElementById('bkCountryCode').value.trim();
+    const phone = document.getElementById('bkPhone').value.trim();
+    const description = document.getElementById('bkDesc').value.trim();
+    const fullPhone = countryCode + ' ' + phone;
+
+    const errors = [];
+    const namePattern = /^[\p{L}\p{M}' .-]{2,50}$/u;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneDigits = phone.replace(/[^0-9]/g, '');
+    const phonePattern = /^[0-9()\-.\s]{6,22}$/;
+
+    if(!firstName){ errors.push({ id:'bkFirst', msg:'First Name is required.' }); }
+    else if(!namePattern.test(firstName)){ errors.push({ id:'bkFirst', msg:'Please enter a valid first name using letters, spaces, apostrophes, periods, or hyphens.' }); }
+
+    if(!lastName){ errors.push({ id:'bkLast', msg:'Last Name is required.' }); }
+    else if(!namePattern.test(lastName)){ errors.push({ id:'bkLast', msg:'Please enter a valid last name using letters, spaces, apostrophes, periods, or hyphens.' }); }
+
+    if(age){
+      const agePattern = /^\d{1,3}$/;
+      const ageNum = Number(age);
+      if(!agePattern.test(age) || ageNum < 1 || ageNum > 120){
+        errors.push({ id:'bkAge', msg:'Age should be a number between 1 and 120.' });
+      }
+    }
+
+    if(!email){ errors.push({ id:'bkEmail', msg:'Email is required.' }); }
+    else if(!emailPattern.test(email)){ errors.push({ id:'bkEmail', msg:'That email address doesn\'t look complete — please double check it.' }); }
+
+    if(!countryCode){ errors.push({ id:'bkCountryCode', msg:'Please select a country code for your phone number.' }); }
+
+    if(!phone){ errors.push({ id:'bkPhone', msg:'Phone number is required.' }); }
+    else if(!phonePattern.test(phone) || (countryCode + phoneDigits).replace(/[^0-9]/g, '').length < 7 || (countryCode + phoneDigits).replace(/[^0-9]/g, '').length > 15){
+      errors.push({ id:'bkPhone', msg:'That phone number doesn\'t look right — enter just the local number (digits only, no country code) after selecting your code.' });
+    }
+
+    if(!description){ errors.push({ id:'bkDesc', msg:'The description field is required.' }); }
+    else if(description.length < 5){ errors.push({ id:'bkDesc', msg:'Please share a little more detail in the description field (at least a few words).' }); }
+    else if(description.length > 1000){ errors.push({ id:'bkDesc', msg:'That description is a bit long — please keep it under 1000 characters, we can go deeper on WhatsApp.' }); }
+
+    if(!document.getElementById('bkTerms').checked){
+      errors.push({ id:'bkTerms', msg:'Please check the box agreeing to the Terms & Conditions.' });
+    }
+
+    if(errors.length){
+      errors.forEach(err => markFieldError(err.id));
+      statusEl.innerHTML = errors.map(err => '• ' + err.msg).join('<br>');
+      document.getElementById(errors[0].id).scrollIntoView({ behavior:'smooth', block:'center' });
+      return false;
+    }
+
+    const bookingId = generateUniqueBookingId(calSelectedDate, liveBookedSlots);
+
+    const waMessage = 'New booking request — ' + bookingId + '\n'
+      + 'Slot #' + bkSelectedSlotNum + ' — ' + dateLabel + ' at ' + bkSelectedTime + ' (Arizona Time / MST)\n'
+      + 'Name: ' + firstName + ' ' + lastName + '\n'
+      + 'Age: ' + age + '\n'
+      + 'Email: ' + email + '\n'
+      + 'Phone: ' + fullPhone + '\n'
+      + 'Looking for support with: ' + description;
+    const waLink = 'https://wa.me/' + BOOKING_WHATSAPP_NUMBER + '?text=' + encodeURIComponent(waMessage);
+
+
+    btn.disabled = true;
+    btn.textContent = 'Checking availability…';
+
+    const stillOpen = await recheckSlotStillOpen(calSelectedDate, bkSelectedSlotNum);
+    if(!stillOpen){
+      btn.disabled = false;
+      btn.textContent = 'Request This Time';
+      showNotAvailableModal();
+      return false;
+    }
+
+    btn.textContent = 'Reserving this request…';
+
+    // Saves the full booking (slot reservation + all details) to Supabase
+    // in one insert. If it cannot be saved, stop rather than telling the
+    // client the request succeeded.
+    const slotSaved = await saveLiveBooking(
+      calSelectedDate, bkSelectedSlotNum, firstName + ' ' + lastName, bookingId, email,
+      { timeLabel: bkSelectedTime, firstName, lastName, age, phone: fullPhone, description }
+    );
+    if(!slotSaved){
+      btn.disabled = false;
+      btn.textContent = 'Request This Time';
+      statusEl.className = 'bk-status bk-status-err';
+      statusEl.textContent = 'We could not safely reserve this time. The request was not completed. Please refresh and try again, or contact Naabi Kamalam on WhatsApp.';
+      await fetchLiveBookings();
+      return false;
+    }
+
+    openBookingConfirmModal(waLink, bookingId, bkSelectedSlotNum, dateLabel, bkSelectedTime);
+
+    document.getElementById('bookingForm').reset();
+    calSelectedDate = null; bkSelectedTime = null; bkSelectedSlotNum = null;
+    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('slot-selected'));
+    calRender();
+    updateBookingSummary();
+
+    btn.disabled = false;
+    btn.textContent = 'Request This Time';
+    return false;
+  }
+
+  function pad2(n){ return String(n).padStart(2,'0'); }
+  // Arizona is fixed at UTC-7 year-round (no Daylight Saving Time), so we
+  // convert the Arizona wall-clock hour to a real UTC instant. This is what
+  // makes the calendar file show the correct time no matter what timezone
+  // the person adding it is actually in — a floating/local-only time would
+  // show the wrong moment for anyone outside Arizona.
+  const ARIZONA_UTC_OFFSET_HOURS = 7;
+  function icsDateTimeUTC(dateObj, arizonaHour){
+    const utc = new Date(Date.UTC(
+      dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate(),
+      arizonaHour + ARIZONA_UTC_OFFSET_HOURS, 0, 0
+    ));
+    return utc.getUTCFullYear() + pad2(utc.getUTCMonth()+1) + pad2(utc.getUTCDate())
+      + 'T' + pad2(utc.getUTCHours()) + pad2(utc.getUTCMinutes()) + pad2(utc.getUTCSeconds()) + 'Z';
+  }
+  function buildCalendarFileUrl(dateObj, slotDef, firstName){
+    if(!slotDef) return null;
+    const stamp = new Date().toISOString().replace(/[-:]/g,'').split('.')[0] + 'Z';
+    const uid = 'nk-booking-' + dateObj.getTime() + '-' + slotDef.num + '@naabikamalam';
+    const ics = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Naabi Kamalam//Booking//EN',
+      'BEGIN:VEVENT',
+      'UID:' + uid,
+      'DTSTAMP:' + stamp,
+      'DTSTART:' + icsDateTimeUTC(dateObj, slotDef.startHour),
+      'DTEND:' + icsDateTimeUTC(dateObj, slotDef.endHour),
+      'SUMMARY:Coaching Session with Naabi Kamalam (Arizona Time — MST)',
+      'DESCRIPTION:Your session with Deepa Sattu. All times are Arizona Time (MST). Questions? WhatsApp 281-866-5159.',
+      'LOCATION:WhatsApp / Virtual',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+    const blob = new Blob([ics], { type:'text/calendar;charset=utf-8' });
+    return URL.createObjectURL(blob);
+  }
+
+  function openBookingConfirmModal(waLink, bookingId, slotNum, dateLabel, timeLabel){
+    const detailEl = document.getElementById('bookingModalDetail');
+    if(detailEl){
+      detailEl.innerHTML = '<b>Booking ID: ' + bookingId + '</b><br>'
+        + dateLabel + ' at ' + timeLabel + ' (Arizona Time — MST)'
+        + '<br><span style="font-size:12px;font-weight:400;">Status: Request received — awaiting review</span>';
+    }
+
+    const calWrap = document.getElementById('bookingModalCalWrap');
+    if(calWrap){
+      calWrap.innerHTML = '<a class="booking-confirm-wa-btn" href="' + waLink
+        + '" rel="noopener" target="_blank">Send a Copy on WhatsApp</a>';
+    }
+
+    document.getElementById('bookingModalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeBookingModal(){
+    document.getElementById('bookingModalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+
+  calRender();
+
+  BK_FIELD_IDS.forEach(id => {
+    document.getElementById(id).addEventListener('input', () => {
+      document.getElementById(id).classList.remove('field-error');
+    });
+    document.getElementById(id).addEventListener('change', () => {
+      document.getElementById(id).classList.remove('field-error');
+    });
+  });
+  document.getElementById('bkTerms').addEventListener('change', () => {
+    document.getElementById('bkTerms').closest('.bk-terms-field').classList.remove('field-error');
+  });
+
+  /* ============================================================
+     HELP / FAQ WIDGET — simple, free, rule-based. No AI, no API
+     key, no cost. Edit the array below to add/change questions.
+     ============================================================ */
+  const HELP_FAQ = [
+    { q:'How do I book a session?', a:'Go to "Book a Session" in the menu, pick a date and a numbered time slot, fill in your details, check the Terms box, and tap "Request This Time." A confirmation popup should appear right away.' },
+    { q:'I booked but didn\u2019t hear back', a:'Double check you tapped "Confirm on WhatsApp" in the popup and actually pressed Send inside WhatsApp \u2014 that\u2019s the step that reaches us. If you\u2019re not sure it went through, just message 281-866-5159 directly with your name and the time you picked.' },
+    { q:'Can I reschedule or cancel?', a:'Yes \u2014 message 281-866-5159 on WhatsApp with your name and the original time, and we\u2019ll find a new one together.' },
+    { q:'Is this therapy or counseling?', a:'No \u2014 this is coaching, not medical or mental health treatment. Full details are on the Terms & Conditions page.' },
+    { q:'How much does a session cost?', a:'Pricing is worked out directly over WhatsApp based on what you\u2019re looking for \u2014 message 281-866-5159 to talk it through.' },
+    { q:'The calendar or form isn\u2019t working', a:'Try opening the site in Chrome or Safari directly rather than an in-app preview, and make sure every field marked with * is filled in. Still stuck? Message us on WhatsApp and we\u2019ll sort it out directly.' },
+    { q:'Is my information kept private?', a:'Yes \u2014 see the Confidentiality section of the Terms & Conditions page for the full details, including the few legal exceptions.' }
+  ];
+
+  function toggleHelpPanel(){
+    const panel = document.getElementById('helpPanel');
+    const nowOpen = !panel.classList.contains('open');
+    panel.classList.toggle('open', nowOpen);
+    if(nowOpen) renderHelpQuestions();
+  }
+  function renderHelpQuestions(){
+    const body = document.getElementById('helpPanelBody');
+    let html = '<p class="help-intro">Quick answers to common questions \u2014 tap one below.</p><div class="help-faq-list">';
+    HELP_FAQ.forEach((item, i) => {
+      html += '<button class="help-faq-q" onclick="showHelpAnswer(' + i + ')">' + item.q + '</button>';
+    });
+    html += '</div>';
+    body.innerHTML = html;
+  }
+  function showHelpAnswer(i){
+    const item = HELP_FAQ[i];
+    const body = document.getElementById('helpPanelBody');
+    body.innerHTML = '<button class="help-back-link" onclick="renderHelpQuestions()">\u2190 Back to Questions</button>'
+      + '<p class="help-answer-q">' + item.q + '</p>'
+      + '<p class="help-answer-text">' + item.a + '</p>';
+  }
+
+  /* ============================================================
+     HOME PAGE DEMO — the
+     simple rule-based mini self-reflection widget. No AI, no
+     API, no cost — just a small hardcoded data set below.
+     ============================================================ */
+
+  const MINI_DEMO_DATA = {
+    selfdoubt: {
+      pain: 'Self-doubt',
+      reframe: 'You know what you want to say — and then don\u2019t say it. That hesitation isn\u2019t proof you\u2019re wrong. It\u2019s just an old habit of checking with everyone but yourself first.'
+    },
+    comparison: {
+      pain: 'Comparison',
+      reframe: 'Somehow, everyone else\u2019s life looks like it\u2019s further along. You\u2019re not actually behind — you\u2019re just measuring your beginning against someone else\u2019s middle.'
+    },
+    peerpressure: {
+      pain: 'Peer Pressure',
+      reframe: 'You say yes when the truer answer was no. The people who actually matter can hold your no without it costing the relationship anything real.'
+    },
+    criticism: {
+      pain: 'Criticism',
+      reframe: 'One comment plays on a loop long after everyone else has forgotten it. It\u2019s not that you\u2019re too sensitive — it\u2019s that no one ever taught you how to let a comment pass through instead of settle in.'
+    },
+    competition: {
+      pain: 'Competition',
+      reframe: 'Even the people you love start to feel like people you\u2019re up against. There\u2019s room for both of you to be doing fine. It was never actually a contest.'
+    },
+    guilt: {
+      pain: 'Guilt & Over-Adjusting',
+      reframe: 'You bend yourself into whatever shape keeps everyone else comfortable. Somewhere under all that adjusting is a version of you who gets to just be — without earning it first.'
+    }
+  };
+
+  function miniDemoShow(key){
+    const item = MINI_DEMO_DATA[key];
+    if(!item) return;
+    document.getElementById('miniDemoPain').textContent = item.pain;
+    document.getElementById('miniDemoReframe').textContent = item.reframe;
+    document.getElementById('miniDemoOptions').style.display = 'none';
+    document.getElementById('miniDemoResult').classList.add('open');
+  }
+  function miniDemoReset(){
+    document.getElementById('miniDemoOptions').style.display = 'flex';
+    document.getElementById('miniDemoResult').classList.remove('open');
+  }
+
+  function go(id){
+    const wasAlreadyOnBooking = document.getElementById('page-booking').classList.contains('active');
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.querySelectorAll('.navlinks a').forEach(a => a.classList.remove('active'));
+    document.querySelector('.navlinks a[href="#' + id + '"]').classList.add('active');
+    document.getElementById('navlinks').classList.remove('open');
+    window.scrollTo(0,0);
+    revealVisible();
+    if(id === 'booking' && !wasAlreadyOnBooking){ fetchLiveBookings(); }
+  }
+  const initial = (location.hash || '#home').replace('#','');
+  const valid = ['home','for','services','booking','about','feedback','contact','terms'];
+  go(valid.includes(initial) ? initial : 'home');
+  window.addEventListener('hashchange', () => {
+    const id = location.hash.replace('#','');
+    if(valid.includes(id)) go(id);
+  });
+
+  // Scroll-reveal: tag cards/sections so they fade+rise into view
+  document.querySelectorAll('section, .qhw .q, .t-card, .svc, .case-card, .contact-card, .pull-quote, .bar-track').forEach(el => {
+    el.classList.add('reveal');
+  });
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Immediately reveal anything already in (or near) the viewport —
+  // covers content in a page that was just switched to display:block,
+  // where the observer may not fire right away.
+  function revealVisible(){
+    document.querySelectorAll('.reveal:not(.in-view)').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight + 300 && r.bottom > -300) el.classList.add('in-view');
+    });
+  }
+  revealVisible();
+
+  // Safety net: never let anything stay invisible for good, no matter
+  // what the browser/observer does.
+  setTimeout(() => document.querySelectorAll('.reveal:not(.in-view)').forEach(el => el.classList.add('in-view')), 1200);
+
+  // Glass nav on scroll
+  const navEl = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    navEl.classList.toggle('scrolled', window.scrollY > 12);
+    revealVisible();
+  });
+
+
+// Poster-style interactive coaching conversation — exactly one dialogue at a time
+const coachingConversation = [
+  ["“I keep thinking I’m not good enough.”", "“What if that is a learned story—not your identity?”"],
+  ["“I always adjust so others won’t be upset.”", "“What would change if your needs mattered too?”"],
+  ["“I know the pattern, but I still feel stuck.”", "“Awareness is the beginning. Now we build the capacity to respond differently.”"]
+];
+
+let conversationIndex = 0;
+let conversationSpeaker = 0; // 0 = You, 1 = Deepa
+
+function showConversationLine(){
+  const root = document.getElementById('posterConversation');
+  if(!root) return;
+
+  const client = root.querySelector('.client-speech');
+  const coach = root.querySelector('.coach-speech');
+  const clientSide = root.querySelector('.client-side');
+  const coachSide = root.querySelector('.coach-side');
+  const dots = [...root.querySelectorAll('.conversation-dots span')];
+
+  client.textContent = coachingConversation[conversationIndex][0];
+  coach.textContent = coachingConversation[conversationIndex][1];
+
+  // Remove both first, then reveal only the current speaker.
+  client.classList.remove('active');
+  coach.classList.remove('active');
+
+  if(conversationSpeaker === 0){
+    client.classList.add('active');
+    clientSide.classList.add('is-speaking');
+    clientSide.classList.remove('is-listening');
+    coachSide.classList.add('is-listening');
+    coachSide.classList.remove('is-speaking');
+  }else{
+    coach.classList.add('active');
+    coachSide.classList.add('is-speaking');
+    coachSide.classList.remove('is-listening');
+    clientSide.classList.add('is-listening');
+    clientSide.classList.remove('is-speaking');
+  }
+
+  dots.forEach((dot, index) => {
+    dot.classList.toggle('active', index === conversationIndex);
+  });
+}
+
+function nextConversation(){
+  if(conversationSpeaker === 0){
+    conversationSpeaker = 1;
+  }else{
+    conversationSpeaker = 0;
+    conversationIndex = (conversationIndex + 1) % coachingConversation.length;
+  }
+  showConversationLine();
+}
+
+showConversationLine();
+
+document.addEventListener('keydown', event => {
+  if(
+    (event.key === 'Enter' || event.key === ' ') &&
+    document.activeElement?.id === 'posterConversation'
+  ){
+    event.preventDefault();
+    nextConversation();
+  }
+});
+
+</script>
+</body>
+</html>

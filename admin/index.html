@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Admin · Naabi Kamalam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,600&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+  :root{
+    --ink:#241A28; --ink-soft:#5C4E5F; --gold:#C98A9C; --paper:#FFFBF8;
+    --card:#ffffff; --line:#EAE1DD; --danger:#8a3a45; --ok:#3a6a4f;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--paper); font-family:'Work Sans',sans-serif; color:var(--ink); }
+  header{ padding:22px 28px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; }
+  header h1{ font-family:'Fraunces',serif; font-style:italic; font-size:20px; margin:0; }
+  header .sub{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--gold); }
+  main{ max-width:1180px; margin:0 auto; padding:28px; }
+  .card{ background:var(--card); border:1px solid var(--line); border-radius:12px; padding:24px; }
+
+  /* ---- login ---- */
+  #loginView{ max-width:380px; margin:80px auto; }
+  #loginView h2{ font-family:'Fraunces',serif; font-style:italic; margin:0 0 6px; }
+  #loginView p{ color:var(--ink-soft); font-size:13px; margin:0 0 20px; }
+  label{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); margin:14px 0 5px; }
+  input{ width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:8px; font-size:14px; font-family:inherit; }
+  input:focus{ outline:2px solid var(--gold); outline-offset:1px; }
+  button{ font-family:inherit; cursor:pointer; }
+  .btn{ background:var(--ink); color:#fff; border:none; padding:11px 18px; border-radius:8px; font-size:13.5px; font-weight:600; }
+  .btn:hover{ opacity:.9; }
+  .btn-ghost{ background:none; border:1px solid var(--line); color:var(--ink); padding:8px 14px; border-radius:8px; font-size:12.5px; }
+  #loginErr{ color:var(--danger); font-size:12.5px; margin-top:12px; min-height:16px; }
+
+  /* ---- dashboard ---- */
+  #dashView{ display:none; }
+  .stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:22px; }
+  .stat{ background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px; }
+  .stat .n{ font-family:'Fraunces',serif; font-size:26px; }
+  .stat .l{ font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); }
+
+  .toolbar{ display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; align-items:center; }
+  .toolbar select, .toolbar input[type=text]{ padding:8px 10px; border:1px solid var(--line); border-radius:8px; font-size:13px; }
+
+  table{ width:100%; border-collapse:collapse; font-size:13px; }
+  th{ text-align:left; padding:10px 8px; border-bottom:2px solid var(--line); font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); }
+  td{ padding:10px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+  tr:hover td{ background:#FFF9F7; }
+  .tag{ display:inline-block; padding:3px 9px; border-radius:20px; font-size:11px; font-weight:600; }
+  .tag-pending{ background:#FBEFD6; color:#8a6a1f; }
+  .tag-confirmed{ background:#DCEFE0; color:var(--ok); }
+  .tag-cancelled{ background:#F5DADD; color:var(--danger); }
+  .tag-completed{ background:#E2E6F5; color:#3a4a8a; }
+  .tag-unpaid{ background:#F5DADD; color:var(--danger); }
+  .tag-deposit_paid{ background:#FBEFD6; color:#8a6a1f; }
+  .tag-paid_in_full{ background:#DCEFE0; color:var(--ok); }
+  select.inline{ font-size:12px; padding:4px 6px; border-radius:6px; border:1px solid var(--line); }
+  .desc-cell{ max-width:220px; color:var(--ink-soft); }
+  .muted{ color:var(--ink-soft); font-size:12px; }
+  #loadErr{ color:var(--danger); font-size:13px; margin-top:10px; }
+  .empty{ text-align:center; padding:40px; color:var(--ink-soft); font-style:italic; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Naabi Kamalam</h1>
+    <div class="sub">Admin Dashboard</div>
+  </div>
+  <button class="btn-ghost" id="signOutBtn" style="display:none;">Sign out</button>
+</header>
+
+<main>
+
+  <!-- LOGIN -->
+  <div id="loginView" class="card">
+    <h2>Sign in</h2>
+    <p>Use the admin login you created in Supabase Authentication.</p>
+    <form id="loginForm">
+      <label for="loginEmail">Email</label>
+      <input id="loginEmail" type="email" required autocomplete="username"/>
+      <label for="loginPass">Password</label>
+      <input id="loginPass" type="password" required autocomplete="current-password"/>
+      <div style="margin-top:18px;"><button class="btn" type="submit">Sign in</button></div>
+      <div id="loginErr"></div>
+    </form>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashView">
+    <div class="stats" id="statsRow"></div>
+
+    <div class="toolbar">
+      <select id="statusFilter">
+        <option value="">All statuses</option>
+        <option value="pending">Pending</option>
+        <option value="confirmed">Confirmed</option>
+        <option value="completed">Completed</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+      <select id="paymentFilter">
+        <option value="">All payment statuses</option>
+        <option value="unpaid">Unpaid</option>
+        <option value="deposit_paid">Deposit paid</option>
+        <option value="paid_in_full">Paid in full</option>
+      </select>
+      <input type="text" id="searchBox" placeholder="Search name, email, booking ID…"/>
+      <button class="btn-ghost" id="refreshBtn">Refresh</button>
+    </div>
+
+    <div class="card" style="padding:0; overflow-x:auto;">
+      <table id="bookingsTable">
+        <thead>
+          <tr>
+            <th>Booking</th>
+            <th>Client</th>
+            <th>Date / Time</th>
+            <th>Notes</th>
+            <th>Status</th>
+            <th>Payment</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody id="bookingsBody"></tbody>
+      </table>
+      <div class="empty" id="emptyState" style="display:none;">No bookings match these filters.</div>
+    </div>
+    <div id="loadErr"></div>
+  </div>
+
+</main>
+
+<script>
+  /* ============================================================
+     Paste the SAME Project URL and anon public key used in the
+     main site's index.html (Supabase dashboard > Project Settings
+     > API). The anon key is safe to expose here: RLS policies in
+     supabase_schema.sql only grant full access to a signed-in
+     ("authenticated") user, which is what logging in below does.
+     ============================================================ */
+  const SUPABASE_URL = 'https://nyksittvgbwinlycsncm.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_I8L0RzRveqbvWPN6BfmjSQ_oSr41AgZ';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  /* ============================================================
+     STATUS-CHANGE EMAILS — same EmailJS account/public key as the
+     main site's booking form. Create two more templates in the
+     EmailJS dashboard (one for "confirmed", one for "cancelled")
+     and paste their template IDs in below; until then, sending is
+     skipped silently.
+     ============================================================ */
+  if(window.emailjs){ emailjs.init({ publicKey: 'OR1X1g_m-mh3CFcKy' }); }
+  const EMAILJS_SERVICE_ID = 'service_irth0t6';
+  const EMAILJS_TEMPLATE_ID_CONFIRMED = 'template_confirmed_id_here';
+  const EMAILJS_TEMPLATE_ID_CANCELLED = 'template_cancelled_id_here';
+
+  let allBookings = [];
+
+  function showDash(show){
+    document.getElementById('loginView').style.display = show ? 'none' : 'block';
+    document.getElementById('dashView').style.display = show ? 'block' : 'none';
+    document.getElementById('signOutBtn').style.display = show ? 'inline-block' : 'none';
+  }
+
+  // ---- auth ----
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPass').value;
+    const errEl = document.getElementById('loginErr');
+    errEl.textContent = '';
+    const { error } = await sb.auth.signInWithPassword({ email, password });
+    if(error){ errEl.textContent = 'Sign-in failed: ' + error.message; return; }
+    await afterLogin();
+  });
+
+  document.getElementById('signOutBtn').addEventListener('click', async () => {
+    await sb.auth.signOut();
+    showDash(false);
+  });
+
+  async function afterLogin(){
+    showDash(true);
+    await loadBookings();
+  }
+
+  // Restore session on reload
+  (async () => {
+    const { data } = await sb.auth.getSession();
+    if(data.session){ await afterLogin(); }
+  })();
+
+  // ---- data ----
+  async function loadBookings(){
+    const errEl = document.getElementById('loadErr');
+    errEl.textContent = '';
+    const { data, error } = await sb
+      .from('bookings')
+      .select('*')
+      .order('requested_date', { ascending: true })
+      .order('session_slot_number', { ascending: true });
+    if(error){
+      errEl.textContent = 'Could not load bookings: ' + error.message;
+      return;
+    }
+    allBookings = data || [];
+    renderStats();
+    renderTable();
+  }
+
+  function renderStats(){
+    const total = allBookings.length;
+    const pending = allBookings.filter(b => b.status === 'pending').length;
+    const confirmed = allBookings.filter(b => b.status === 'confirmed').length;
+    const unpaid = allBookings.filter(b => b.payment_status === 'unpaid').length;
+    document.getElementById('statsRow').innerHTML = [
+      ['Total bookings', total],
+      ['Pending review', pending],
+      ['Confirmed', confirmed],
+      ['Unpaid', unpaid],
+    ].map(([l,n]) => `<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
+  }
+
+  function renderTable(){
+    const statusF = document.getElementById('statusFilter').value;
+    const paymentF = document.getElementById('paymentFilter').value;
+    const q = document.getElementById('searchBox').value.trim().toLowerCase();
+
+    const rows = allBookings.filter(b => {
+      if(statusF && b.status !== statusF) return false;
+      if(paymentF && b.payment_status !== paymentF) return false;
+      if(q){
+        const hay = [b.booking_id, b.first_name, b.last_name, b.email, b.phone].join(' ').toLowerCase();
+        if(!hay.includes(q)) return false;
+      }
+      return true;
+    });
+
+    const body = document.getElementById('bookingsBody');
+    document.getElementById('emptyState').style.display = rows.length ? 'none' : 'block';
+
+    body.innerHTML = rows.map(b => `
+      <tr data-id="${b.id}">
+        <td><b>${b.booking_id}</b><br><span class="muted">${new Date(b.created_at).toLocaleString()}</span></td>
+        <td>${escapeHtml(b.first_name)} ${escapeHtml(b.last_name)}${b.age ? ' · ' + b.age : ''}<br>
+            <span class="muted">${escapeHtml(b.email)}<br>${escapeHtml(b.phone)}</span></td>
+        <td>${b.requested_date}<br><span class="muted">${escapeHtml(b.requested_time_label)} (slot ${b.session_slot_number})</span></td>
+        <td class="desc-cell">${escapeHtml(b.description)}</td>
+        <td>
+          <span class="tag tag-${b.status}">${b.status}</span><br>
+          <select class="inline status-select" style="margin-top:6px;">
+            ${['pending','confirmed','completed','cancelled'].map(s =>
+              `<option value="${s}" ${s===b.status?'selected':''}>${s}</option>`).join('')}
+          </select>
+        </td>
+        <td>
+          <span class="tag tag-${b.payment_status}">${b.payment_status.replace('_',' ')}</span><br>
+          <select class="inline payment-select" style="margin-top:6px;">
+            ${['unpaid','deposit_paid','paid_in_full'].map(s =>
+              `<option value="${s}" ${s===b.payment_status?'selected':''}>${s.replace('_',' ')}</option>`).join('')}
+          </select>
+        </td>
+        <td>
+          <div class="muted">Paid: $${(b.amount_paid || 0).toFixed(2)}</div>
+          <div class="muted">Due: ${b.amount_due != null ? '$'+Number(b.amount_due).toFixed(2) : '—'}</div>
+        </td>
+      </tr>
+    `).join('');
+
+    // wire up inline editors
+    body.querySelectorAll('tr').forEach(tr => {
+      const id = tr.getAttribute('data-id');
+      tr.querySelector('.status-select').addEventListener('change', (e) => updateBooking(id, { status: e.target.value }));
+      tr.querySelector('.payment-select').addEventListener('change', (e) => updateBooking(id, { payment_status: e.target.value }));
+    });
+  }
+
+  async function updateBooking(id, patch){
+    const existing = allBookings.find(b => String(b.id) === String(id));
+    const statusChanged = 'status' in patch && existing && existing.status !== patch.status;
+
+    const { error } = await sb.from('bookings').update(patch).eq('id', id);
+    if(error){
+      alert('Update failed: ' + error.message);
+      return;
+    }
+
+    if(statusChanged){
+      sendStatusChangeEmail(existing, patch.status);
+    }
+
+    await loadBookings();
+  }
+
+  function sendStatusChangeEmail(booking, newStatus){
+    if(!window.emailjs) return;
+    const templateId = newStatus === 'confirmed' ? EMAILJS_TEMPLATE_ID_CONFIRMED
+      : newStatus === 'cancelled' ? EMAILJS_TEMPLATE_ID_CANCELLED
+      : null;
+    if(!templateId) return;
+
+    emailjs.send(EMAILJS_SERVICE_ID, templateId, {
+      email: booking.email,
+      first_name: booking.first_name,
+      booking_id: booking.booking_id,
+      date: booking.requested_date,
+      time: booking.requested_time_label,
+      booking_status: newStatus === 'confirmed' ? 'Confirmed' : 'Cancelled'
+    }).catch(function(err){ console.error('EmailJS status update email failed:', err); });
+  }
+
+  function escapeHtml(str){
+    return String(str ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  document.getElementById('statusFilter').addEventListener('change', renderTable);
+  document.getElementById('paymentFilter').addEventListener('change', renderTable);
+  document.getElementById('searchBox').addEventListener('input', renderTable);
+  document.getElementById('refreshBtn').addEventListener('click', loadBookings);
+</script>
+</body>
+</html>
