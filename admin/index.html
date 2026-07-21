@@ -146,6 +146,15 @@
   th.sortable .arrow{ color:var(--gold); margin-left:3px; }
   .sessions-link{ background:none; border:none; color:var(--gold); font-size:11px; text-decoration:underline; cursor:pointer; padding:0; font-family:inherit; }
   .auto-tag{ font-size:8px; background:#E2E6F5; color:#3a4a8a; padding:2px 7px; border-radius:10px; margin-left:6px; text-transform:uppercase; letter-spacing:.04em; font-weight:700; }
+
+  /* ---- level confirmation (Phase 4) ---- */
+  .level-cell{ max-width:170px; }
+  .requested-line{ font-size:11px; color:var(--ink-soft); margin-bottom:6px; }
+  .confirmed-line{ font-size:11.5px; display:flex; align-items:center; gap:6px; margin-top:6px; }
+  select.confirm-level-select{ font-size:11.5px; padding:5px 7px; border-radius:6px; border:1px solid var(--line); }
+  .level-mismatch-note{ font-size:10.5px; color:#8a6a1f; margin-top:4px; }
+  .level-sync-link{ font-size:10.5px; color:var(--gold); text-decoration:underline; cursor:pointer; background:none; border:none; padding:0; font-family:inherit; display:block; margin-top:4px; }
+  .level-na{ color:var(--ink-soft); font-style:italic; font-size:11.5px; }
 </style>
 </head>
 <body>
@@ -204,6 +213,7 @@
             <th>Client</th>
             <th>Date / Time</th>
             <th>Notes</th>
+            <th>Level</th>
             <th>Status</th>
             <th>Payment</th>
             <th>Amount</th>
@@ -355,6 +365,17 @@
 
   let allBookings = [];
 
+  // Mirrors the LEVELS/LEVEL_PRICES definitions in the public site's
+  // index.html — kept in sync manually since the two files share no code.
+  const LEVELS = [
+    { code:'L1', name:'Listening Space' },
+    { code:'L2', name:'Release' },
+    { code:'L3', name:'Transform' },
+    { code:'L4', name:'Evolve' }
+  ];
+  const LEVEL_PRICES = { L1: 150, L2: 1500, L3: 3000, L4: 5000 };
+  function levelName(code){ const l = LEVELS.find(x => x.code === code); return l ? l.name : code; }
+
   function showDash(show){
     document.getElementById('loginView').style.display = show ? 'none' : 'block';
     document.getElementById('dashView').style.display = show ? 'block' : 'none';
@@ -423,6 +444,36 @@
     ].map(([l,n]) => `<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
   }
 
+  // Requested level is set by the client at booking time and never
+  // changes. Confirmed level is set here by the admin after actually
+  // talking to the client, and is what the Clients tab / auto-session
+  // tags prefer once it exists (see clientDerivedView / autoSessionTag).
+  function renderLevelCell(b){
+    if(b.appointment_type !== 'regular_session'){
+      return `<span class="level-na">Not applicable</span>`;
+    }
+    const requestedChip = b.requested_service_level
+      ? `<span class="level-chip level-chip-${b.requested_service_level}">${b.requested_service_level}</span> ${escapeHtml(levelName(b.requested_service_level))}`
+      : `<span class="muted">none on file</span>`;
+    const requestedLine = `<div class="requested-line">Requested: ${requestedChip}</div>`;
+
+    if(!b.confirmed_service_level){
+      return `${requestedLine}
+        <select class="inline confirm-level-select">
+          <option value="">Confirm level…</option>
+          ${LEVELS.map(l => `<option value="${l.code}">${l.code} — ${l.name}</option>`).join('')}
+        </select>`;
+    }
+
+    const confirmedChip = `<span class="level-chip level-chip-${b.confirmed_service_level}">${b.confirmed_service_level}</span> ${escapeHtml(levelName(b.confirmed_service_level))}`;
+    const mismatch = b.requested_service_level && b.confirmed_service_level !== b.requested_service_level;
+    const syncPrice = LEVEL_PRICES[b.confirmed_service_level];
+    return `${requestedLine}
+      <div class="confirmed-line">Confirmed: ${confirmedChip}</div>
+      ${mismatch ? `<div class="level-mismatch-note">⚠ differs from requested level</div>` : ''}
+      ${mismatch && syncPrice != null ? `<button type="button" class="level-sync-link" data-sync-price="${syncPrice}">Update Total to $${syncPrice.toLocaleString()} (${b.confirmed_service_level} package)?</button>` : ''}`;
+  }
+
   function renderTable(){
     const statusF = document.getElementById('statusFilter').value;
     const paymentF = document.getElementById('paymentFilter').value;
@@ -451,6 +502,7 @@
               : `<span class="muted">No client profile</span>`}</td>
         <td>${b.requested_date}<br><span class="muted">${escapeHtml(b.requested_time_label)} (slot ${b.session_slot_number})</span></td>
         <td class="desc-cell">${escapeHtml(b.description)}</td>
+        <td class="level-cell">${renderLevelCell(b)}</td>
         <td>
           <span class="tag tag-${b.status}">${b.status}</span><br>
           <select class="inline status-select" style="margin-top:6px;">
@@ -487,6 +539,20 @@
       const id = tr.getAttribute('data-id');
       tr.querySelector('.status-select').addEventListener('change', (e) => updateBooking(id, { status: e.target.value }));
       tr.querySelector('.payment-select').addEventListener('change', (e) => updateBooking(id, { payment_status: e.target.value }));
+
+      const confirmLevelSelect = tr.querySelector('.confirm-level-select');
+      if(confirmLevelSelect){
+        confirmLevelSelect.addEventListener('change', (e) => {
+          if(!e.target.value) return;
+          updateBooking(id, { confirmed_service_level: e.target.value });
+        });
+      }
+      const levelSyncLink = tr.querySelector('.level-sync-link');
+      if(levelSyncLink){
+        levelSyncLink.addEventListener('click', (e) => {
+          updateBooking(id, { amount_total: Number(e.target.dataset.syncPrice) });
+        });
+      }
 
       tr.querySelector('.amount-total-input').addEventListener('change', (e) => {
         const val = e.target.value.trim() === '' ? 0 : Number(e.target.value);
