@@ -1977,10 +1977,33 @@
   // confirmed) is the real guard against a race between two submits —
   // Postgres rejects the second insert outright even if both passed the
   // recheck above at nearly the same instant.
+  // Matches this booking to a client profile (or creates one) via a
+  // security-definer database function — the anon key never gets direct
+  // read access to the clients table, only this narrow RPC. Best-effort:
+  // if matching fails for any reason, the booking still proceeds without
+  // a client_id rather than blocking a real booking over this.
+  async function matchOrCreateClient(firstName, lastName, email, phone){
+    if(!supabaseClient) return null;
+    try{
+      const { data, error } = await supabaseClient.rpc('find_or_create_client', {
+        p_first_name: firstName,
+        p_last_name: lastName,
+        p_email: email,
+        p_phone: phone
+      });
+      if(error) throw error;
+      return data || null;
+    } catch(err){
+      console.error('Client matching failed (booking still proceeds):', err);
+      return null;
+    }
+  }
+
   async function saveLiveBooking(dateObj, slotNum, name, bookingId, email, extra){
     if(!supabaseClient) return false;
     try{
       const key = dateKey(dateObj);
+      const clientId = await matchOrCreateClient(extra.firstName, extra.lastName, email, extra.phone);
       // No .select() chained here on purpose: the anon key can INSERT
       // but cannot SELECT (see supabase_schema.sql RLS policies), so
       // asking Postgrest to return the inserted row would fail even
@@ -1997,7 +2020,9 @@
           age: extra.age ? Number(extra.age) : null,
           email: email,
           phone: extra.phone,
-          description: extra.description
+          description: extra.description,
+          client_id: clientId,
+          appointment_type: 'regular_session'
         });
       if(error) throw error;
       liveBookedSlots.push({ date:key, slot:slotNum });
