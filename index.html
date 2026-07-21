@@ -298,11 +298,40 @@
     display:block; text-align:left; font-family:'Work Sans',sans-serif; font-style:italic;
     color:var(--ink-soft); line-height:1.55; font-size:13.5px;
   }
+
+  /* ---- screen 2: "you're all set" follow-up ---- */
+  .bc-s2-icon{ background:#FBEFD6; color:#8a6a1f; }
+  .bc-bid-block{
+    display:block; width:100%; background:var(--card); border:1.5px dashed var(--gold); border-radius:12px;
+    padding:16px 18px; text-align:center; margin:0 0 18px; font-family:inherit; cursor:pointer;
+  }
+  .bc-bid-label{
+    display:block; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:.05em;
+    text-transform:uppercase; color:var(--ink-soft); margin-bottom:5px;
+  }
+  .bc-bid-value{
+    display:block; font-family:'IBM Plex Mono', monospace; font-size:17px; font-weight:700;
+    color:var(--ink); letter-spacing:.02em;
+  }
+  .bc-bid-copy-hint{ display:block; font-size:10.5px; color:var(--gold); margin-top:6px; }
+  .bc-s2-copy{ font-family:'Work Sans',sans-serif; font-size:13.5px; color:var(--ink); line-height:1.6; text-align:center; margin:0 0 18px; }
+  .bc-phone-link{
+    display:block; text-align:center; font-family:'Work Sans',sans-serif; font-size:15px; font-weight:700;
+    color:var(--ink); text-decoration:none; background:rgba(201,138,156,0.10); border-radius:10px; padding:12px; margin:0 0 20px;
+  }
+  .bc-phone-label{
+    display:block; font-family:'IBM Plex Mono', monospace; font-size:9.5px; letter-spacing:.05em;
+    text-transform:uppercase; color:var(--ink-soft); font-weight:600; margin-bottom:3px;
+  }
+  .bc-close-btn{
+    display:block; width:100%; text-align:center; background:var(--ink); color:#fff; border:none;
+    padding:13px; border-radius:10px; font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:700;
+    letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;
+  }
   .booking-confirm-wa-btn{
     display:inline-block; margin-top:10px; background:var(--gold); color:#fff; font-family:'IBM Plex Mono', monospace;
     font-size:11px; letter-spacing:0.06em; text-transform:uppercase; padding:12px 20px; border-radius:8px; text-decoration:none;
   }
-  .booking-confirm-wa-btn.wa-btn-done{ opacity:.55; pointer-events:none; }
   .booking-confirm-cal-btn{
     display:inline-block; margin-top:18px; background:var(--band); color:var(--band-text); font-family:'IBM Plex Mono', monospace;
     font-size:11px; letter-spacing:0.06em; text-transform:uppercase; padding:12px 20px; border-radius:8px; text-decoration:none;
@@ -1753,12 +1782,33 @@
 <div class="topic-modal-overlay" id="bookingModalOverlay" onclick="if(event.target===this) closeBookingModal()">
 <div class="topic-modal booking-confirm-modal">
 <button aria-label="Close" class="topic-modal-close" onclick="closeBookingModal()">×</button>
+
+<div id="bcScreen1">
 <div class="booking-confirm-icon">✓</div>
 <h3 id="bookingModalHeading">Your booking request has been received</h3>
 <div class="bc-subhead" id="bookingModalSubhead"></div>
 <div id="bookingModalDetail"></div>
-<p class="modal-copy shift">Save your Booking ID. This is a request, not a confirmation — we'll email you with next steps and payment details after review.</p>
+<p class="modal-copy shift">This is a request, not a confirmation.</p>
 <div id="bookingModalCalWrap"></div>
+</div>
+
+<div id="bcScreen2" style="display:none;">
+<div class="booking-confirm-icon bc-s2-icon">💬</div>
+<h3>You're All Set!</h3>
+<div class="bc-subhead">Here's What Happens Next</div>
+<button type="button" class="bc-bid-block" id="bcBidBlock" onclick="copyBookingId(this)">
+  <span class="bc-bid-label">Your Booking ID</span>
+  <span class="bc-bid-value" id="bcBidValue"></span>
+  <span class="bc-bid-copy-hint" id="bcBidCopyHint">Tap to copy · save this for reference</span>
+</button>
+<p class="bc-s2-copy">You'll receive a confirmation email within the next hour with your session details.</p>
+<a href="#" class="bc-phone-link" id="bcPhoneLink">
+  <span class="bc-phone-label">Haven't heard from us? Call or WhatsApp</span>
+  <span id="bcPhoneNumber"></span>
+</a>
+<button type="button" class="bc-close-btn" onclick="closeBookingModal()">Close</button>
+</div>
+
 </div>
 </div>
 <!-- HELP / FAQ WIDGET -->
@@ -2699,25 +2749,45 @@
     return URL.createObjectURL(blob);
   }
 
-  // Prevents the "duplicate WhatsApp message" problem: the confirmation
-  // modal intentionally stays open after this is clicked (so the client
-  // can still see their Booking ID), but with no visible change on the
-  // button itself, an unsure client would tap it again — reopening
-  // WhatsApp with the same pre-filled message and often sending it a
-  // second or third time. Locking the button after the first tap makes
-  // it obvious the action already happened.
-  function handleWaConfirmClick(el){
+  // Prevents the "duplicate WhatsApp message" problem: an unsure client
+  // tapping this more than once would reopen WhatsApp with the same
+  // pre-filled message each time, often sending it two or three times.
+  // The dataset guard blocks repeat taps; swapping to Screen 2 (the
+  // "You're All Set" follow-up) makes it obvious the action already
+  // happened, same as locking the button used to, but clearer.
+  function handleRequestSpotClick(el){
     if(el.dataset.opened === 'true') return false;
     el.dataset.opened = 'true';
-    el.textContent = 'Tap Send in WhatsApp ✓';
-    el.classList.add('wa-btn-done');
-    return true;
+    const s1 = document.getElementById('bcScreen1');
+    const s2 = document.getElementById('bcScreen2');
+    if(s1) s1.style.display = 'none';
+    if(s2) s2.style.display = '';
+    return true; // let the WhatsApp link continue opening in its own tab
+  }
+
+  function copyBookingId(){
+    const valueEl = document.getElementById('bcBidValue');
+    const hintEl = document.getElementById('bcBidCopyHint');
+    const text = valueEl ? valueEl.textContent : '';
+    if(!text || !navigator.clipboard || !navigator.clipboard.writeText) return;
+    navigator.clipboard.writeText(text).then(() => {
+      if(!hintEl) return;
+      hintEl.textContent = 'Copied!';
+      setTimeout(() => { hintEl.textContent = 'Tap to copy · save this for reference'; }, 1500);
+    }).catch(() => {});
   }
 
   const LEVEL_PILL_COLORS = { L1:'#5C9AA0', L2:'#5C8A63', L3:'#C9789A', L4:'#8A5FBF' };
 
   function openBookingConfirmModal(waLink, bookingId, slotNum, dateLabel, timeLabel, mode, level, sessionNumber, description){
     const isDiscovery = mode === 'discovery_call';
+
+    // Always start on Screen 1 — the modal markup is reused across bookings.
+    const s1 = document.getElementById('bcScreen1');
+    const s2 = document.getElementById('bcScreen2');
+    if(s1) s1.style.display = '';
+    if(s2) s2.style.display = 'none';
+
     const headingEl = document.getElementById('bookingModalHeading');
     if(headingEl){
       headingEl.textContent = isDiscovery ? 'Discovery Call Requested' : 'Coaching Session Requested';
@@ -2744,7 +2814,6 @@
       detailEl.innerHTML = `
         <div class="bc-receipt">
           <div class="bc-receipt-top">
-            <div class="bc-bid">Booking ID <b>${escapeHtmlFrontend(bookingId)}</b></div>
             <div class="bc-when">${escapeHtmlFrontend(dateLabel)} · ${escapeHtmlFrontend(timeLabel)} <span class="bc-tz">(Arizona Time)</span></div>
           </div>
           <div class="bc-meta">
@@ -2756,10 +2825,23 @@
         </div>`;
     }
 
+    const bidValueEl = document.getElementById('bcBidValue');
+    if(bidValueEl) bidValueEl.textContent = bookingId;
+    const bidHintEl = document.getElementById('bcBidCopyHint');
+    if(bidHintEl) bidHintEl.textContent = 'Tap to copy · save this for reference';
+
+    const phoneLinkEl = document.getElementById('bcPhoneLink');
+    const phoneNumberEl = document.getElementById('bcPhoneNumber');
+    if(phoneLinkEl && phoneNumberEl){
+      const n = BOOKING_WHATSAPP_NUMBER;
+      phoneLinkEl.href = 'tel:+' + n;
+      phoneNumberEl.textContent = '+' + n[0] + ' ' + n.slice(1,4) + '-' + n.slice(4,7) + '-' + n.slice(7);
+    }
+
     const calWrap = document.getElementById('bookingModalCalWrap');
     if(calWrap){
       calWrap.innerHTML = '<a class="booking-confirm-wa-btn" href="' + waLink
-        + '" rel="noopener" target="_blank" onclick="return handleWaConfirmClick(this)">Confirm Your Spot</a>';
+        + '" rel="noopener" target="_blank" onclick="return handleRequestSpotClick(this)">Request Your Spot</a>';
     }
 
     document.getElementById('bookingModalOverlay').classList.add('open');
