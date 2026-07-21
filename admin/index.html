@@ -615,6 +615,15 @@
     return level ? (level + ' — ' + levelName(level)) : 'Not yet assigned';
   }
 
+  // The numbered Session that trg_create_session_from_booking created for
+  // THIS specific booking (matched via source_booking_id, set at Phase 3).
+  // Falls back to a plain dash if the client didn't match to a profile or
+  // the session lookup otherwise comes up empty — never blocks the email.
+  function sessionNumberLine(booking){
+    const session = allSessions.find(s => String(s.source_booking_id) === String(booking.id));
+    return session ? ('Session ' + session.session_number) : '—';
+  }
+
   function sendStatusChangeEmail(booking, newStatus){
     if(!window.emailjs) return;
     const templateId = newStatus === 'confirmed' ? EMAILJS_TEMPLATE_ID_CONFIRMED
@@ -629,7 +638,9 @@
       date: booking.requested_date,
       time: booking.requested_time_label,
       booking_status: newStatus === 'confirmed' ? 'Confirmed' : 'Cancelled',
-      session_level: sessionTypeLine(booking)
+      session_level: sessionTypeLine(booking),
+      session_number: sessionNumberLine(booking),
+      description: booking.description || ''
     }).catch(function(err){ console.error('EmailJS status update email failed:', err); });
   }
 

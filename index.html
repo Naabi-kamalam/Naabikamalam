@@ -1980,6 +1980,10 @@
     return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
   }
 
+  function escapeHtmlFrontend(str){
+    return String(str ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
   // All booking validation uses Arizona wall-clock time rather than the
   // visitor's phone/computer timezone. Arizona stays on UTC-7 year-round.
   function getArizonaNowParts(){
@@ -2136,12 +2140,37 @@
     }
   }
 
+  // Best-effort preview of which numbered Session this booking will become
+  // (the real number is assigned server-side by trg_create_session_from_booking
+  // at insert time — this just predicts it so the client can be told "This
+  // will be your Session 3" without anon ever getting read access to
+  // client_sessions). If it fails or the client didn't match, the
+  // confirmation screen simply omits the session number rather than
+  // blocking anything.
+  async function getNextSessionNumber(clientId){
+    if(!supabaseClient || !clientId) return null;
+    try{
+      const { data, error } = await supabaseClient.rpc('get_next_session_number', { p_client_id: clientId });
+      if(error) throw error;
+      return data || null;
+    } catch(err){
+      console.error('Session number preview failed (non-blocking):', err);
+      return null;
+    }
+  }
+
   async function saveLiveBooking(dateObj, slotNum, name, bookingId, email, extra){
-    if(!supabaseClient) return false;
+    if(!supabaseClient) return { ok:false };
     try{
       const key = dateKey(dateObj);
       const ageNum = extra.age ? Number(extra.age) : null;
       const clientId = await matchOrCreateClient(extra.firstName, extra.lastName, email, extra.phone, ageNum);
+      // Predict the session number BEFORE inserting the booking — the
+      // insert's trigger will assign this exact same number to the real
+      // session row, using the identical "current max + 1" formula.
+      // Querying this after the insert would see the row the trigger
+      // just created and predict the NEXT booking's number instead.
+      const sessionNumber = await getNextSessionNumber(clientId);
       // No .select() chained here on purpose: the anon key can INSERT
       // but cannot SELECT (see supabase_schema.sql RLS policies), so
       // asking Postgrest to return the inserted row would fail even
@@ -2169,10 +2198,10 @@
       if(error) throw error;
       liveBookedSlots.push({ date:key, slot:slotNum });
       liveBookingsReady = true;
-      return true;
+      return { ok:true, sessionNumber };
     } catch(err){
       console.error('Booking save failed:', err);
-      return false;
+      return { ok:false };
     }
   }
 
@@ -2512,7 +2541,7 @@
     // Saves the full booking (slot reservation + all details) to Supabase
     // in one insert. If it cannot be saved, stop rather than telling the
     // client the request succeeded.
-    const slotSaved = await saveLiveBooking(
+    const saveResult = await saveLiveBooking(
       calSelectedDate, bkSelectedSlotNum, firstName + ' ' + lastName, bookingId, email,
       {
         timeLabel: bkSelectedTime, firstName, lastName, age, phone: fullPhone, description,
@@ -2522,7 +2551,7 @@
         price: isDiscovery ? 0 : (LEVEL_PRICES[bkSelectedLevel] || null)
       }
     );
-    if(!slotSaved){
+    if(!saveResult.ok){
       btn.disabled = false;
       btn.textContent = 'Request This Time';
       statusEl.className = 'bk-status bk-status-err';
@@ -2531,7 +2560,7 @@
       return false;
     }
 
-    openBookingConfirmModal(waLink, bookingId, bkSelectedSlotNum, dateLabel, bkSelectedTime, bookingMode, bkSelectedLevel);
+    openBookingConfirmModal(waLink, bookingId, bkSelectedSlotNum, dateLabel, bkSelectedTime, bookingMode, bkSelectedLevel, saveResult.sessionNumber, description);
 
     document.getElementById('bookingForm').reset();
     calSelectedDate = null; bkSelectedTime = null; bkSelectedSlotNum = null; bkSelectedLevel = null;
@@ -2636,7 +2665,7 @@
     return URL.createObjectURL(blob);
   }
 
-  function openBookingConfirmModal(waLink, bookingId, slotNum, dateLabel, timeLabel, mode, level){
+  function openBookingConfirmModal(waLink, bookingId, slotNum, dateLabel, timeLabel, mode, level, sessionNumber, description){
     const headingEl = document.getElementById('bookingModalHeading');
     if(headingEl){
       headingEl.textContent = mode === 'discovery_call'
@@ -2650,9 +2679,16 @@
       const statusLine = mode === 'discovery_call'
         ? 'Status: Request received — awaiting review'
         : 'Level requested: ' + level + (lvl ? ' — ' + lvl.name + ' (' + lvl.outcome + ')' : '') + '<br>Status: Request received — awaiting review';
+      const sessionLine = sessionNumber
+        ? '<br><span style="font-size:12px;font-weight:400;">This will be your Session ' + sessionNumber + '.</span>'
+        : '';
+      const descriptionLine = description
+        ? '<br><span style="font-size:12px;font-weight:400;">You shared: “' + escapeHtmlFrontend(description) + '”</span>'
+        : '';
       detailEl.innerHTML = '<b>Booking ID: ' + bookingId + '</b><br>'
         + dateLabel + ' at ' + timeLabel + ' (Arizona Time — MST)'
-        + '<br><span style="font-size:12px;font-weight:400;">' + statusLine + '</span>';
+        + '<br><span style="font-size:12px;font-weight:400;">' + statusLine + '</span>'
+        + sessionLine + descriptionLine;
     }
 
     const calWrap = document.getElementById('bookingModalCalWrap');
