@@ -70,17 +70,65 @@
   #loadErr{ color:var(--danger); font-size:13px; margin-top:10px; }
   .empty{ text-align:center; padding:40px; color:var(--ink-soft); font-style:italic; }
   .notes-link{ background:none; border:none; color:var(--gold); font-size:11px; text-decoration:underline; cursor:pointer; padding:0; margin-top:6px; font-family:inherit; }
-  .notes-modal-overlay{ display:none; position:fixed; inset:0; z-index:100; background:rgba(36,26,40,0.55); align-items:center; justify-content:center; padding:20px; }
-  .notes-modal-overlay.open{ display:flex; }
-  .notes-modal{ background:#fff; max-width:480px; width:100%; max-height:82vh; overflow-y:auto; border-radius:12px; padding:24px; position:relative; box-shadow:0 20px 50px rgba(0,0,0,.3); }
-  .notes-modal-close{ position:absolute; top:14px; right:14px; width:28px; height:28px; border-radius:50%; background:rgba(36,26,40,.06); border:none; font-size:16px; line-height:1; cursor:pointer; }
-  .notes-modal h3{ font-family:'Fraunces',serif; font-size:17px; margin:0 0 4px; padding-right:24px; }
-  .notes-modal-sub{ font-size:11.5px; color:var(--ink-soft); margin:0 0 16px; }
-  .notes-list{ display:flex; flex-direction:column; gap:10px; margin-bottom:18px; max-height:280px; overflow-y:auto; }
-  .note-entry{ background:#FFF9F7; border:1px solid var(--line); border-radius:8px; padding:10px 12px; font-size:12.5px; line-height:1.55; }
-  .note-entry .note-date{ font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--ink-soft); margin-bottom:4px; }
-  .notes-empty{ font-size:12.5px; color:var(--ink-soft); font-style:italic; }
-  .notes-modal textarea{ width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:8px; font-family:inherit; font-size:13px; resize:vertical; }
+
+  /* ---- sessions modal ---- */
+  .sessions-modal-overlay{ display:none; position:fixed; inset:0; z-index:100; background:rgba(36,26,40,0.55); align-items:center; justify-content:center; padding:20px; }
+  .sessions-modal-overlay.open{ display:flex; }
+  .sessions-modal{ background:#fff; max-width:560px; width:100%; max-height:88vh; overflow-y:auto; border-radius:12px; padding:26px; position:relative; box-shadow:0 20px 50px rgba(0,0,0,.3); }
+  .sessions-modal-close{ position:absolute; top:14px; right:14px; width:28px; height:28px; border-radius:50%; background:rgba(36,26,40,.06); border:none; font-size:16px; line-height:1; cursor:pointer; }
+  .sessions-modal h3{ font-family:'Fraunces',serif; font-size:19px; margin:0 0 2px; padding-right:24px; }
+  .sessions-modal-sub{ font-size:11.5px; color:var(--ink-soft); margin:0 0 18px; }
+  .sessions-top-row{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:10px; }
+  .session-count-badge{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-soft); background:#FFF3F0; border:1px solid var(--line); padding:6px 12px; border-radius:20px; }
+  .btn-report{ background:none; border:1px solid var(--gold); color:var(--gold); padding:8px 13px; border-radius:8px; font-size:11.5px; cursor:pointer; font-family:inherit; }
+
+  .session-card{ border:1px solid var(--line); border-radius:10px; margin-bottom:14px; overflow:hidden; }
+  .session-card.latest{ border-color:var(--gold); box-shadow:0 0 0 1px var(--gold); }
+  .session-head{ background:#FBF3EF; padding:10px 16px; display:flex; align-items:center; justify-content:space-between; }
+  .session-head .s-title{ font-family:'Fraunces',serif; font-weight:600; font-size:14px; }
+  .session-head .s-date{ font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--ink-soft); }
+  .latest-tag{ background:var(--gold); color:#fff; font-size:9px; font-family:'IBM Plex Mono',monospace; padding:2px 8px; border-radius:20px; letter-spacing:.05em; text-transform:uppercase; margin-left:8px; }
+  .session-body{ padding:14px 16px; }
+  .session-field{ margin-bottom:12px; }
+  .session-field:last-child{ margin-bottom:0; }
+  .session-field label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--gold); margin-bottom:4px; }
+  .session-field textarea{ width:100%; padding:8px 10px; border:1px solid var(--line); border-radius:8px; font-family:inherit; font-size:12.5px; line-height:1.5; resize:vertical; }
+  .progress-pair{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .attach-row{ display:flex; gap:8px; margin-top:6px; flex-wrap:wrap; align-items:center; }
+  .thumb{ width:46px; height:46px; border-radius:6px; object-fit:cover; border:1px solid var(--line); background:#EADDE1; }
+  .upload-label{ width:46px; height:46px; border-radius:6px; border:1.5px dashed var(--gold); color:var(--gold); display:flex; align-items:center; justify-content:center; font-size:18px; cursor:pointer; }
+  .upload-label input{ display:none; }
+  .add-session-btn{ width:100%; border:1.5px dashed var(--gold); background:#FFF9F7; color:var(--gold); font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.05em; text-transform:uppercase; padding:14px; border-radius:10px; cursor:pointer; }
+  .sessions-empty{ font-size:12.5px; color:var(--ink-soft); font-style:italic; margin-bottom:14px; }
+
+  /* ---- report modal ---- */
+  .report-modal{ background:var(--paper); max-width:760px; width:100%; max-height:90vh; overflow-y:auto; border-radius:12px; padding:28px; position:relative; box-shadow:0 20px 50px rgba(0,0,0,.3); }
+  .report-back-link{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--gold); background:none; border:none; cursor:pointer; padding:0; }
+  .report-modal h1{ font-family:'Fraunces',serif; font-style:italic; font-size:24px; margin:14px 0 2px; }
+  .report-client-meta{ font-size:12.5px; color:var(--ink-soft); margin:0 0 22px; }
+  .report-stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:26px; }
+  .report-stat{ background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px; }
+  .report-stat .n{ font-family:'Fraunces',serif; font-size:22px; }
+  .report-stat .l{ font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); margin-top:2px; }
+  .report-section-title{ font-family:'Fraunces',serif; font-weight:500; font-size:13px; text-transform:uppercase; letter-spacing:.06em; margin:0 0 14px; border-bottom:1px solid var(--line); padding-bottom:8px; }
+  .report-compare{ display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:stretch; margin-bottom:28px; }
+  .compare-card{ background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px; }
+  .compare-card.now{ border-color:var(--gold); background:#FFF9F7; }
+  .compare-card .tag{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px; display:block; }
+  .compare-card.now .tag{ color:var(--gold); }
+  .compare-card p{ font-size:12.5px; line-height:1.6; margin:0; }
+  .compare-arrow{ display:flex; align-items:center; justify-content:center; font-size:20px; color:var(--gold); }
+  .tag-chip{ display:inline-block; background:#FBEFD6; color:#8a6a1f; font-size:11px; padding:5px 11px; border-radius:20px; margin:0 6px 6px 0; }
+  .report-timeline{ margin:0 0 28px; padding:0; list-style:none; }
+  .report-timeline li{ display:flex; gap:14px; padding:12px 0; border-bottom:1px solid var(--line); }
+  .report-timeline li:last-child{ border-bottom:none; }
+  .report-timeline .t-num{ font-family:'Fraunces',serif; font-weight:600; font-size:14px; color:var(--gold); flex:0 0 66px; }
+  .report-timeline .t-date{ font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--ink-soft); display:block; margin-bottom:3px; }
+  .report-timeline .t-text{ font-size:12.5px; color:var(--ink-soft); line-height:1.5; }
+  .report-gallery{ display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
+  .g-item{ aspect-ratio:1; border-radius:8px; overflow:hidden; position:relative; background:#EADDE1; }
+  .g-item img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .g-item .g-label{ position:absolute; bottom:4px; left:6px; font-family:'IBM Plex Mono',monospace; font-size:8px; color:#fff; background:rgba(36,26,40,.55); padding:1px 5px; border-radius:8px; }
 </style>
 </head>
 <body>
@@ -173,17 +221,49 @@
 
 </main>
 
-<!-- CLIENT SESSION NOTES MODAL -->
-<div class="notes-modal-overlay" id="notesModalOverlay">
-  <div class="notes-modal">
-    <button class="notes-modal-close" id="notesModalCloseBtn" aria-label="Close">×</button>
-    <h3 id="notesModalClient"></h3>
-    <p class="notes-modal-sub">Private session notes &amp; planning — never shown to the client.</p>
-    <div class="notes-list" id="notesList"></div>
-    <label for="newNoteText">Add a note</label>
-    <textarea id="newNoteText" placeholder="What happened this session, what to plan for next time…" rows="3"></textarea>
-    <div style="margin-top:10px;"><button class="btn" id="addNoteBtn" type="button">Add Note</button></div>
-    <div class="muted" id="notesModalErr" style="margin-top:8px;"></div>
+<!-- CLIENT SESSION HISTORY MODAL -->
+<div class="sessions-modal-overlay" id="sessionsModalOverlay">
+  <div class="sessions-modal">
+    <button class="sessions-modal-close" id="sessionsModalCloseBtn" aria-label="Close">×</button>
+    <h3 id="sessionsModalClient"></h3>
+    <p class="sessions-modal-sub">Private session notes &amp; progress tracking — never shown to the client.</p>
+    <div class="sessions-top-row">
+      <span class="session-count-badge" id="sessionCountBadge">0 sessions logged</span>
+      <button class="btn-report" id="viewReportBtn" type="button">View Full Report →</button>
+    </div>
+    <div id="sessionCardsWrap"></div>
+    <div class="muted" id="sessionsModalErr" style="margin-top:8px;"></div>
+    <button class="add-session-btn" id="addSessionBtn" type="button">+ Add Session</button>
+  </div>
+</div>
+
+<!-- CLIENT PROGRESS REPORT MODAL -->
+<div class="sessions-modal-overlay" id="reportModalOverlay">
+  <div class="report-modal">
+    <button class="sessions-modal-close" id="reportModalCloseBtn" aria-label="Close">×</button>
+    <button class="report-back-link" id="reportBackBtn" type="button">← Back to Sessions</button>
+    <h1 id="reportClientName"></h1>
+    <p class="report-client-meta" id="reportClientMeta"></p>
+
+    <div class="report-stats" id="reportStats"></div>
+
+    <div id="reportCompareSection">
+      <div class="report-section-title">Progress — Then vs. Now</div>
+      <div class="report-compare" id="reportCompare"></div>
+    </div>
+
+    <div id="reportTechniquesSection">
+      <div class="report-section-title">Techniques Used</div>
+      <div id="reportTechniques" style="margin-bottom:28px;"></div>
+    </div>
+
+    <div class="report-section-title">Session Timeline</div>
+    <ul class="report-timeline" id="reportTimeline"></ul>
+
+    <div id="reportGallerySection">
+      <div class="report-section-title">Attachments</div>
+      <div class="report-gallery" id="reportGallery"></div>
+    </div>
   </div>
 </div>
 
@@ -236,7 +316,7 @@
 
   async function afterLogin(){
     showDash(true);
-    await loadClientNotes();
+    await loadSessions();
     await loadBookings();
     await loadLeads();
   }
@@ -301,7 +381,7 @@
         <td><b>${b.booking_id}</b><br><span class="muted">${new Date(b.created_at).toLocaleString()}</span></td>
         <td>${escapeHtml(b.first_name)} ${escapeHtml(b.last_name)}${b.age ? ' · ' + b.age : ''}<br>
             <span class="muted">${escapeHtml(b.email)}<br>${escapeHtml(b.phone)}</span><br>
-            <button class="notes-link" data-email="${escapeHtml(b.email)}" data-name="${escapeHtml(b.first_name + ' ' + b.last_name)}">Notes (${notesForEmail(b.email).length})</button></td>
+            <button class="notes-link" data-email="${escapeHtml(b.email)}" data-name="${escapeHtml(b.first_name + ' ' + b.last_name)}">Sessions (${sessionsForEmail(b.email).length})</button></td>
         <td>${b.requested_date}<br><span class="muted">${escapeHtml(b.requested_time_label)} (slot ${b.session_slot_number})</span></td>
         <td class="desc-cell">${escapeHtml(b.description)}</td>
         <td>
@@ -364,7 +444,7 @@
       });
 
       tr.querySelector('.notes-link').addEventListener('click', (e) => {
-        openNotesModal(e.target.dataset.email, e.target.dataset.name);
+        openSessionsModal(e.target.dataset.email, e.target.dataset.name);
       });
     });
   }
@@ -438,83 +518,277 @@
     `).join('');
   }
 
-  // ---- client session notes (private, per client email, spans all their bookings) ----
-  let allClientNotes = [];
+  // ---- client sessions (private, per client email, spans all their bookings) ----
+  let allSessions = [];
 
-  async function loadClientNotes(){
+  async function loadSessions(){
     const { data, error } = await sb
-      .from('client_notes')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .from('client_sessions')
+      .select('*, client_session_attachments(*)')
+      .order('session_number', { ascending: true });
     if(error){
-      console.error('Could not load client notes:', error.message);
+      console.error('Could not load client sessions:', error.message);
       return;
     }
-    allClientNotes = data || [];
+    allSessions = data || [];
   }
 
-  function notesForEmail(email){
+  function sessionsForEmail(email){
     const key = (email || '').trim().toLowerCase();
-    return allClientNotes.filter(n => (n.client_email || '').trim().toLowerCase() === key);
+    return allSessions
+      .filter(s => (s.client_email || '').trim().toLowerCase() === key)
+      .sort((a, b) => a.session_number - b.session_number);
   }
 
-  function renderNotesList(email){
-    const notes = notesForEmail(email);
-    const listEl = document.getElementById('notesList');
-    if(!notes.length){
-      listEl.innerHTML = '<div class="notes-empty">No notes yet for this client.</div>';
+  async function getAttachmentUrl(storagePath){
+    const { data, error } = await sb.storage.from('session-attachments').createSignedUrl(storagePath, 3600);
+    if(error || !data) return null;
+    return data.signedUrl;
+  }
+
+  async function updateSessionField(sessionId, field, value){
+    const { error } = await sb.from('client_sessions').update({ [field]: value }).eq('id', sessionId);
+    if(error){
+      alert('Could not save: ' + error.message);
       return;
     }
-    listEl.innerHTML = notes.map(n => `
-      <div class="note-entry">
-        <div class="note-date">${new Date(n.created_at).toLocaleString()}</div>
-        <div>${escapeHtml(n.note).replace(/\n/g, '<br>')}</div>
-      </div>
-    `).join('');
+    const s = allSessions.find(x => String(x.id) === String(sessionId));
+    if(s) s[field] = value;
   }
 
-  function openNotesModal(email, displayName){
-    document.getElementById('notesModalClient').textContent = displayName;
-    document.getElementById('notesModalOverlay').dataset.email = email;
-    document.getElementById('newNoteText').value = '';
-    document.getElementById('notesModalErr').textContent = '';
-    renderNotesList(email);
-    document.getElementById('notesModalOverlay').classList.add('open');
+  async function uploadAttachment(sessionId, file){
+    const errEl = document.getElementById('sessionsModalErr');
+    errEl.textContent = '';
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const storagePath = 'sessions/' + sessionId + '/' + Date.now() + '-' + safeName;
+
+    const { error: uploadErr } = await sb.storage.from('session-attachments').upload(storagePath, file);
+    if(uploadErr){
+      errEl.textContent = 'Could not upload photo: ' + uploadErr.message;
+      return;
+    }
+    const { error: insertErr } = await sb.from('client_session_attachments').insert({ session_id: sessionId, storage_path: storagePath });
+    if(insertErr){
+      errEl.textContent = 'Photo uploaded but could not be linked: ' + insertErr.message;
+      return;
+    }
+    const email = document.getElementById('sessionsModalOverlay').dataset.email;
+    await loadSessions();
+    await renderSessionCards(email);
   }
 
-  function closeNotesModal(){
-    document.getElementById('notesModalOverlay').classList.remove('open');
+  async function renderSessionCards(email){
+    const sessions = sessionsForEmail(email);
+    document.getElementById('sessionCountBadge').textContent =
+      sessions.length + (sessions.length === 1 ? ' session logged' : ' sessions logged');
+
+    const wrap = document.getElementById('sessionCardsWrap');
+    if(!sessions.length){
+      wrap.innerHTML = '<div class="sessions-empty">No sessions logged yet for this client.</div>';
+      return;
+    }
+
+    const cardsHtml = await Promise.all(sessions.map(async (s, idx) => {
+      const isLatest = idx === sessions.length - 1;
+      const attachments = s.client_session_attachments || [];
+      const thumbUrls = await Promise.all(attachments.map(a => getAttachmentUrl(a.storage_path)));
+      const thumbsHtml = attachments.map((a, i) => thumbUrls[i]
+        ? `<img class="thumb" src="${thumbUrls[i]}" alt="Attachment"/>`
+        : ''
+      ).join('');
+
+      return `
+        <div class="session-card${isLatest ? ' latest' : ''}" data-session-id="${s.id}">
+          <div class="session-head">
+            <span class="s-title">Session ${s.session_number}${isLatest ? '<span class="latest-tag">Latest</span>' : ''}</span>
+            <span class="s-date">${new Date(s.created_at).toLocaleDateString()}</span>
+          </div>
+          <div class="session-body">
+            <div class="session-field">
+              <label>Notes</label>
+              <textarea class="session-notes-input" rows="2" placeholder="What happened this session…">${escapeHtml(s.notes || '')}</textarea>
+            </div>
+            <div class="progress-pair">
+              <div class="session-field">
+                <label>Progress — Initial</label>
+                <textarea class="session-initial-input" rows="2" placeholder="Where they started…">${escapeHtml(s.progress_initial || '')}</textarea>
+              </div>
+              <div class="session-field">
+                <label>Progress — Now</label>
+                <textarea class="session-now-input" rows="2" placeholder="Where they are now…">${escapeHtml(s.progress_now || '')}</textarea>
+              </div>
+            </div>
+            <div class="session-field">
+              <label>Techniques Used</label>
+              <textarea class="session-techniques-input" rows="1" placeholder="e.g. breathing exercise, role-play…">${escapeHtml(s.techniques_used || '')}</textarea>
+            </div>
+            <div class="session-field">
+              <label>Attachments</label>
+              <div class="attach-row">
+                ${thumbsHtml}
+                <label class="upload-label">+<input type="file" accept="image/*" class="session-upload-input"/></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }));
+
+    wrap.innerHTML = cardsHtml.join('');
+
+    wrap.querySelectorAll('.session-card').forEach(card => {
+      const sessionId = card.dataset.sessionId;
+      card.querySelector('.session-notes-input').addEventListener('change', (e) => updateSessionField(sessionId, 'notes', e.target.value));
+      card.querySelector('.session-initial-input').addEventListener('change', (e) => updateSessionField(sessionId, 'progress_initial', e.target.value));
+      card.querySelector('.session-now-input').addEventListener('change', (e) => updateSessionField(sessionId, 'progress_now', e.target.value));
+      card.querySelector('.session-techniques-input').addEventListener('change', (e) => updateSessionField(sessionId, 'techniques_used', e.target.value));
+      card.querySelector('.session-upload-input').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if(file) uploadAttachment(sessionId, file);
+      });
+    });
   }
 
-  document.getElementById('notesModalCloseBtn').addEventListener('click', closeNotesModal);
-  document.getElementById('notesModalOverlay').addEventListener('click', (e) => {
-    if(e.target.id === 'notesModalOverlay') closeNotesModal();
+  async function openSessionsModal(email, displayName){
+    document.getElementById('sessionsModalClient').textContent = displayName;
+    document.getElementById('sessionsModalOverlay').dataset.email = email;
+    document.getElementById('sessionsModalOverlay').dataset.name = displayName;
+    document.getElementById('sessionsModalErr').textContent = '';
+    await renderSessionCards(email);
+    document.getElementById('sessionsModalOverlay').classList.add('open');
+  }
+
+  function closeSessionsModal(){
+    document.getElementById('sessionsModalOverlay').classList.remove('open');
+  }
+
+  document.getElementById('sessionsModalCloseBtn').addEventListener('click', closeSessionsModal);
+  document.getElementById('sessionsModalOverlay').addEventListener('click', (e) => {
+    if(e.target.id === 'sessionsModalOverlay') closeSessionsModal();
   });
 
-  document.getElementById('addNoteBtn').addEventListener('click', async () => {
-    const email = document.getElementById('notesModalOverlay').dataset.email;
-    const text = document.getElementById('newNoteText').value.trim();
-    const errEl = document.getElementById('notesModalErr');
-    errEl.textContent = '';
-    if(!text){
-      errEl.textContent = 'Write something before saving.';
-      return;
-    }
-    const { error } = await sb.from('client_notes').insert({ client_email: email, note: text });
+  document.getElementById('addSessionBtn').addEventListener('click', async () => {
+    const email = document.getElementById('sessionsModalOverlay').dataset.email;
+    const existing = sessionsForEmail(email);
+    const nextNum = existing.length ? Math.max(...existing.map(s => s.session_number)) + 1 : 1;
+    const { error } = await sb.from('client_sessions').insert({ client_email: email, session_number: nextNum });
     if(error){
-      errEl.textContent = 'Could not save note: ' + error.message;
+      document.getElementById('sessionsModalErr').textContent = 'Could not add session: ' + error.message;
       return;
     }
-    await loadClientNotes();
-    renderNotesList(email);
+    await loadSessions();
+    await renderSessionCards(email);
     renderTable();
-    document.getElementById('newNoteText').value = '';
+  });
+
+  // ---- client progress report ----
+  function dedupeTechniques(sessions){
+    const seen = new Map();
+    sessions.forEach(s => {
+      (s.techniques_used || '').split(',').map(t => t.trim()).filter(Boolean).forEach(t => {
+        const key = t.toLowerCase();
+        if(!seen.has(key)) seen.set(key, t);
+      });
+    });
+    return Array.from(seen.values());
+  }
+
+  async function openReportModal(email, displayName){
+    const sessions = sessionsForEmail(email);
+    document.getElementById('reportClientName').textContent = displayName + ' — Progress Report';
+    document.getElementById('reportClientMeta').textContent = email;
+    document.getElementById('reportModalOverlay').dataset.email = email;
+    document.getElementById('reportModalOverlay').dataset.name = displayName;
+
+    const statsEl = document.getElementById('reportStats');
+    if(!sessions.length){
+      statsEl.innerHTML = '<div class="report-stat"><div class="n">0</div><div class="l">Total Sessions</div></div>';
+      document.getElementById('reportCompareSection').style.display = 'none';
+      document.getElementById('reportTechniquesSection').style.display = 'none';
+      document.getElementById('reportTimeline').innerHTML = '';
+      document.getElementById('reportGallerySection').style.display = 'none';
+      document.getElementById('reportModalOverlay').classList.add('open');
+      return;
+    }
+
+    const first = sessions[0];
+    const last = sessions[sessions.length - 1];
+
+    statsEl.innerHTML = `
+      <div class="report-stat"><div class="n">${sessions.length}</div><div class="l">Total Sessions</div></div>
+      <div class="report-stat"><div class="n">${new Date(first.created_at).toLocaleDateString()}</div><div class="l">First Session</div></div>
+      <div class="report-stat"><div class="n">${new Date(last.created_at).toLocaleDateString()}</div><div class="l">Latest Session</div></div>
+    `;
+
+    document.getElementById('reportCompareSection').style.display = '';
+    document.getElementById('reportCompare').innerHTML = `
+      <div class="compare-card">
+        <span class="tag">Session ${first.session_number} — Initial</span>
+        <p>${escapeHtml(first.progress_initial || 'Not recorded.')}</p>
+      </div>
+      <div class="compare-arrow">→</div>
+      <div class="compare-card now">
+        <span class="tag">Session ${last.session_number} — Now</span>
+        <p>${escapeHtml(last.progress_now || 'Not recorded.')}</p>
+      </div>
+    `;
+
+    const techniques = dedupeTechniques(sessions);
+    document.getElementById('reportTechniquesSection').style.display = techniques.length ? '' : 'none';
+    document.getElementById('reportTechniques').innerHTML = techniques.map(t => `<span class="tag-chip">${escapeHtml(t)}</span>`).join('');
+
+    document.getElementById('reportTimeline').innerHTML = sessions.map(s => `
+      <li>
+        <span class="t-num">Session ${s.session_number}</span>
+        <div><span class="t-date">${new Date(s.created_at).toLocaleDateString()}</span><span class="t-text">${escapeHtml(s.notes || 'No notes recorded.')}</span></div>
+      </li>
+    `).join('');
+
+    const allAttachments = [];
+    sessions.forEach(s => (s.client_session_attachments || []).forEach(a => allAttachments.push(Object.assign({}, a, { session_number: s.session_number }))));
+
+    const galleryEl = document.getElementById('reportGallery');
+    const gallerySection = document.getElementById('reportGallerySection');
+    if(!allAttachments.length){
+      gallerySection.style.display = 'none';
+    } else {
+      gallerySection.style.display = '';
+      const urls = await Promise.all(allAttachments.map(a => getAttachmentUrl(a.storage_path)));
+      galleryEl.innerHTML = allAttachments.map((a, i) => urls[i]
+        ? `<div class="g-item"><img src="${urls[i]}" alt="Attachment"/><span class="g-label">S${a.session_number}</span></div>`
+        : ''
+      ).join('');
+    }
+
+    document.getElementById('reportModalOverlay').classList.add('open');
+  }
+
+  function closeReportModal(){
+    document.getElementById('reportModalOverlay').classList.remove('open');
+  }
+
+  document.getElementById('viewReportBtn').addEventListener('click', async () => {
+    const email = document.getElementById('sessionsModalOverlay').dataset.email;
+    const name = document.getElementById('sessionsModalOverlay').dataset.name;
+    closeSessionsModal();
+    await openReportModal(email, name);
+  });
+
+  document.getElementById('reportModalCloseBtn').addEventListener('click', closeReportModal);
+  document.getElementById('reportModalOverlay').addEventListener('click', (e) => {
+    if(e.target.id === 'reportModalOverlay') closeReportModal();
+  });
+  document.getElementById('reportBackBtn').addEventListener('click', async () => {
+    const email = document.getElementById('reportModalOverlay').dataset.email;
+    const name = document.getElementById('reportModalOverlay').dataset.name;
+    closeReportModal();
+    await openSessionsModal(email, name);
   });
 
   document.getElementById('statusFilter').addEventListener('change', renderTable);
   document.getElementById('paymentFilter').addEventListener('change', renderTable);
   document.getElementById('searchBox').addEventListener('input', renderTable);
-  document.getElementById('refreshBtn').addEventListener('click', async () => { await loadClientNotes(); await loadBookings(); });
+  document.getElementById('refreshBtn').addEventListener('click', async () => { await loadSessions(); await loadBookings(); });
   document.getElementById('refreshLeadsBtn').addEventListener('click', loadLeads);
 </script>
 </body>
