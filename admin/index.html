@@ -200,6 +200,51 @@
   .ladder-arrow{ color:var(--ink-soft); font-size:11px; }
   .boundary-flag{ margin-top:16px; background:#FBEFD6; border:1px solid #E0A03A; border-radius:10px; padding:12px 14px; font-size:12px; line-height:1.6; color:#6a4f14; }
   .boundary-flag strong{ display:block; margin-bottom:4px; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.05em; text-transform:uppercase; }
+
+  /* ---- Screen 1: raw-notes input (mock — nothing is parsed or sent anywhere) ---- */
+  .ai-input-hint{ font-size:11.5px; color:var(--ink-soft); margin:0 0 12px; line-height:1.5; }
+  .ai-input-toolbar{ display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+  .ai-upload-chip{ border:1.5px dashed var(--gold); color:var(--gold); font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.04em; text-transform:uppercase; padding:7px 12px; border-radius:20px; cursor:pointer; }
+  .ai-upload-chip input{ display:none; }
+  .ai-upload-filename{ font-size:11px; color:var(--ink-soft); font-style:italic; }
+  .ai-raw-textarea{ width:100%; min-height:320px; background:#FBF3EF; border:1px solid var(--line); border-radius:10px; padding:16px; font-family:inherit; font-size:12.5px; line-height:1.75; resize:vertical; color:var(--ink); }
+  .ai-generate-btn{ margin-top:14px; background:#7a4a8a; color:#fff; border:none; padding:11px 18px; border-radius:8px; font-size:12.5px; font-weight:600; cursor:pointer; font-family:inherit; }
+  .ai-generate-btn:hover{ opacity:.9; }
+
+  /* ---- Screen 2: level boundaries + leverage point + categorized fields ---- */
+  .level-ref-strip{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:0 0 16px; }
+  .level-ref{ border:1px solid var(--line); border-radius:8px; padding:9px 10px; position:relative; }
+  .level-ref .lr-code{ font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:700; color:var(--ink-soft); display:flex; align-items:center; justify-content:space-between; gap:4px; }
+  .level-ref .lr-outcome{ font-family:'Fraunces',serif; font-size:12.5px; margin:4px 0 5px; }
+  .level-ref .lr-rule{ font-size:10px; line-height:1.45; color:var(--ink-soft); }
+  .level-ref.this-case{ border-color:#7a4a8a; background:#F7F1FA; box-shadow:0 0 0 1px #7a4a8a; }
+  .level-ref.this-case .lr-code{ color:#7a4a8a; }
+  .this-case-tag{ background:#7a4a8a; color:#fff; font-size:8px; padding:2px 6px; border-radius:8px; text-transform:uppercase; letter-spacing:.03em; }
+  .boundary-callout{ border:1px solid #7a4a8a; background:#F7F1FA; border-radius:10px; padding:14px 16px; margin:0 0 18px; }
+  .boundary-callout .bc-title{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.05em; text-transform:uppercase; color:#7a4a8a; margin-bottom:8px; }
+  .boundary-cols{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .boundary-col-title{ font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; margin:0 0 6px; }
+  .boundary-col-title.ok{ color:var(--ok); }
+  .boundary-col-title.no{ color:var(--danger); }
+  .boundary-callout ul{ margin:0; padding-left:16px; font-size:12px; line-height:1.55; }
+  .leverage-banner{ background:linear-gradient(100deg,#7a4a8a,#5a3a6a); color:#fff; border-radius:10px; padding:14px 16px; margin:0 0 10px; font-size:12.5px; line-height:1.6; }
+  .leverage-banner strong{ display:block; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.06em; text-transform:uppercase; margin-bottom:4px; opacity:.85; }
+  .dilts-level.primary{ border-color:#5a3a6a; background:#7a4a8a; }
+  .dilts-level.primary .d-name{ color:#fff; }
+  .dilts-level.primary .d-status{ background:#fff; color:#5a3a6a; font-weight:700; }
+  .dilts-level.primary .d-text{ color:#fff; }
+  .info-card{ border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin-bottom:10px; }
+  .info-card .ic-title{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--gold); margin-bottom:6px; }
+  .info-card p{ margin:0; font-size:12.5px; line-height:1.6; }
+  .info-card p + p{ margin-top:8px; }
+  .parts-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; }
+  .part-card{ border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+  .part-card .pc-title{ font-family:'Fraunces',serif; font-size:13px; margin-bottom:4px; }
+  .part-card .pc-wants{ font-size:11.5px; color:var(--ink-soft); line-height:1.5; }
+  .part-integration{ border:1px dashed var(--gold); border-radius:10px; padding:11px 14px; font-size:12px; line-height:1.55; margin-bottom:10px; color:var(--ink); }
+  .inference-tag{ font-size:9px; background:#E2E6F5; color:#3a4a8a; padding:2px 7px; border-radius:8px; margin-left:6px; text-transform:uppercase; letter-spacing:.03em; }
+  .nlp-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px; }
+  .nlp-tag{ background:#F7F1FA; border:1px solid #D9C3E6; color:#5a3a6a; font-size:11.5px; padding:5px 12px; border-radius:20px; }
 </style>
 </head>
 <body>
@@ -401,10 +446,15 @@
       <button class="ai-tab" type="button" data-panel="aiPanelMeasure">4. Final Release Measure</button>
     </div>
 
-    <!-- Screen 1: raw notes as entered -->
+    <!-- Screen 1: raw notes — type, paste, or upload; nothing here is parsed or sent anywhere yet -->
     <div class="ai-panel active" id="aiPanelRaw">
       <h4>Session Notes — as entered</h4>
-      <div class="ai-raw-note">Divya — Session 1 (Release).
+      <p class="ai-input-hint">Key the notes in directly, paste them from elsewhere, or attach a document/photo of handwritten notes. This is the same raw-notes box the real product will use — this preview just doesn't send it anywhere yet.</p>
+      <div class="ai-input-toolbar">
+        <label class="ai-upload-chip">+ Upload document / photo<input type="file" id="aiUploadInput" accept="image/*,.pdf,.doc,.docx,.txt"/></label>
+        <span class="ai-upload-filename" id="aiUploadFilename"></span>
+      </div>
+      <textarea class="ai-raw-textarea" id="aiRawTextarea">Divya — Session 1 (Release).
 
 Presenting issue: one specific task, an online course she keeps delaying starting.
 
@@ -424,17 +474,66 @@ Committed action: watch the course video for 10 minutes — first 3 bullet point
 
 Future-paced tomorrow at the exact time she plans to start; agreed that if resistance shows up again she'll notice it and remind herself she only needs the first 10 minutes.
 
-Re-measured: Resistance 8 → 2. Confidence and heaviness were measured again but not clearly recorded this session.
-
-[Optional — photo of handwritten notes attached]</div>
+Re-measured: Resistance 8 → 2. Confidence and heaviness were measured again but not clearly recorded this session.</textarea>
+      <button class="ai-generate-btn" type="button" id="aiGenerateBtn">Generate Case Formulation →</button>
     </div>
 
-    <!-- Screen 2: full AI case formulation, incl. full Dilts 6-level breakdown -->
+    <!-- Screen 2: full AI case formulation — level boundaries, leverage point, full Dilts 6-level breakdown, categorized fields -->
     <div class="ai-panel" id="aiPanelFormulation">
       <h4>Presenting Issue</h4>
       <p>One specific task — an online course — repeatedly delayed. Client-reported Resistance 8/10 and Shame 8/10 at the start of the session.</p>
 
-      <h4>Neurological Levels (Dilts) — full 6-level breakdown</h4>
+      <h4>Level Boundaries — what each level is (and isn't) for</h4>
+      <div class="level-ref-strip">
+        <div class="level-ref">
+          <div class="lr-code">L1</div>
+          <div class="lr-outcome">Heard</div>
+          <div class="lr-rule">Reflect, listen, summarize. No belief change, root-cause work, capacity-building, identity or values work — it's an observer effect, not an intervention.</div>
+        </div>
+        <div class="level-ref this-case">
+          <div class="lr-code">L2 <span class="this-case-tag">This case</span></div>
+          <div class="lr-outcome">Move</div>
+          <div class="lr-rule">One immediate blocker, one intervention, one observable action. No childhood-root analysis, broad pattern work, identity or values redesign.</div>
+        </div>
+        <div class="level-ref">
+          <div class="lr-code">L3</div>
+          <div class="lr-outcome">Respond Differently</div>
+          <div class="lr-rule">Work the one relevant repeating pattern only. Don't try to fix the whole person or redesign unrelated life areas.</div>
+        </div>
+        <div class="level-ref">
+          <div class="lr-code">L4</div>
+          <div class="lr-outcome">Lead Myself</div>
+          <div class="lr-rule">Stay within agreed areas of evolution. Don't build an idealized identity or redesign the client's whole life.</div>
+        </div>
+      </div>
+
+      <div class="boundary-callout">
+        <div class="bc-title">Coaching boundary for this session — L2, Release</div>
+        <div class="boundary-cols">
+          <div>
+            <div class="boundary-col-title ok">Work within</div>
+            <ul>
+              <li>The one immediate blocker — starting the course</li>
+              <li>One intervention — submodality shift + belief reframe</li>
+              <li>One observable action — first 10 minutes of the video</li>
+            </ul>
+          </div>
+          <div>
+            <div class="boundary-col-title no">Do not open</div>
+            <ul>
+              <li>Childhood-root analysis of the shame pattern</li>
+              <li>Broad repeating-pattern work across other life areas</li>
+              <li>Identity reconstruction or values redesign</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="leverage-banner">
+        <strong>Primary leverage point — where the 5% tweak sits</strong>
+        Belief. The shame-linked inner voice ("why are you being lazy") is what's driving the Behavior and blocking Capability. Reframing that one belief is what unlocked the rest — Environment, Identity, and Purpose stayed untouched, as they should at this level.
+      </div>
+
       <div class="dilts-grid">
         <div class="dilts-level">
           <div class="d-name">Environment <span class="d-status">Not Applicable</span></div>
@@ -448,8 +547,8 @@ Re-measured: Resistance 8 → 2. Confidence and heaviness were measured again bu
           <div class="d-name">Capability <span class="d-status">Active</span></div>
           <div class="d-text">No prior strategy for beginning under resistance. Session built one: chunk the task down, shift the inner-voice reframe, anchor a resourceful state, commit to one small action.</div>
         </div>
-        <div class="dilts-level active">
-          <div class="d-name">Belief <span class="d-status">Active</span></div>
+        <div class="dilts-level primary">
+          <div class="d-name">Belief <span class="d-status">★ Primary Leverage</span></div>
           <div class="d-text">Core lever of the session. Starting voice heard as "why are you being lazy" (shame-linked). Reframed to "I don't need to finish. I only need to begin."</div>
         </div>
         <div class="dilts-level">
@@ -462,17 +561,45 @@ Re-measured: Resistance 8 → 2. Confidence and heaviness were measured again bu
         </div>
       </div>
 
+      <h4>Motivation Direction</h4>
+      <div class="info-card">
+        <p><strong>Away-from</strong> at the start — avoiding the shame/fear behind the critical inner voice.</p>
+        <p><strong>Shifted towards</strong> by the end — the reframe plus the +ve reason ("I want to feel free tonight, I want to trust myself, I want progress") gave her a towards-motivation frame for the committed action.</p>
+      </div>
+
+      <h4>Parts in Conflict</h4>
+      <div class="parts-grid">
+        <div class="part-card">
+          <div class="pc-title">Delay Part</div>
+          <div class="pc-wants">Wants: rest, freedom, protection from shame.</div>
+        </div>
+        <div class="part-card">
+          <div class="pc-title">Achievement Part</div>
+          <div class="pc-wants">Wants: growth, confidence, success / completion.</div>
+        </div>
+      </div>
+      <div class="part-integration">Integration action — one small action that respects both parts: watch only the first 10 minutes. Protects the Delay Part (no full commitment demanded) while satisfying the Achievement Part (forward motion happens).</div>
+
+      <h4>Limiting Belief &amp; Limiting Decision</h4>
+      <div class="info-card">
+        <p><span class="ic-title" style="display:inline;">Limiting belief</span> — "Hesitating means I'm being lazy," tied directly to shame.</p>
+        <p><span class="ic-title" style="display:inline;">Limiting decision</span><span class="inference-tag">Coach inference</span> — not a direct client statement. Reading back from the reframe she reached ("I don't need to finish, I only need to begin"), the earlier decision this is undoing looks like: a task only counts if it's finished, so starting without certainty of finishing has felt unsafe. Flagged for the coach to confirm with Divya directly rather than treated as fact.</p>
+      </div>
+
       <h4>Emotional Themes</h4>
       <p>Shame (8/10). Resistance / fear (8/10 → 2/10). Overwhelm — addressed by chunking the task down.</p>
 
       <h4>Representation (VAK)</h4>
       <p>Visual-dominant — pictures the task and dissociates / avoids it. Also auditory: a critical inner voice. Kinesthetic: <span class="not-captured">Not Captured</span>.</p>
 
-      <h4>Technique Used</h4>
-      <p>Submodality shift + belief reframe + parts negotiation (Delay Part vs. Achievement Part) + resource anchoring + future pace.</p>
-
-      <h4>Immediate Blocker</h4>
-      <p>The internal "why are you being lazy" voice.</p>
+      <h4>NLP Techniques Used</h4>
+      <div class="nlp-tags">
+        <span class="nlp-tag">Belief Reframe</span>
+        <span class="nlp-tag">Submodality Shift</span>
+        <span class="nlp-tag">Parts Negotiation</span>
+        <span class="nlp-tag">Resource Anchoring</span>
+        <span class="nlp-tag">Future Pacing</span>
+      </div>
 
       <h4>Measures</h4>
       <div class="measure-row"><span class="measure-label">Resistance</span><span class="measure-chip before">8/10</span><span class="measure-arrow">→</span><span class="measure-chip after">2/10</span></div>
@@ -1177,6 +1304,11 @@ Re-measured: Resistance 8 → 2. Confidence and heaviness were measured again bu
   document.getElementById('aiModalOverlay').addEventListener('click', (e) => {
     if(e.target.id === 'aiModalOverlay') closeAiFormulationModal();
   });
+  document.getElementById('aiUploadInput').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    document.getElementById('aiUploadFilename').textContent = file ? ('Attached: ' + file.name + ' (preview only — not parsed)') : '';
+  });
+  document.getElementById('aiGenerateBtn').addEventListener('click', () => switchAiTab('aiPanelFormulation'));
 
   async function openSessionsModal(clientId, displayName){
     document.getElementById('sessionsModalClient').textContent = displayName;
