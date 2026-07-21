@@ -1446,7 +1446,7 @@ Closed with the Final Release Measure and the same indirect forward-seed toward 
       ).join('');
 
       return `
-        <div class="session-card${isLatest ? ' latest' : ''}" data-session-id="${s.id}">
+        <div class="session-card${isLatest ? ' latest' : ''}" data-session-id="${s.id}" data-session-number="${s.session_number}">
           <div class="session-head">
             <span class="s-title">Session ${s.session_number}${isLatest ? '<span class="latest-tag">Latest</span>' : ''}${autoSessionTag(s)}</span>
             <span class="s-date">${new Date(s.created_at).toLocaleDateString()}</span>
@@ -1495,7 +1495,7 @@ Closed with the Final Release Measure and the same indirect forward-seed toward 
         const file = e.target.files[0];
         if(file) uploadAttachment(sessionId, file);
       });
-      card.querySelector('.ai-preview-btn').addEventListener('click', () => openAiFormulationModal(s.session_number));
+      card.querySelector('.ai-preview-btn').addEventListener('click', () => openAiFormulationModal(Number(card.dataset.sessionNumber)));
     });
   }
 
