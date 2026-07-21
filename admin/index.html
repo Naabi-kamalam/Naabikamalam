@@ -603,6 +603,18 @@
     renderClients();
   }
 
+  // What to show in the email's "Session Type" line — the confirmed level
+  // if one has been set, else the requested level, else a plain fallback
+  // for Discovery Calls (which have no level at all) or legacy bookings
+  // from before levels existed.
+  function sessionTypeLine(booking){
+    if(booking.appointment_type !== 'regular_session'){
+      return 'Discovery Call — Free, 20 minutes';
+    }
+    const level = booking.confirmed_service_level || booking.requested_service_level;
+    return level ? (level + ' — ' + levelName(level)) : 'Not yet assigned';
+  }
+
   function sendStatusChangeEmail(booking, newStatus){
     if(!window.emailjs) return;
     const templateId = newStatus === 'confirmed' ? EMAILJS_TEMPLATE_ID_CONFIRMED
@@ -616,7 +628,8 @@
       booking_id: booking.booking_id,
       date: booking.requested_date,
       time: booking.requested_time_label,
-      booking_status: newStatus === 'confirmed' ? 'Confirmed' : 'Cancelled'
+      booking_status: newStatus === 'confirmed' ? 'Confirmed' : 'Cancelled',
+      session_level: sessionTypeLine(booking)
     }).catch(function(err){ console.error('EmailJS status update email failed:', err); });
   }
 
