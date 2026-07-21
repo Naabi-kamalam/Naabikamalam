@@ -1944,6 +1944,11 @@
     { code:'L4', name:'Evolve', outcome:'Lead Myself', tagline:'Align with who you want to become.' }
   ];
 
+  // Default price shown to the admin when a booking comes in — L1 is
+  // billed per session, L2-L4 are package pricing. Discovery Calls are
+  // always free. Stays editable in the admin dashboard afterwards.
+  const LEVEL_PRICES = { L1: 150, L2: 1500, L3: 3000, L4: 5000 };
+
   let bookingMode = null;      // 'discovery_call' | 'regular_session'
   let bkSelectedLevel = null;  // 'L1'..'L4', regular sessions only
 
@@ -2113,14 +2118,15 @@
   // read access to the clients table, only this narrow RPC. Best-effort:
   // if matching fails for any reason, the booking still proceeds without
   // a client_id rather than blocking a real booking over this.
-  async function matchOrCreateClient(firstName, lastName, email, phone){
+  async function matchOrCreateClient(firstName, lastName, email, phone, age){
     if(!supabaseClient) return null;
     try{
       const { data, error } = await supabaseClient.rpc('find_or_create_client', {
         p_first_name: firstName,
         p_last_name: lastName,
         p_email: email,
-        p_phone: phone
+        p_phone: phone,
+        p_age: age
       });
       if(error) throw error;
       return data || null;
@@ -2134,7 +2140,8 @@
     if(!supabaseClient) return false;
     try{
       const key = dateKey(dateObj);
-      const clientId = await matchOrCreateClient(extra.firstName, extra.lastName, email, extra.phone);
+      const ageNum = extra.age ? Number(extra.age) : null;
+      const clientId = await matchOrCreateClient(extra.firstName, extra.lastName, email, extra.phone, ageNum);
       // No .select() chained here on purpose: the anon key can INSERT
       // but cannot SELECT (see supabase_schema.sql RLS policies), so
       // asking Postgrest to return the inserted row would fail even
@@ -2148,7 +2155,7 @@
           requested_time_label: extra.timeLabel,
           first_name: extra.firstName,
           last_name: extra.lastName,
-          age: extra.age ? Number(extra.age) : null,
+          age: ageNum,
           email: email,
           phone: extra.phone,
           description: extra.description,
@@ -2156,7 +2163,8 @@
           appointment_type: extra.appointmentType,
           requested_service_level: extra.requestedLevel || null,
           duration_minutes: extra.durationMinutes,
-          price: extra.price
+          price: extra.price,
+          amount_total: extra.price
         });
       if(error) throw error;
       liveBookedSlots.push({ date:key, slot:slotNum });
@@ -2511,7 +2519,7 @@
         appointmentType: bookingMode,
         requestedLevel: isDiscovery ? null : bkSelectedLevel,
         durationMinutes: isDiscovery ? 20 : 60,
-        price: isDiscovery ? 0 : null
+        price: isDiscovery ? 0 : (LEVEL_PRICES[bkSelectedLevel] || null)
       }
     );
     if(!slotSaved){

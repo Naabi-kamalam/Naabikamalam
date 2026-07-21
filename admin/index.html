@@ -129,6 +129,23 @@
   .g-item{ aspect-ratio:1; border-radius:8px; overflow:hidden; position:relative; background:#EADDE1; }
   .g-item img{ width:100%; height:100%; object-fit:cover; display:block; }
   .g-item .g-label{ position:absolute; bottom:4px; left:6px; font-family:'IBM Plex Mono',monospace; font-size:8px; color:#fff; background:rgba(36,26,40,.55); padding:1px 5px; border-radius:8px; }
+
+  /* ---- clients tab ---- */
+  .tag-active_client{ background:#DCEFE0; color:var(--ok); }
+  .tag-prospective_client{ background:#E2E6F5; color:#3a4a8a; }
+  .tag-follow_up_required{ background:#FBEFD6; color:#8a6a1f; }
+  .tag-not_proceeding{ background:#F5DADD; color:var(--danger); }
+  .review-badge{ font-size:10px; background:#FDEFD8; color:#8a5a1f; border:1px solid #E0A03A; border-radius:10px; padding:1px 7px; cursor:help; margin-left:6px; }
+  .level-chip{ font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:700; padding:2px 7px; border-radius:5px; color:#fff; display:inline-block; }
+  .level-chip-L1{ background:#5C8A63; }
+  .level-chip-L2{ background:#3a6a8a; }
+  .level-chip-L3{ background:#7a4a8a; }
+  .level-chip-L4{ background:#8a3a5a; }
+  .level-chip-pending{ background:#8a6a1f; }
+  th.sortable{ cursor:pointer; user-select:none; }
+  th.sortable .arrow{ color:var(--gold); margin-left:3px; }
+  .sessions-link{ background:none; border:none; color:var(--gold); font-size:11px; text-decoration:underline; cursor:pointer; padding:0; font-family:inherit; }
+  .auto-tag{ font-size:8px; background:#E2E6F5; color:#3a4a8a; padding:2px 7px; border-radius:10px; margin-left:6px; text-transform:uppercase; letter-spacing:.04em; font-weight:700; }
 </style>
 </head>
 <body>
@@ -217,6 +234,53 @@
       <div class="empty" id="leadsEmptyState" style="display:none;">No leads yet.</div>
     </div>
     <div id="leadsLoadErr"></div>
+
+    <div class="card" style="padding:0; overflow-x:auto; margin-top:28px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 16px 0;">
+        <h2 style="font-family:'Fraunces',serif; font-style:italic; font-size:16px; margin:0;">Clients</h2>
+        <button class="btn-ghost" id="refreshClientsBtn">Refresh</button>
+      </div>
+      <div class="toolbar" style="padding:12px 16px 0;">
+        <input type="text" id="clientSearchBox" placeholder="Search name, email…"/>
+        <select id="clientStatusFilter">
+          <option value="">All statuses</option>
+          <option value="active_client">Active Client</option>
+          <option value="prospective_client">Prospective Client</option>
+          <option value="follow_up_required">Follow-up Required</option>
+          <option value="not_proceeding">Not Proceeding</option>
+        </select>
+        <select id="clientLevelFilter">
+          <option value="">All levels</option>
+          <option value="L1">L1</option>
+          <option value="L2">L2</option>
+          <option value="L3">L3</option>
+          <option value="L4">L4</option>
+          <option value="Pending">Pending</option>
+          <option value="Not Applicable">Not Applicable</option>
+        </select>
+        <select id="clientTypeFilter">
+          <option value="">All appointment types</option>
+          <option value="discovery_call">Discovery Call</option>
+          <option value="regular_session">Book a Session</option>
+        </select>
+      </div>
+      <table id="clientsTable" style="margin-top:12px;">
+        <thead>
+          <tr>
+            <th class="sortable" data-sort="name">Client Name <span class="arrow" id="sortArrow-name"></span></th>
+            <th>Status</th>
+            <th>Latest Booking</th>
+            <th class="sortable" data-sort="latestSession">Latest Session <span class="arrow" id="sortArrow-latestSession"></span></th>
+            <th>Sessions</th>
+            <th>Level</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody id="clientsBody"></tbody>
+      </table>
+      <div class="empty" id="clientsEmptyState" style="display:none;">No clients match these filters.</div>
+    </div>
+    <div id="clientsLoadErr"></div>
   </div>
 
 </main>
@@ -319,6 +383,7 @@
     await loadSessions();
     await loadBookings();
     await loadLeads();
+    await loadClients();
   }
 
   // Restore session on reload
@@ -381,7 +446,9 @@
         <td><b>${b.booking_id}</b><br><span class="muted">${new Date(b.created_at).toLocaleString()}</span></td>
         <td>${escapeHtml(b.first_name)} ${escapeHtml(b.last_name)}${b.age ? ' · ' + b.age : ''}<br>
             <span class="muted">${escapeHtml(b.email)}<br>${escapeHtml(b.phone)}</span><br>
-            <button class="notes-link" data-email="${escapeHtml(b.email)}" data-name="${escapeHtml(b.first_name + ' ' + b.last_name)}">Sessions (${sessionsForEmail(b.email).length})</button></td>
+            ${b.client_id
+              ? `<button class="notes-link" data-client-id="${b.client_id}" data-name="${escapeHtml(b.first_name + ' ' + b.last_name)}">Sessions (${sessionsForClientId(b.client_id).length})</button>`
+              : `<span class="muted">No client profile</span>`}</td>
         <td>${b.requested_date}<br><span class="muted">${escapeHtml(b.requested_time_label)} (slot ${b.session_slot_number})</span></td>
         <td class="desc-cell">${escapeHtml(b.description)}</td>
         <td>
@@ -443,9 +510,12 @@
         updateBooking(id, { amount_paid: val });
       });
 
-      tr.querySelector('.notes-link').addEventListener('click', (e) => {
-        openSessionsModal(e.target.dataset.email, e.target.dataset.name);
-      });
+      const notesLink = tr.querySelector('.notes-link');
+      if(notesLink){
+        notesLink.addEventListener('click', (e) => {
+          openSessionsModal(e.target.dataset.clientId, e.target.dataset.name);
+        });
+      }
     });
   }
 
@@ -518,7 +588,156 @@
     `).join('');
   }
 
-  // ---- client sessions (private, per client email, spans all their bookings) ----
+  // ---- clients (merged by name — see find_or_create_client) ----
+  let allClients = [];
+  let clientSort = { key: 'latestSession', dir: 'desc' };
+
+  async function loadClients(){
+    const errEl = document.getElementById('clientsLoadErr');
+    errEl.textContent = '';
+    const { data, error } = await sb
+      .from('clients')
+      .select('*')
+      .order('created_at', { ascending: true });
+    if(error){
+      errEl.textContent = 'Could not load clients: ' + error.message;
+      return;
+    }
+    allClients = data || [];
+    renderClients();
+  }
+
+  // Combines a client row with everything derivable from their bookings
+  // and sessions — latest booking/session dates, session count, and the
+  // level to show (confirmed level if set, else requested, else "Pending"
+  // for a regular-session client with no level on file, else "Not
+  // Applicable" if they've never booked a regular session).
+  function clientDerivedView(client){
+    const clientBookings = allBookings.filter(b => String(b.client_id) === String(client.id));
+    const clientSessions = sessionsForClientId(client.id);
+
+    const latestBooking = clientBookings.reduce((max, b) => {
+      const t = new Date(b.created_at).getTime();
+      return t > max ? t : max;
+    }, 0);
+    const latestSession = clientSessions.reduce((max, s) => {
+      const t = new Date(s.created_at).getTime();
+      return t > max ? t : max;
+    }, 0);
+
+    const regularBookings = clientBookings.filter(b => b.appointment_type === 'regular_session');
+    let level = 'Not Applicable';
+    if(regularBookings.length){
+      const latestRegular = regularBookings.reduce((a, b) =>
+        new Date(a.created_at) > new Date(b.created_at) ? a : b);
+      level = latestRegular.confirmed_service_level || latestRegular.requested_service_level || 'Pending';
+    }
+
+    const appointmentTypes = new Set(clientBookings.map(b => b.appointment_type));
+
+    return {
+      client, latestBooking, latestSession, level, appointmentTypes,
+      sessionCount: clientSessions.length
+    };
+  }
+
+  function renderClients(){
+    const q = document.getElementById('clientSearchBox').value.trim().toLowerCase();
+    const statusF = document.getElementById('clientStatusFilter').value;
+    const levelF = document.getElementById('clientLevelFilter').value;
+    const typeF = document.getElementById('clientTypeFilter').value;
+
+    let rows = allClients.map(clientDerivedView).filter(row => {
+      const c = row.client;
+      if(statusF && c.status !== statusF) return false;
+      if(levelF && row.level !== levelF) return false;
+      if(typeF && !row.appointmentTypes.has(typeF)) return false;
+      if(q){
+        const hay = [c.first_name, c.last_name, c.email, c.phone].join(' ').toLowerCase();
+        if(!hay.includes(q)) return false;
+      }
+      return true;
+    });
+
+    rows.sort((a, b) => {
+      let av, bv;
+      if(clientSort.key === 'name'){
+        av = (a.client.first_name + ' ' + a.client.last_name).toLowerCase();
+        bv = (b.client.first_name + ' ' + b.client.last_name).toLowerCase();
+      } else {
+        av = a.latestSession; bv = b.latestSession;
+      }
+      if(av < bv) return clientSort.dir === 'asc' ? -1 : 1;
+      if(av > bv) return clientSort.dir === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    ['name','latestSession'].forEach(key => {
+      const arrowEl = document.getElementById('sortArrow-' + key);
+      arrowEl.textContent = clientSort.key === key ? (clientSort.dir === 'asc' ? '▴' : '▾') : '';
+    });
+
+    const body = document.getElementById('clientsBody');
+    document.getElementById('clientsEmptyState').style.display = rows.length ? 'none' : 'block';
+
+    const levelChipClass = lvl => ['L1','L2','L3','L4'].includes(lvl) ? 'level-chip-' + lvl : (lvl === 'Pending' ? 'level-chip-pending' : '');
+
+    body.innerHTML = rows.map(row => {
+      const c = row.client;
+      const name = escapeHtml(c.first_name) + ' ' + escapeHtml(c.last_name);
+      const reviewBadge = c.needs_review
+        ? `<span class="review-badge" title="${escapeHtml(c.review_reason || '')}">⚠ review age</span>`
+        : '';
+      const levelHtml = ['L1','L2','L3','L4','Pending'].includes(row.level)
+        ? `<span class="level-chip ${levelChipClass(row.level)}">${row.level}</span>`
+        : `<span class="muted">Not Applicable</span>`;
+      return `
+        <tr data-client-id="${c.id}">
+          <td>${name}${reviewBadge}<br><span class="muted">${escapeHtml(c.phone || '')}</span></td>
+          <td>
+            <span class="tag tag-${c.status}">${c.status.replace(/_/g,' ')}</span><br>
+            <select class="inline client-status-select" style="margin-top:6px;">
+              ${['active_client','prospective_client','follow_up_required','not_proceeding'].map(s =>
+                `<option value="${s}" ${s===c.status?'selected':''}>${s.replace(/_/g,' ').replace(/\b\w/g, ch => ch.toUpperCase())}</option>`).join('')}
+            </select>
+          </td>
+          <td>${row.latestBooking ? new Date(row.latestBooking).toLocaleDateString() : '<span class="muted">—</span>'}</td>
+          <td>${row.latestSession ? new Date(row.latestSession).toLocaleDateString() : '<span class="muted">—</span>'}</td>
+          <td>${row.sessionCount} · <button class="sessions-link" data-client-id="${c.id}" data-name="${name}">View</button></td>
+          <td>${levelHtml}</td>
+          <td class="muted">${escapeHtml(c.email || '')}</td>
+        </tr>
+      `;
+    }).join('');
+
+    body.querySelectorAll('tr').forEach(tr => {
+      const id = tr.getAttribute('data-client-id');
+      tr.querySelector('.client-status-select').addEventListener('change', async (e) => {
+        const { error } = await sb.from('clients').update({ status: e.target.value }).eq('id', id);
+        if(error){ alert('Could not update client status: ' + error.message); return; }
+        await loadClients();
+      });
+      tr.querySelector('.sessions-link').addEventListener('click', (e) => {
+        openSessionsModal(e.target.dataset.clientId, e.target.dataset.name);
+      });
+    });
+  }
+
+  document.getElementById('clientSearchBox').addEventListener('input', renderClients);
+  document.getElementById('clientStatusFilter').addEventListener('change', renderClients);
+  document.getElementById('clientLevelFilter').addEventListener('change', renderClients);
+  document.getElementById('clientTypeFilter').addEventListener('change', renderClients);
+  document.getElementById('refreshClientsBtn').addEventListener('click', loadClients);
+  document.querySelectorAll('th.sortable').forEach(th => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.sort;
+      if(clientSort.key === key){ clientSort.dir = clientSort.dir === 'asc' ? 'desc' : 'asc'; }
+      else { clientSort = { key, dir: 'asc' }; }
+      renderClients();
+    });
+  });
+
+  // ---- client sessions (private, per client, spans all their bookings) ----
   let allSessions = [];
 
   async function loadSessions(){
@@ -533,11 +752,24 @@
     allSessions = data || [];
   }
 
-  function sessionsForEmail(email){
-    const key = (email || '').trim().toLowerCase();
+  function sessionsForClientId(clientId){
+    const key = String(clientId);
     return allSessions
-      .filter(s => (s.client_email || '').trim().toLowerCase() === key)
+      .filter(s => String(s.client_id) === key)
       .sort((a, b) => a.session_number - b.session_number);
+  }
+
+  // Auto-created sessions are tagged with the booking that spawned them
+  // (see the trg_create_session_from_booking trigger) so the admin can
+  // see at a glance whether a session came from a Discovery Call or a
+  // Book a Session request, and at which level.
+  function autoSessionTag(session){
+    if(!session.auto_created) return '';
+    const booking = allBookings.find(b => String(b.id) === String(session.source_booking_id));
+    if(!booking) return '<span class="auto-tag">Auto</span>';
+    if(booking.appointment_type === 'discovery_call') return '<span class="auto-tag">Auto — Discovery Call</span>';
+    const level = booking.confirmed_service_level || booking.requested_service_level;
+    return `<span class="auto-tag">Auto — Book a Session${level ? ' (' + escapeHtml(level) + ')' : ''}</span>`;
   }
 
   async function getAttachmentUrl(storagePath){
@@ -572,13 +804,13 @@
       errEl.textContent = 'Photo uploaded but could not be linked: ' + insertErr.message;
       return;
     }
-    const email = document.getElementById('sessionsModalOverlay').dataset.email;
+    const clientId = document.getElementById('sessionsModalOverlay').dataset.clientId;
     await loadSessions();
-    await renderSessionCards(email);
+    await renderSessionCards(clientId);
   }
 
-  async function renderSessionCards(email){
-    const sessions = sessionsForEmail(email);
+  async function renderSessionCards(clientId){
+    const sessions = sessionsForClientId(clientId);
     document.getElementById('sessionCountBadge').textContent =
       sessions.length + (sessions.length === 1 ? ' session logged' : ' sessions logged');
 
@@ -600,7 +832,7 @@
       return `
         <div class="session-card${isLatest ? ' latest' : ''}" data-session-id="${s.id}">
           <div class="session-head">
-            <span class="s-title">Session ${s.session_number}${isLatest ? '<span class="latest-tag">Latest</span>' : ''}</span>
+            <span class="s-title">Session ${s.session_number}${isLatest ? '<span class="latest-tag">Latest</span>' : ''}${autoSessionTag(s)}</span>
             <span class="s-date">${new Date(s.created_at).toLocaleDateString()}</span>
           </div>
           <div class="session-body">
@@ -649,12 +881,12 @@
     });
   }
 
-  async function openSessionsModal(email, displayName){
+  async function openSessionsModal(clientId, displayName){
     document.getElementById('sessionsModalClient').textContent = displayName;
-    document.getElementById('sessionsModalOverlay').dataset.email = email;
+    document.getElementById('sessionsModalOverlay').dataset.clientId = clientId;
     document.getElementById('sessionsModalOverlay').dataset.name = displayName;
     document.getElementById('sessionsModalErr').textContent = '';
-    await renderSessionCards(email);
+    await renderSessionCards(clientId);
     document.getElementById('sessionsModalOverlay').classList.add('open');
   }
 
@@ -668,17 +900,18 @@
   });
 
   document.getElementById('addSessionBtn').addEventListener('click', async () => {
-    const email = document.getElementById('sessionsModalOverlay').dataset.email;
-    const existing = sessionsForEmail(email);
+    const clientId = document.getElementById('sessionsModalOverlay').dataset.clientId;
+    const existing = sessionsForClientId(clientId);
     const nextNum = existing.length ? Math.max(...existing.map(s => s.session_number)) + 1 : 1;
-    const { error } = await sb.from('client_sessions').insert({ client_email: email, session_number: nextNum });
+    const { error } = await sb.from('client_sessions').insert({ client_id: clientId, session_number: nextNum });
     if(error){
       document.getElementById('sessionsModalErr').textContent = 'Could not add session: ' + error.message;
       return;
     }
     await loadSessions();
-    await renderSessionCards(email);
+    await renderSessionCards(clientId);
     renderTable();
+    renderClients();
   });
 
   // ---- client progress report ----
@@ -693,11 +926,12 @@
     return Array.from(seen.values());
   }
 
-  async function openReportModal(email, displayName){
-    const sessions = sessionsForEmail(email);
+  async function openReportModal(clientId, displayName){
+    const sessions = sessionsForClientId(clientId);
+    const client = allClients.find(c => String(c.id) === String(clientId));
     document.getElementById('reportClientName').textContent = displayName + ' — Progress Report';
-    document.getElementById('reportClientMeta').textContent = email;
-    document.getElementById('reportModalOverlay').dataset.email = email;
+    document.getElementById('reportClientMeta').textContent = client ? (client.email || '') : '';
+    document.getElementById('reportModalOverlay').dataset.clientId = clientId;
     document.getElementById('reportModalOverlay').dataset.name = displayName;
 
     const statsEl = document.getElementById('reportStats');
@@ -768,10 +1002,10 @@
   }
 
   document.getElementById('viewReportBtn').addEventListener('click', async () => {
-    const email = document.getElementById('sessionsModalOverlay').dataset.email;
+    const clientId = document.getElementById('sessionsModalOverlay').dataset.clientId;
     const name = document.getElementById('sessionsModalOverlay').dataset.name;
     closeSessionsModal();
-    await openReportModal(email, name);
+    await openReportModal(clientId, name);
   });
 
   document.getElementById('reportModalCloseBtn').addEventListener('click', closeReportModal);
@@ -779,10 +1013,10 @@
     if(e.target.id === 'reportModalOverlay') closeReportModal();
   });
   document.getElementById('reportBackBtn').addEventListener('click', async () => {
-    const email = document.getElementById('reportModalOverlay').dataset.email;
+    const clientId = document.getElementById('reportModalOverlay').dataset.clientId;
     const name = document.getElementById('reportModalOverlay').dataset.name;
     closeReportModal();
-    await openSessionsModal(email, name);
+    await openSessionsModal(clientId, name);
   });
 
   document.getElementById('statusFilter').addEventListener('change', renderTable);
