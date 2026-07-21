@@ -302,6 +302,7 @@
     display:inline-block; margin-top:10px; background:var(--gold); color:#fff; font-family:'IBM Plex Mono', monospace;
     font-size:11px; letter-spacing:0.06em; text-transform:uppercase; padding:12px 20px; border-radius:8px; text-decoration:none;
   }
+  .booking-confirm-wa-btn.wa-btn-done{ opacity:.55; pointer-events:none; }
   .booking-confirm-cal-btn{
     display:inline-block; margin-top:18px; background:var(--band); color:var(--band-text); font-family:'IBM Plex Mono', monospace;
     font-size:11px; letter-spacing:0.06em; text-transform:uppercase; padding:12px 20px; border-radius:8px; text-decoration:none;
@@ -2698,6 +2699,21 @@
     return URL.createObjectURL(blob);
   }
 
+  // Prevents the "duplicate WhatsApp message" problem: the confirmation
+  // modal intentionally stays open after this is clicked (so the client
+  // can still see their Booking ID), but with no visible change on the
+  // button itself, an unsure client would tap it again — reopening
+  // WhatsApp with the same pre-filled message and often sending it a
+  // second or third time. Locking the button after the first tap makes
+  // it obvious the action already happened.
+  function handleWaConfirmClick(el){
+    if(el.dataset.opened === 'true') return false;
+    el.dataset.opened = 'true';
+    el.textContent = 'Opened — Check WhatsApp ✓';
+    el.classList.add('wa-btn-done');
+    return true;
+  }
+
   const LEVEL_PILL_COLORS = { L1:'#5C9AA0', L2:'#5C8A63', L3:'#C9789A', L4:'#8A5FBF' };
 
   function openBookingConfirmModal(waLink, bookingId, slotNum, dateLabel, timeLabel, mode, level, sessionNumber, description){
@@ -2743,7 +2759,7 @@
     const calWrap = document.getElementById('bookingModalCalWrap');
     if(calWrap){
       calWrap.innerHTML = '<a class="booking-confirm-wa-btn" href="' + waLink
-        + '" rel="noopener" target="_blank">Confirm Your Spot</a>';
+        + '" rel="noopener" target="_blank" onclick="return handleWaConfirmClick(this)">Confirm Your Spot</a>';
     }
 
     document.getElementById('bookingModalOverlay').classList.add('open');
