@@ -1723,7 +1723,7 @@
 <div class="booking-confirm-icon">✓</div>
 <h3 id="bookingModalHeading">Your booking request has been received</h3>
 <p class="booking-confirm-detail" id="bookingModalDetail"></p>
-<p class="modal-copy shift">Please save your Booking ID. This is a booking request, not final confirmation. Naabi Kamalam will review the request and email you with the next steps, payment details, and final confirmation.</p>
+<p class="modal-copy shift">Save your Booking ID. This is a request, not a confirmation — we'll email you with next steps and payment details after review.</p>
 <div id="bookingModalCalWrap"></div>
 </div>
 </div>
@@ -2669,18 +2669,18 @@
     const headingEl = document.getElementById('bookingModalHeading');
     if(headingEl){
       headingEl.textContent = mode === 'discovery_call'
-        ? 'Discovery Call Requested — Free — 20 Minutes'
-        : 'Coaching Session Request Received — Regular Session — 60 Minutes';
+        ? 'Discovery Call Requested — Free, 20 Minutes'
+        : 'Coaching Session Requested — 60 Minutes';
     }
 
     const detailEl = document.getElementById('bookingModalDetail');
     if(detailEl){
       const lvl = LEVELS.find(l => l.code === level);
       const statusLine = mode === 'discovery_call'
-        ? 'Status: Request received — awaiting review'
-        : 'Level requested: ' + level + (lvl ? ' — ' + lvl.name + ' (' + lvl.outcome + ')' : '') + '<br>Status: Request received — awaiting review';
+        ? 'Status: Awaiting review'
+        : 'Level: ' + level + (lvl ? ' — ' + lvl.name : '') + '<br>Status: Awaiting review';
       const sessionLine = sessionNumber
-        ? '<br><span style="font-size:12px;font-weight:400;">This will be your Session ' + sessionNumber + '.</span>'
+        ? '<br><span style="font-size:12px;font-weight:400;">Session: ' + sessionNumber + '</span>'
         : '';
       const descriptionLine = description
         ? '<br><span style="font-size:12px;font-weight:400;">You shared: “' + escapeHtmlFrontend(description) + '”</span>'
@@ -2694,7 +2694,7 @@
     const calWrap = document.getElementById('bookingModalCalWrap');
     if(calWrap){
       calWrap.innerHTML = '<a class="booking-confirm-wa-btn" href="' + waLink
-        + '" rel="noopener" target="_blank">Send a Copy on WhatsApp</a>';
+        + '" rel="noopener" target="_blank">Confirm Your Spot</a>';
     }
 
     document.getElementById('bookingModalOverlay').classList.add('open');
