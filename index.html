@@ -468,6 +468,49 @@
    ============================================================ */
 .booking-wrap{ max-width:640px; }
 .booking-step-label{ font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin:0 0 10px; }
+.apt-type-row{ display:flex; flex-direction:column; gap:8px; margin-bottom:8px; }
+.apt-type-btn{
+  display:flex; align-items:center; gap:10px; width:100%; cursor:pointer; font-family:inherit;
+  text-align:left; background:var(--card); border:1.5px solid var(--rule); border-radius:10px;
+  padding:12px 14px; box-shadow:0 2px 6px rgba(36,26,40,.05); transition:border-color .15s ease, background .15s ease;
+}
+.apt-type-btn:hover{ border-color:var(--gold); }
+.apt-type-btn.selected{ border-color:var(--gold); background:#FFF6F8; }
+.apt-type-icon{
+  flex:0 0 auto; width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center;
+  font-size:14px; background:var(--band); color:var(--band-text);
+}
+.apt-type-text{ flex:1 1 auto; }
+.apt-type-title{ font-size:13.5px; font-weight:600; color:var(--ink); }
+.apt-type-meta{ font-family:'IBM Plex Mono', monospace; font-size:9.5px; letter-spacing:.04em; text-transform:uppercase; color:var(--gold); font-weight:600; }
+.apt-type-check{ display:none; font-size:14px; color:var(--gold); font-weight:700; }
+.apt-type-btn.selected .apt-type-check{ display:block; }
+.apt-type-prompt{ font-size:11.5px; color:var(--ink-soft); font-style:italic; margin:0 0 20px; }
+
+.level-support-text{ font-size:11.5px; color:var(--ink-soft); margin:0 0 12px; }
+.level-list{ display:flex; flex-direction:column; gap:7px; margin-bottom:4px; }
+.level-btn{
+  display:flex; align-items:center; gap:10px; width:100%; cursor:pointer; font-family:inherit;
+  text-align:left; background:var(--card); border:1.5px solid var(--rule); border-radius:9px; padding:9px 11px;
+}
+.level-btn:hover{ border-color:var(--gold); }
+.level-btn.selected{ border-color:var(--gold); background:#FFF6F8; }
+.level-code-pill{
+  flex:0 0 auto; width:24px; height:24px; border-radius:7px; display:flex; align-items:center; justify-content:center;
+  font-family:'IBM Plex Mono', monospace; font-size:9px; font-weight:700; color:#fff;
+}
+.level-btn.level-l1 .level-code-pill{ background:#5C9AA0; }
+.level-btn.level-l2 .level-code-pill{ background:#5C8A63; }
+.level-btn.level-l3 .level-code-pill{ background:#C9789A; }
+.level-btn.level-l4 .level-code-pill{ background:#8A5FBF; }
+.level-text{ flex:1 1 auto; min-width:0; }
+.level-name-row{ display:flex; align-items:baseline; gap:6px; flex-wrap:wrap; }
+.level-name{ font-size:12.5px; font-weight:600; color:var(--ink); }
+.level-outcome{ font-family:'IBM Plex Mono', monospace; font-size:8.5px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-soft); font-weight:600; }
+.level-tagline{ font-size:10.5px; color:var(--ink-soft); line-height:1.35; margin:1px 0 0; }
+.level-check{ display:none; flex:0 0 auto; color:var(--gold); font-size:14px; font-weight:700; }
+.level-btn.selected .level-check{ display:block; }
+.level-validation{ font-size:11px; color:#B85C6B; min-height:16px; margin:6px 0 22px; }
 .bk-tz-note{ color:var(--ink-soft); text-transform:none; letter-spacing:0.02em; font-weight:400; }
 .cal-card{ background:var(--card); border:1px solid var(--rule); border-radius:10px; padding:20px; margin-bottom:24px; }
 .cal-header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
@@ -1311,7 +1354,30 @@
 <div class="wrap">
 <section>
 <div class="booking-wrap">
-<p class="booking-step-label">Step 1 — Pick a Date</p>
+<p class="booking-step-label">Step 1 — Choose Appointment Type</p>
+<div class="apt-type-row">
+<button class="apt-type-btn" id="aptTypeDiscoveryBtn" onclick="selectAppointmentType('discovery_call')" type="button">
+<span class="apt-type-icon">💬</span>
+<span class="apt-type-text"><span class="apt-type-title">Discovery Call</span><br/><span class="apt-type-meta">Free · 20 Min</span></span>
+<span class="apt-type-check">✓</span>
+</button>
+<button class="apt-type-btn" id="aptTypeRegularBtn" onclick="selectAppointmentType('regular_session')" type="button">
+<span class="apt-type-icon">✦</span>
+<span class="apt-type-text"><span class="apt-type-title">Book a Session</span><br/><span class="apt-type-meta">60 Min · Choose Level</span></span>
+<span class="apt-type-check">✓</span>
+</button>
+</div>
+<p class="apt-type-prompt" id="aptTypePrompt">Choose an option above to continue.</p>
+
+<div id="levelSection" style="display:none;">
+<p class="booking-step-label">Which level are you booking? <span class="bk-required">*</span></p>
+<p class="level-support-text">Select the level that most closely matches the support you are looking for. Deepa can review it with you if clarification is needed.</p>
+<div class="level-list" id="levelList"></div>
+<div class="level-validation" id="levelValidation">&nbsp;</div>
+</div>
+
+<div id="calendarSection" style="display:none;">
+<p class="booking-step-label">Step 2 — Pick a Date</p>
 <div class="cal-card">
 <div class="cal-header">
 <button aria-label="Previous month" class="cal-nav-btn" onclick="calShiftMonth(-1)" type="button">‹</button>
@@ -1323,12 +1389,15 @@
 </div>
 <div class="cal-grid" id="calGrid"></div>
 </div>
-<p class="booking-step-label">Step 2 — Pick a Time <span class="bk-tz-note">(Arizona Time — MST, UTC-7)</span></p>
+<p class="booking-step-label">Step 3 — Pick a Time <span class="bk-tz-note">(Arizona Time — MST, UTC-7)</span></p>
 <div class="time-slots" id="timeSlots">
 <p style="grid-column:1/-1; font-size:12.5px; color:var(--ink-soft); font-style:italic;">Pick a date above first.</p>
 </div>
 <p class="booking-selected-summary" id="bkSummary">No date or time selected yet.</p>
-<p class="booking-step-label">Step 3 — Your Details</p>
+</div>
+
+<div id="detailsSection" style="display:none;">
+<p class="booking-step-label">Step 4 — Your Details</p>
 <p class="bk-required-note"><span class="bk-required">*</span> Required</p>
 <form id="bookingForm" novalidate="" onsubmit="return submitBooking(event)">
 <div class="bk-row">
@@ -1398,6 +1467,7 @@
 <button class="bk-submit" id="bkSubmitBtn" type="submit">Request This Time</button>
 <div class="bk-status" id="bkStatus"></div>
 </form>
+</div>
 </div>
 </section>
 </div>
@@ -1651,7 +1721,7 @@
 <div class="topic-modal booking-confirm-modal">
 <button aria-label="Close" class="topic-modal-close" onclick="closeBookingModal()">×</button>
 <div class="booking-confirm-icon">✓</div>
-<h3>Your booking request has been received</h3>
+<h3 id="bookingModalHeading">Your booking request has been received</h3>
 <p class="booking-confirm-detail" id="bookingModalDetail"></p>
 <p class="modal-copy shift">Please save your Booking ID. This is a booking request, not final confirmation. Naabi Kamalam will review the request and email you with the next steps, payment details, and final confirmation.</p>
 <div id="bookingModalCalWrap"></div>
@@ -1847,12 +1917,59 @@
   const DAILY_RECURRING_BLOCKED_SLOTS = [];
 
   const ALL_TIME_SLOTS = [
-    { num:1, label:'9 – 10 AM',  startHour:9,  endHour:10 },
-    { num:2, label:'11 – 12 PM', startHour:11, endHour:12 },
-    { num:3, label:'2 – 3 PM',   startHour:14, endHour:15 },
-    { num:4, label:'3 – 4 PM',   startHour:15, endHour:16 },
-    { num:5, label:'4 – 5 PM',   startHour:16, endHour:17 }
+    { num:1, label:'9 – 10 AM',  startHour:9,  startMinute:0, endHour:10, endMinute:0 },
+    { num:2, label:'11 – 12 PM', startHour:11, startMinute:0, endHour:12, endMinute:0 },
+    { num:3, label:'2 – 3 PM',   startHour:14, startMinute:0, endHour:15, endMinute:0 },
+    { num:4, label:'3 – 4 PM',   startHour:15, startMinute:0, endHour:16, endMinute:0 },
+    { num:5, label:'4 – 5 PM',   startHour:16, startMinute:0, endHour:17, endMinute:0 }
   ];
+
+  // Discovery Call — separate, smaller set of 20-minute slots. Numbered
+  // 101+ (disjoint from the regular 1-5 range) so the same `bookings`
+  // table / unique index can hold both kinds of appointment without the
+  // numbering schemes ever colliding.
+  const DISCOVERY_TIME_SLOTS = [
+    { num:101, label:'8:00 – 8:20 AM',   startHour:8,  startMinute:0,  endHour:8,  endMinute:20 },
+    { num:102, label:'8:20 – 8:40 AM',   startHour:8,  startMinute:20, endHour:8,  endMinute:40 },
+    { num:103, label:'12:00 – 12:20 PM', startHour:12, startMinute:0,  endHour:12, endMinute:20 },
+    { num:104, label:'12:20 – 12:40 PM', startHour:12, startMinute:20, endHour:12, endMinute:40 },
+    { num:105, label:'12:40 – 1:00 PM',  startHour:12, startMinute:40, endHour:13, endMinute:0 },
+    { num:106, label:'5:00 – 5:20 PM',   startHour:17, startMinute:0,  endHour:17, endMinute:20 }
+  ];
+
+  const LEVELS = [
+    { code:'L1', name:'Listening Space', outcome:'Heard', tagline:'Talk it out, feel heard.' },
+    { code:'L2', name:'Release', outcome:'Move', tagline:'Get past one specific blocker.' },
+    { code:'L3', name:'Transform', outcome:'Respond Differently', tagline:'Break a repeating pattern for good.' },
+    { code:'L4', name:'Evolve', outcome:'Lead Myself', tagline:'Align with who you want to become.' }
+  ];
+
+  let bookingMode = null;      // 'discovery_call' | 'regular_session'
+  let bkSelectedLevel = null;  // 'L1'..'L4', regular sessions only
+
+  function getCurrentSlotArray(){
+    return bookingMode === 'discovery_call' ? DISCOVERY_TIME_SLOTS : ALL_TIME_SLOTS;
+  }
+  function findSlotDef(slotNum){
+    return ALL_TIME_SLOTS.find(s => s.num === slotNum) || DISCOVERY_TIME_SLOTS.find(s => s.num === slotNum) || null;
+  }
+  function slotRangesOverlap(a, b){
+    const aStart = a.startHour*60 + (a.startMinute||0), aEnd = a.endHour*60 + (a.endMinute||0);
+    const bStart = b.startHour*60 + (b.startMinute||0), bEnd = b.endHour*60 + (b.endMinute||0);
+    return aStart < bEnd && aEnd > bStart;
+  }
+  // Cross-calendar conflict rule: a Discovery Call and a Regular Session
+  // block each other whenever their actual start/end timestamps overlap,
+  // not just when the slot NUMBER matches (they never share numbers, but
+  // could still overlap in real time if slot definitions ever change).
+  function hasCrossCalendarConflict(dateObj, candidateSlotDef){
+    const key = dateKey(dateObj);
+    return liveBookedSlots.some(b => {
+      if(b.date !== key || b.slot === candidateSlotDef.num) return false;
+      const existingDef = findSlotDef(b.slot);
+      return existingDef ? slotRangesOverlap(candidateSlotDef, existingDef) : false;
+    });
+  }
 
   function dateKey(d){
     return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
@@ -1881,7 +1998,9 @@
     const todayKey = now.year + '-' + String(now.month).padStart(2,'0') + '-' + String(now.day).padStart(2,'0');
     if(selectedKey < todayKey) return true;
     if(selectedKey > todayKey) return false;
-    return slotDef.startHour < now.hour || (slotDef.startHour === now.hour && now.minute > 0);
+    const slotStartMinutes = slotDef.startHour*60 + (slotDef.startMinute||0);
+    const nowMinutes = now.hour*60 + now.minute;
+    return slotStartMinutes < nowMinutes;
   }
   function generateBookingIdCandidate(dateObj){
     const compactDate = dateKey(dateObj).replaceAll('-','');
@@ -1945,27 +2064,39 @@
     return liveBookedSlots.some(b => b.date === key && b.slot === slotNum);
   }
 
-  function isDateFullyBooked(dateObj){
+  function isDateFullyBooked(dateObj, mode){
     const key = dateKey(dateObj);
-    const takenNums = new Set(liveBookedSlots.filter(b => b.date === key).map(b => b.slot));
-    (BLOCKED_SLOTS_BY_DATE[key] || []).forEach(n => takenNums.add(n));
-    DAILY_RECURRING_BLOCKED_SLOTS.forEach(n => takenNums.add(n));
-    return takenNums.size >= ALL_TIME_SLOTS.length;
+    const slots = mode === 'discovery_call' ? DISCOVERY_TIME_SLOTS : ALL_TIME_SLOTS;
+    const validNums = new Set(slots.map(s => s.num));
+    const takenNums = new Set(liveBookedSlots.filter(b => b.date === key && validNums.has(b.slot)).map(b => b.slot));
+    if(mode !== 'discovery_call'){
+      (BLOCKED_SLOTS_BY_DATE[key] || []).forEach(n => takenNums.add(n));
+      DAILY_RECURRING_BLOCKED_SLOTS.forEach(n => takenNums.add(n));
+    }
+    return takenNums.size >= slots.length;
   }
 
   // Re-check right before actually saving — closes the gap where two
   // people pick the same open slot within seconds of each other.
-  async function recheckSlotStillOpen(dateObj, slotNum){
+  // Re-checks both same-slot AND cross-calendar timestamp overlap right
+  // before saving — closes the gap where two people (on either calendar)
+  // grab an overlapping time within seconds of each other.
+  async function recheckNoConflict(dateObj, slotDef){
     if(!supabaseClient) return false;
     try{
       const key = dateKey(dateObj);
       const { data, error } = await supabaseClient
         .from('public_slot_availability')
         .select('requested_date, session_slot_number')
-        .eq('requested_date', key)
-        .eq('session_slot_number', slotNum);
+        .eq('requested_date', key);
       if(error) throw error;
-      return (data || []).length === 0;
+      const rows = data || [];
+      if(rows.some(r => r.session_slot_number === slotDef.num)) return false;
+      const conflict = rows.some(r => {
+        const other = findSlotDef(r.session_slot_number);
+        return other ? slotRangesOverlap(slotDef, other) : false;
+      });
+      return !conflict;
     } catch(err){
       return false; // fail closed
     }
@@ -2022,7 +2153,10 @@
           phone: extra.phone,
           description: extra.description,
           client_id: clientId,
-          appointment_type: 'regular_session'
+          appointment_type: extra.appointmentType,
+          requested_service_level: extra.requestedLevel || null,
+          duration_minutes: extra.durationMinutes,
+          price: extra.price
         });
       if(error) throw error;
       liveBookedSlots.push({ date:key, slot:slotNum });
@@ -2104,7 +2238,7 @@
       cell.textContent = d;
 
       if(cellDate.getTime() === today.getTime()) cell.classList.add('cal-today');
-      if(cellDate < today || isDateFullyBlocked(cellDate) || isDateFullyBooked(cellDate)){
+      if(cellDate < today || isDateFullyBlocked(cellDate) || isDateFullyBooked(cellDate, bookingMode)){
         cell.classList.add('cal-disabled');
       } else {
         cell.onclick = () => calSelectDate(cellDate, cell);
@@ -2146,14 +2280,17 @@
       wrap.innerHTML = '<p style="grid-column:1/-1; font-size:12.5px; color:#8a3a45; line-height:1.6;">We could not verify live availability right now. Please refresh the page or try again shortly. No booking will be accepted until availability is verified.</p>';
       return;
     }
-    const ownerBlockedNums = (BLOCKED_SLOTS_BY_DATE[dateKey(calSelectedDate)] || []).concat(DAILY_RECURRING_BLOCKED_SLOTS);
-    ALL_TIME_SLOTS.forEach(slot => {
+    const ownerBlockedNums = bookingMode === 'regular_session'
+      ? (BLOCKED_SLOTS_BY_DATE[dateKey(calSelectedDate)] || []).concat(DAILY_RECURRING_BLOCKED_SLOTS)
+      : [];
+    getCurrentSlotArray().forEach(slot => {
       const el = document.createElement('div');
       const ownerBlocked = ownerBlockedNums.includes(slot.num);
       const liveBooked = isSlotLiveBooked(calSelectedDate, slot.num);
+      const crossConflict = !liveBooked && hasCrossCalendarConflict(calSelectedDate, slot);
       const pastInArizona = isPastArizonaSlot(calSelectedDate, slot);
-      const isBlocked = ownerBlocked || liveBooked || pastInArizona;
-      const tag = liveBooked ? 'booked' : (pastInArizona ? 'time passed' : (ownerBlocked ? 'unavailable' : ''));
+      const isBlocked = ownerBlocked || liveBooked || crossConflict || pastInArizona;
+      const tag = liveBooked || crossConflict ? 'booked' : (pastInArizona ? 'time passed' : (ownerBlocked ? 'unavailable' : ''));
       el.className = 'time-slot' + (isBlocked ? ' cal-disabled' : '');
       el.innerHTML = '<span class="slot-num">' + slot.num + '</span>' + slot.label + (tag ? ' <span style="font-size:9px;">(' + tag + ')</span>' : '');
       if(!isBlocked){
@@ -2161,7 +2298,8 @@
       } else {
         el.onclick = () => showNotAvailableModal(liveBooked
           ? 'This exact time slot is already booked by someone else. Please pick a different one below.'
-          : (pastInArizona ? 'This time has already passed in Arizona. Please select a future time.' : 'This time isn\'t open right now. Please pick a different one below.'));
+          : (crossConflict ? 'This time overlaps with another appointment that is already booked. Please pick a different one below.'
+          : (pastInArizona ? 'This time has already passed in Arizona. Please select a future time.' : 'This time isn\'t open right now. Please pick a different one below.')));
       }
       wrap.appendChild(el);
     });
@@ -2175,6 +2313,52 @@
     updateBookingSummary();
   }
 
+  function renderLevelList(){
+    const wrap = document.getElementById('levelList');
+    if(!wrap) return;
+    wrap.innerHTML = LEVELS.map(lvl => `
+      <button type="button" class="level-btn level-${lvl.code.toLowerCase()}${bkSelectedLevel === lvl.code ? ' selected' : ''}" onclick="selectLevel('${lvl.code}')">
+        <span class="level-code-pill">${lvl.code}</span>
+        <span class="level-text">
+          <span class="level-name-row"><span class="level-name">${lvl.name}</span><span class="level-outcome">${lvl.outcome}</span></span>
+          <p class="level-tagline">${lvl.tagline}</p>
+        </span>
+        <span class="level-check">✓</span>
+      </button>
+    `).join('');
+  }
+
+  function selectLevel(code){
+    bkSelectedLevel = code;
+    renderLevelList();
+    const validationEl = document.getElementById('levelValidation');
+    if(validationEl) validationEl.innerHTML = '&nbsp;';
+    updateBookingSummary();
+  }
+
+  function selectAppointmentType(mode){
+    bookingMode = mode;
+    bkSelectedLevel = null;
+    calSelectedDate = null; bkSelectedTime = null; bkSelectedSlotNum = null;
+
+    document.getElementById('aptTypeDiscoveryBtn').classList.toggle('selected', mode === 'discovery_call');
+    document.getElementById('aptTypeRegularBtn').classList.toggle('selected', mode === 'regular_session');
+    document.getElementById('aptTypePrompt').style.display = 'none';
+    document.getElementById('levelSection').style.display = mode === 'regular_session' ? 'block' : 'none';
+    document.getElementById('calendarSection').style.display = 'block';
+    document.getElementById('detailsSection').style.display = 'block';
+    const validationEl = document.getElementById('levelValidation');
+    if(validationEl) validationEl.innerHTML = '&nbsp;';
+
+    if(mode === 'regular_session') renderLevelList();
+
+    calViewDate = new Date();
+    calViewDate.setDate(1);
+    calRender();
+    renderTimeSlots();
+    updateBookingSummary();
+  }
+
   function updateBookingSummary(){
     const summaryEl = document.getElementById('bkSummary');
     if(!calSelectedDate && !bkSelectedTime){
@@ -2183,7 +2367,14 @@
     }
     const dateStr = calSelectedDate ? calSelectedDate.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' }) : 'a date';
     const timeStr = bkSelectedTime || 'a time';
-    summaryEl.innerHTML = 'You\'re requesting <b>' + dateStr + '</b> at <b>' + timeStr + '</b> <span class="bk-tz-note">(Arizona Time — MST)</span>.';
+    let extra = '';
+    if(bookingMode === 'discovery_call'){
+      extra = ' — a free 20-minute Discovery Call. Coaching level: <b>Not Applicable</b>.';
+    } else if(bookingMode === 'regular_session'){
+      const lvl = LEVELS.find(l => l.code === bkSelectedLevel);
+      extra = ' — a 60-minute Regular Session' + (lvl ? ', <b>' + lvl.code + ' — ' + lvl.name + '</b>' : '') + '.';
+    }
+    summaryEl.innerHTML = 'You\'re requesting <b>' + dateStr + '</b> at <b>' + timeStr + '</b> <span class="bk-tz-note">(Arizona Time — MST)</span>' + extra;
   }
 
   const BK_FIELD_IDS = ['bkFirst','bkLast','bkAge','bkCountryCode','bkPhone','bkEmail','bkDesc'];
@@ -2206,14 +2397,24 @@
     statusEl.className = 'bk-status bk-status-err';
     clearFieldErrors();
 
+    if(!bookingMode){
+      statusEl.textContent = 'Please choose an appointment type above before submitting.';
+      return false;
+    }
     if(!calSelectedDate || !bkSelectedTime){
       statusEl.textContent = 'Please select both a date and a time above before submitting.';
       return false;
     }
-    const selectedSlotDef = ALL_TIME_SLOTS.find(s => s.num === bkSelectedSlotNum);
+    const selectedSlotDef = getCurrentSlotArray().find(s => s.num === bkSelectedSlotNum);
     if(isPastArizonaSlot(calSelectedDate, selectedSlotDef)){
       statusEl.textContent = 'That date or time has already passed in Arizona. Please choose a future appointment time.';
       renderTimeSlots();
+      return false;
+    }
+    if(bookingMode === 'regular_session' && !bkSelectedLevel){
+      const validationEl = document.getElementById('levelValidation');
+      if(validationEl) validationEl.textContent = 'Please select L1, L2, L3, or L4 before booking your session.';
+      document.getElementById('levelSection').scrollIntoView({ behavior:'smooth', block:'center' });
       return false;
     }
 
@@ -2273,9 +2474,12 @@
     }
 
     const bookingId = generateUniqueBookingId(calSelectedDate, liveBookedSlots);
+    const isDiscovery = bookingMode === 'discovery_call';
+    const levelInfo = LEVELS.find(l => l.code === bkSelectedLevel);
 
-    const waMessage = 'New booking request — ' + bookingId + '\n'
+    const waMessage = (isDiscovery ? 'New Discovery Call request — ' : 'New booking request — ') + bookingId + '\n'
       + 'Slot #' + bkSelectedSlotNum + ' — ' + dateLabel + ' at ' + bkSelectedTime + ' (Arizona Time / MST)\n'
+      + (isDiscovery ? '' : 'Level requested: ' + bkSelectedLevel + (levelInfo ? ' — ' + levelInfo.name : '') + '\n')
       + 'Name: ' + firstName + ' ' + lastName + '\n'
       + 'Age: ' + age + '\n'
       + 'Email: ' + email + '\n'
@@ -2287,7 +2491,7 @@
     btn.disabled = true;
     btn.textContent = 'Checking availability…';
 
-    const stillOpen = await recheckSlotStillOpen(calSelectedDate, bkSelectedSlotNum);
+    const stillOpen = await recheckNoConflict(calSelectedDate, selectedSlotDef);
     if(!stillOpen){
       btn.disabled = false;
       btn.textContent = 'Request This Time';
@@ -2302,7 +2506,13 @@
     // client the request succeeded.
     const slotSaved = await saveLiveBooking(
       calSelectedDate, bkSelectedSlotNum, firstName + ' ' + lastName, bookingId, email,
-      { timeLabel: bkSelectedTime, firstName, lastName, age, phone: fullPhone, description }
+      {
+        timeLabel: bkSelectedTime, firstName, lastName, age, phone: fullPhone, description,
+        appointmentType: bookingMode,
+        requestedLevel: isDiscovery ? null : bkSelectedLevel,
+        durationMinutes: isDiscovery ? 20 : 60,
+        price: isDiscovery ? 0 : null
+      }
     );
     if(!slotSaved){
       btn.disabled = false;
@@ -2313,11 +2523,18 @@
       return false;
     }
 
-    openBookingConfirmModal(waLink, bookingId, bkSelectedSlotNum, dateLabel, bkSelectedTime);
+    openBookingConfirmModal(waLink, bookingId, bkSelectedSlotNum, dateLabel, bkSelectedTime, bookingMode, bkSelectedLevel);
 
     document.getElementById('bookingForm').reset();
-    calSelectedDate = null; bkSelectedTime = null; bkSelectedSlotNum = null;
+    calSelectedDate = null; bkSelectedTime = null; bkSelectedSlotNum = null; bkSelectedLevel = null;
     document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('slot-selected'));
+    bookingMode = null;
+    document.getElementById('aptTypeDiscoveryBtn').classList.remove('selected');
+    document.getElementById('aptTypeRegularBtn').classList.remove('selected');
+    document.getElementById('aptTypePrompt').style.display = '';
+    document.getElementById('levelSection').style.display = 'none';
+    document.getElementById('calendarSection').style.display = 'none';
+    document.getElementById('detailsSection').style.display = 'none';
     calRender();
     updateBookingSummary();
 
@@ -2411,12 +2628,23 @@
     return URL.createObjectURL(blob);
   }
 
-  function openBookingConfirmModal(waLink, bookingId, slotNum, dateLabel, timeLabel){
+  function openBookingConfirmModal(waLink, bookingId, slotNum, dateLabel, timeLabel, mode, level){
+    const headingEl = document.getElementById('bookingModalHeading');
+    if(headingEl){
+      headingEl.textContent = mode === 'discovery_call'
+        ? 'Discovery Call Requested — Free — 20 Minutes'
+        : 'Coaching Session Request Received — Regular Session — 60 Minutes';
+    }
+
     const detailEl = document.getElementById('bookingModalDetail');
     if(detailEl){
+      const lvl = LEVELS.find(l => l.code === level);
+      const statusLine = mode === 'discovery_call'
+        ? 'Status: Request received — awaiting review'
+        : 'Level requested: ' + level + (lvl ? ' — ' + lvl.name + ' (' + lvl.outcome + ')' : '') + '<br>Status: Request received — awaiting review';
       detailEl.innerHTML = '<b>Booking ID: ' + bookingId + '</b><br>'
         + dateLabel + ' at ' + timeLabel + ' (Arizona Time — MST)'
-        + '<br><span style="font-size:12px;font-weight:400;">Status: Request received — awaiting review</span>';
+        + '<br><span style="font-size:12px;font-weight:400;">' + statusLine + '</span>';
     }
 
     const calWrap = document.getElementById('bookingModalCalWrap');
