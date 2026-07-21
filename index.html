@@ -262,9 +262,41 @@
   }
   .booking-confirm-modal h3{ text-align:center; }
   .booking-confirm-modal .modal-copy{ border-left:none; padding-left:0; text-align:left; }
-  .booking-confirm-detail{
-    text-align:center; font-family:'Fraunces', serif; font-weight:600; font-size:15px;
-    color:var(--ink); background:rgba(201,138,156,0.10); border-radius:8px; padding:10px 14px; margin:0 0 14px;
+  .bc-subhead{
+    text-align:center; font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--gold); margin:-10px 0 20px;
+  }
+  .bc-receipt{
+    background:var(--card); border:1px solid rgba(201,138,156,0.25); border-radius:12px;
+    padding:18px 20px 20px; margin:0 0 18px; text-align:left;
+  }
+  .bc-receipt-top{ margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid rgba(201,138,156,0.2); }
+  .bc-receipt-top .bc-bid{
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.03em; color:var(--ink-soft);
+    text-transform:uppercase; margin-bottom:5px;
+  }
+  .bc-receipt-top .bc-bid b{ color:var(--ink); font-family:inherit; letter-spacing:0; text-transform:none; font-size:12.5px; }
+  .bc-receipt-top .bc-when{ font-family:'Work Sans',sans-serif; font-size:16px; font-weight:600; color:var(--ink); }
+  .bc-receipt-top .bc-when .bc-tz{ font-weight:400; color:var(--ink-soft); font-size:12px; }
+  .bc-meta{ display:flex; flex-direction:column; gap:13px; }
+  .bc-label{
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px; text-transform:uppercase;
+    letter-spacing:.05em; color:var(--ink-soft); font-weight:600;
+  }
+  .bc-row{ display:flex; justify-content:space-between; align-items:center; gap:16px; }
+  .bc-row .bc-label{ flex:0 0 auto; }
+  .bc-row .bc-value{ font-family:'Work Sans',sans-serif; font-size:14px; text-align:right; color:var(--ink); }
+  .bc-level-value{ display:flex; align-items:center; gap:7px; }
+  .bc-level-pill{
+    width:22px; height:22px; border-radius:6px; color:#fff; flex:0 0 auto;
+    font-family:'IBM Plex Mono', monospace; font-size:9px; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .bc-shared{ padding-top:13px; border-top:1px dashed rgba(201,138,156,0.25); }
+  .bc-shared .bc-label{ display:block; margin-bottom:7px; }
+  .bc-shared .bc-value{
+    display:block; text-align:left; font-family:'Work Sans',sans-serif; font-style:italic;
+    color:var(--ink-soft); line-height:1.55; font-size:13.5px;
   }
   .booking-confirm-wa-btn{
     display:inline-block; margin-top:10px; background:var(--gold); color:#fff; font-family:'IBM Plex Mono', monospace;
@@ -1722,7 +1754,8 @@
 <button aria-label="Close" class="topic-modal-close" onclick="closeBookingModal()">×</button>
 <div class="booking-confirm-icon">✓</div>
 <h3 id="bookingModalHeading">Your booking request has been received</h3>
-<p class="booking-confirm-detail" id="bookingModalDetail"></p>
+<div class="bc-subhead" id="bookingModalSubhead"></div>
+<div id="bookingModalDetail"></div>
 <p class="modal-copy shift">Save your Booking ID. This is a request, not a confirmation — we'll email you with next steps and payment details after review.</p>
 <div id="bookingModalCalWrap"></div>
 </div>
@@ -2665,30 +2698,46 @@
     return URL.createObjectURL(blob);
   }
 
+  const LEVEL_PILL_COLORS = { L1:'#5C9AA0', L2:'#5C8A63', L3:'#C9789A', L4:'#8A5FBF' };
+
   function openBookingConfirmModal(waLink, bookingId, slotNum, dateLabel, timeLabel, mode, level, sessionNumber, description){
+    const isDiscovery = mode === 'discovery_call';
     const headingEl = document.getElementById('bookingModalHeading');
     if(headingEl){
-      headingEl.textContent = mode === 'discovery_call'
-        ? 'Discovery Call Requested — Free, 20 Minutes'
-        : 'Coaching Session Requested — 60 Minutes';
+      headingEl.textContent = isDiscovery ? 'Discovery Call Requested' : 'Coaching Session Requested';
+    }
+    const subheadEl = document.getElementById('bookingModalSubhead');
+    if(subheadEl){
+      subheadEl.textContent = isDiscovery ? 'Free, 20-Minute Discovery Call' : '60-Minute Regular Session';
     }
 
     const detailEl = document.getElementById('bookingModalDetail');
     if(detailEl){
       const lvl = LEVELS.find(l => l.code === level);
-      const statusLine = mode === 'discovery_call'
-        ? 'Status: Awaiting review'
-        : 'Level: ' + level + (lvl ? ' — ' + lvl.name : '') + '<br>Status: Awaiting review';
-      const sessionLine = sessionNumber
-        ? '<br><span style="font-size:12px;font-weight:400;">Session: ' + sessionNumber + '</span>'
+      const levelRow = isDiscovery ? '' : `
+        <div class="bc-row">
+          <span class="bc-label">Level</span>
+          <span class="bc-value bc-level-value"><span class="bc-level-pill" style="background:${LEVEL_PILL_COLORS[level] || '#8a8088'}">${escapeHtmlFrontend(level || '')}</span>${escapeHtmlFrontend(lvl ? lvl.name : '')}</span>
+        </div>`;
+      const sessionRow = sessionNumber
+        ? `<div class="bc-row"><span class="bc-label">Session</span><span class="bc-value">${sessionNumber}</span></div>`
         : '';
-      const descriptionLine = description
-        ? '<br><span style="font-size:12px;font-weight:400;">You shared: “' + escapeHtmlFrontend(description) + '”</span>'
+      const sharedRow = description
+        ? `<div class="bc-shared"><span class="bc-label">You shared</span><span class="bc-value">“${escapeHtmlFrontend(description)}”</span></div>`
         : '';
-      detailEl.innerHTML = '<b>Booking ID: ' + bookingId + '</b><br>'
-        + dateLabel + ' at ' + timeLabel + ' (Arizona Time — MST)'
-        + '<br><span style="font-size:12px;font-weight:400;">' + statusLine + '</span>'
-        + sessionLine + descriptionLine;
+      detailEl.innerHTML = `
+        <div class="bc-receipt">
+          <div class="bc-receipt-top">
+            <div class="bc-bid">Booking ID <b>${escapeHtmlFrontend(bookingId)}</b></div>
+            <div class="bc-when">${escapeHtmlFrontend(dateLabel)} · ${escapeHtmlFrontend(timeLabel)} <span class="bc-tz">(Arizona Time)</span></div>
+          </div>
+          <div class="bc-meta">
+            ${levelRow}
+            <div class="bc-row"><span class="bc-label">Status</span><span class="bc-value">Awaiting review</span></div>
+            ${sessionRow}
+            ${sharedRow}
+          </div>
+        </div>`;
     }
 
     const calWrap = document.getElementById('bookingModalCalWrap');
