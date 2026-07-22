@@ -246,10 +246,16 @@
   .nlp-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px; }
   .nlp-tag{ background:#F7F1FA; border:1px solid #D9C3E6; color:#5a3a6a; font-size:11.5px; padding:5px 12px; border-radius:20px; }
 
-  /* ---- per-session content variants (this preview covers Session 1 and Session 2) ---- */
-  .ai-variant-2{ display:none; }
-  .ai-modal[data-session="2"] .ai-variant-1{ display:none; }
-  .ai-modal[data-session="2"] .ai-variant-2{ display:block; }
+  /* ---- live AI generation states ---- */
+  .ai-mock-banner.status-processing{ background:#FBEFD6; border-color:#E0A03A; color:#8a5a1f; }
+  .ai-mock-banner.status-done{ background:#DCEFE0; border-color:#8fc79c; color:var(--ok); }
+  .ai-mock-banner.status-error{ background:#F5DADD; border-color:#e0a3ac; color:var(--danger); }
+  .ai-empty-state{ font-size:12.5px; color:var(--ink-soft); font-style:italic; padding:20px 0; }
+  .ai-generate-note{ font-size:11.5px; color:var(--ink-soft); margin-top:8px; line-height:1.5; }
+  .ai-generate-note.err{ color:var(--danger); }
+  .ai-generate-btn:disabled{ opacity:.5; cursor:not-allowed; }
+  .ai-spinner{ display:inline-block; width:13px; height:13px; border:2px solid #D9C3E6; border-top-color:#7a4a8a; border-radius:50%; animation:ai-spin .7s linear infinite; margin-right:7px; vertical-align:-2px; }
+  @keyframes ai-spin{ to{ transform:rotate(360deg); } }
   .technique-callout{ background:#F7F1FA; border:1px solid #D9C3E6; border-radius:10px; padding:12px 14px; margin:0 0 14px; font-size:12.5px; line-height:1.6; }
   .technique-callout strong{ display:block; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.05em; text-transform:uppercase; color:#5a3a6a; margin-bottom:4px; }
   .session-plan-list{ margin-bottom:6px; }
@@ -449,419 +455,49 @@
   </div>
 </div>
 
-<!-- AI CASE FORMULATION PREVIEW — worked example, mock data only, not live AI -->
+<!-- AI CASE FORMULATION — live, calls the categorize-session Edge Function for whichever session was opened -->
 <div class="sessions-modal-overlay" id="aiModalOverlay">
   <div class="ai-modal">
     <button class="sessions-modal-close" id="aiModalCloseBtn" aria-label="Close">×</button>
-    <div class="ai-mock-banner">Preview mockup — mock data, not live AI</div>
-    <h3>AI Case Formulation — Worked Example</h3>
-    <p class="ai-modal-sub" id="aiModalSub">Divya · Session 1 · Confirmed Level: L2 — Release (outcome: MOVE)</p>
+    <div class="ai-mock-banner" id="aiStatusBanner">Not generated yet</div>
+    <h3>AI Case Formulation</h3>
+    <p class="ai-modal-sub" id="aiModalSub"></p>
 
     <div class="ai-tabs">
       <button class="ai-tab active" type="button" data-panel="aiPanelRaw">1. Raw Notes</button>
       <button class="ai-tab" type="button" data-panel="aiPanelFormulation">2. Case Formulation</button>
-      <button class="ai-tab" type="button" data-panel="aiPanelPrep">3. Session Plan</button>
+      <button class="ai-tab" type="button" data-panel="aiPanelPrep">3. Carried Forward</button>
       <button class="ai-tab" type="button" data-panel="aiPanelMeasure">4. Final Measure</button>
     </div>
 
-    <!-- Screen 1: raw notes — type, paste, or upload; nothing here is parsed or sent anywhere yet -->
+    <!-- Screen 1: raw notes, real session data, editable and saved back to the DB -->
     <div class="ai-panel active" id="aiPanelRaw">
       <h4>Session Notes — as entered</h4>
-      <p class="ai-input-hint">Key the notes in directly, paste them from elsewhere, or attach a document/photo of handwritten notes. This is the same raw-notes box the real product will use — this preview just doesn't send it anywhere yet.</p>
+      <p class="ai-input-hint">Type, paste, or edit the notes below — they save back to this session automatically. Confirm this session's level (on the session card behind this modal) before generating a case formulation.</p>
       <div class="ai-input-toolbar">
-        <label class="ai-upload-chip">+ Upload document / photo<input type="file" id="aiUploadInput" accept="image/*,.pdf,.doc,.docx,.txt"/></label>
-        <span class="ai-upload-filename" id="aiUploadFilename"></span>
+        <label class="ai-upload-chip">+ Upload document / photo<input type="file" id="aiUploadInput" accept="image/*,.pdf,.doc,.docx,.txt" disabled/></label>
+        <span class="ai-upload-filename" id="aiUploadFilename">Coming soon — notes are text-only for now.</span>
       </div>
-      <div class="ai-variant ai-variant-1">
-      <textarea class="ai-raw-textarea">Divya — Session 1 (Release).
-
-Presenting issue: one specific task, an online course she keeps delaying starting.
-
-Baseline measure: Resistance 8/10. Shame 8/10. Describes the pattern as "easy to feel lazy about" and says she avoids the priority.
-
-VAK: when she pictures the task she goes into avoidance / dissociation (visual). Hears a critical inner voice asking "why are you being lazy" (auditory) — moving away from that fear. Kinesthetic response not clearly described.
-
-Reframe: is that voice helping her begin, or making it harder? What kind of voice would support the first step? Landed on: "I don't need to finish. I only need to begin."
-
-Named two parts in conflict — a Delay Part (wants rest, freedom, protection from shame) and an Achievement Part (wants growth, confidence, success/completion). Looked for one small action that respects both.
-
-Anchored a resourceful state: recalled a time she started something before feeling fully ready.
-
-+ve reason to begin now, not waiting for fear or a deadline: "I want to feel free tonight. I want to trust myself. I want progress."
-
-Committed action: watch the course video for 10 minutes — first 3 bullet points only.
-
-Future-paced tomorrow at the exact time she plans to start; agreed that if resistance shows up again she'll notice it and remind herself she only needs the first 10 minutes.
-
-Re-measured: Resistance 8 → 2. Confidence and heaviness were measured again but not clearly recorded this session.</textarea>
+      <textarea class="ai-raw-textarea" id="aiRawTextarea"></textarea>
+      <div id="aiGenerateArea">
+        <button class="ai-generate-btn" type="button" id="aiGenerateBtn">Generate Case Formulation →</button>
+        <div class="ai-generate-note" id="aiGenerateNote"></div>
       </div>
-      <div class="ai-variant ai-variant-2">
-      <textarea class="ai-raw-textarea">Divya — Session 2 (Release).
-
-Opened with the Session 1 prep banner: checked whether the committed action happened. Partial follow-through — watched 6 of the planned 10 minutes of the course video before stopping.
-
-Re-measured on arrival: Resistance 4/10, Confidence 6/10, Heaviness 3/10 — up slightly from Session 1's close (Resistance 2/10), consistent with a partial win rather than a full one.
-
-Elicited today's live cue picture — not reused from last time. Sees the paused video thumbnail; the critical voice is quieter but still present; a new element showed up — a mental image of a deadline clock (Sunday), pulling her back toward away-from motivation.
-
-Applied the Swish Pattern: cue picture (the paused-video moment, associated) swished against the Session 1 resourceful-state anchor (dissociated, bright, big, close, already doing the task). 6 reps, faster each time, breaking state between reps.
-
-Tested: asked her to bring the old cue picture back up — reported it was "hard to hold onto," slid back to the resourceful image on its own by the last rep.
-
-Residual check: the deadline-clock image was still pulling attention. Applied a single submodality tweak only — pushed the clock image further away and dulled it, left everything else untouched.
-
-This week's committed action: finish the rest of the first module — minutes 10 to 25 of the course video.
-
-Future-paced the exact moment and what she does if resistance shows again.
-
-Re-measured again: Resistance 1/10, Confidence 8/10, Heaviness 2/10.
-
-Closed with the Final Release Measure and the same indirect forward-seed toward deeper pattern work — no direct pitch.</textarea>
-      </div>
-      <button class="ai-generate-btn" type="button" id="aiGenerateBtn">Generate Case Formulation →</button>
     </div>
 
-    <!-- Screen 2: full AI case formulation — level boundaries, leverage point, full Dilts 6-level breakdown, categorized fields -->
+    <!-- Screen 2: dynamically rendered from ai_formulation JSON returned by the categorize-session Edge Function -->
     <div class="ai-panel" id="aiPanelFormulation">
-      <div class="ai-variant ai-variant-1">
-      <h4>Presenting Issue</h4>
-      <p>One specific task — an online course — repeatedly delayed. Client-reported Resistance 8/10 and Shame 8/10 at the start of the session.</p>
-      </div>
-      <div class="ai-variant ai-variant-2">
-      <h4>Presenting Issue</h4>
-      <p>Continuing from Session 1 — same course-avoidance pattern. Today tests whether the reframe and anchor hold under real-world follow-through (a partial win, not a full one).</p>
-      </div>
-
-      <h4>Level Boundaries — what each level is (and isn't) for</h4>
-      <div class="level-ref-strip">
-        <div class="level-ref">
-          <div class="lr-code">L1</div>
-          <div class="lr-outcome">Heard</div>
-          <div class="lr-rule">Reflect, listen, summarize. No belief change, root-cause work, capacity-building, identity or values work — it's an observer effect, not an intervention.</div>
-        </div>
-        <div class="level-ref this-case">
-          <div class="lr-code">L2 <span class="this-case-tag">This case</span></div>
-          <div class="lr-outcome">Move</div>
-          <div class="lr-rule">One immediate blocker, one intervention, one observable action. No childhood-root analysis, broad pattern work, identity or values redesign.</div>
-        </div>
-        <div class="level-ref">
-          <div class="lr-code">L3</div>
-          <div class="lr-outcome">Respond Differently</div>
-          <div class="lr-rule">Work the one relevant repeating pattern only. Don't try to fix the whole person or redesign unrelated life areas.</div>
-        </div>
-        <div class="level-ref">
-          <div class="lr-code">L4</div>
-          <div class="lr-outcome">Lead Myself</div>
-          <div class="lr-rule">Stay within agreed areas of evolution. Don't build an idealized identity or redesign the client's whole life.</div>
-        </div>
-      </div>
-
-      <div class="ai-variant ai-variant-1">
-      <div class="boundary-callout">
-        <div class="bc-title">Coaching boundary for this session — L2, Release</div>
-        <div class="boundary-cols">
-          <div>
-            <div class="boundary-col-title ok">Work within</div>
-            <ul>
-              <li>The one immediate blocker — starting the course</li>
-              <li>One intervention — submodality shift + belief reframe</li>
-              <li>One observable action — first 10 minutes of the video</li>
-            </ul>
-          </div>
-          <div>
-            <div class="boundary-col-title no">Do not open</div>
-            <ul>
-              <li>Childhood-root analysis of the shame pattern</li>
-              <li>Broad repeating-pattern work across other life areas</li>
-              <li>Identity reconstruction or values redesign</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="leverage-banner">
-        <strong>Primary leverage point — where the 5% tweak sits</strong>
-        Belief. The shame-linked inner voice ("why are you being lazy") is what's driving the Behavior and blocking Capability. Reframing that one belief is what unlocked the rest — Environment, Identity, and Purpose stayed untouched, as they should at this level.
-      </div>
-
-      <div class="dilts-grid">
-        <div class="dilts-level">
-          <div class="d-name">Environment <span class="d-status">Not Applicable</span></div>
-          <div class="d-text">The course itself was named as the trigger, but no specific place/time context was explored this session.</div>
-        </div>
-        <div class="dilts-level active">
-          <div class="d-name">Behavior <span class="d-status">Active</span></div>
-          <div class="d-text">The presenting pattern: repeatedly delaying / avoiding starting the course.</div>
-        </div>
-        <div class="dilts-level active">
-          <div class="d-name">Capability <span class="d-status">Active</span></div>
-          <div class="d-text">No prior strategy for beginning under resistance. Session built one: chunk the task down, shift the inner-voice reframe, anchor a resourceful state, commit to one small action.</div>
-        </div>
-        <div class="dilts-level primary">
-          <div class="d-name">Belief <span class="d-status">★ Primary Leverage</span></div>
-          <div class="d-text">Core lever of the session. Starting voice heard as "why are you being lazy" (shame-linked). Reframed to "I don't need to finish. I only need to begin."</div>
-        </div>
-        <div class="dilts-level">
-          <div class="d-name">Identity <span class="d-status">Not Applicable</span></div>
-          <div class="d-text">Not raised in the raw notes. Identity-level work is out of scope for Release — belongs to Evolve (L4).</div>
-        </div>
-        <div class="dilts-level">
-          <div class="d-name">Purpose <span class="d-status">Not Applicable</span></div>
-          <div class="d-text">Not raised in the raw notes.</div>
-        </div>
-      </div>
-
-      <h4>Motivation Direction</h4>
-      <div class="info-card">
-        <p><strong>Away-from</strong> at the start — avoiding the shame/fear behind the critical inner voice.</p>
-        <p><strong>Shifted towards</strong> by the end — the reframe plus the +ve reason ("I want to feel free tonight, I want to trust myself, I want progress") gave her a towards-motivation frame for the committed action.</p>
-      </div>
-
-      <h4>Parts in Conflict</h4>
-      <div class="parts-grid">
-        <div class="part-card">
-          <div class="pc-title">Delay Part</div>
-          <div class="pc-wants">Wants: rest, freedom, protection from shame.</div>
-        </div>
-        <div class="part-card">
-          <div class="pc-title">Achievement Part</div>
-          <div class="pc-wants">Wants: growth, confidence, success / completion.</div>
-        </div>
-      </div>
-      <div class="part-integration">Integration action — one small action that respects both parts: watch only the first 10 minutes. Protects the Delay Part (no full commitment demanded) while satisfying the Achievement Part (forward motion happens).</div>
-
-      <h4>Limiting Belief &amp; Limiting Decision</h4>
-      <div class="info-card">
-        <p><span class="ic-title" style="display:inline;">Limiting belief</span> — "Hesitating means I'm being lazy," tied directly to shame.</p>
-        <p><span class="ic-title" style="display:inline;">Limiting decision</span><span class="inference-tag">Coach inference</span> — not a direct client statement. Reading back from the reframe she reached ("I don't need to finish, I only need to begin"), the earlier decision this is undoing looks like: a task only counts if it's finished, so starting without certainty of finishing has felt unsafe. Flagged for the coach to confirm with Divya directly rather than treated as fact.</p>
-      </div>
-
-      <h4>Emotional Themes</h4>
-      <p>Shame (8/10). Resistance / fear (8/10 → 2/10). Overwhelm — addressed by chunking the task down.</p>
-
-      <h4>Representation (VAK)</h4>
-      <p>Visual-dominant — pictures the task and dissociates / avoids it. Also auditory: a critical inner voice. Kinesthetic: <span class="not-captured">Not Captured</span>.</p>
-
-      <h4>NLP Techniques Used</h4>
-      <div class="nlp-tags">
-        <span class="nlp-tag">Belief Reframe</span>
-        <span class="nlp-tag">Submodality Shift</span>
-        <span class="nlp-tag">Parts Negotiation</span>
-        <span class="nlp-tag">Resource Anchoring</span>
-        <span class="nlp-tag">Future Pacing</span>
-      </div>
-
-      <h4>Measures</h4>
-      <div class="measure-row"><span class="measure-label">Resistance</span><span class="measure-chip before">8/10</span><span class="measure-arrow">→</span><span class="measure-chip after">2/10</span></div>
-      <div class="measure-row"><span class="measure-label">Confidence</span><span class="not-captured">Not Captured</span></div>
-      <div class="measure-row"><span class="measure-label">Heaviness</span><span class="not-captured">Not Captured</span></div>
-
-      <h4>Exact Next Action</h4>
-      <p>Watch the course video — first 10 minutes / first 3 bullet points.</p>
-
-      <h4>Context Acknowledged but Not Treated</h4>
-      <p>Shame carried a strong, longstanding charge — client described the pattern as going back years. That's deeper material than the single-blocker scope of Release; acknowledged here, not treated. See the boundary check on the Final Release Measure screen.</p>
-      </div>
-
-      <div class="ai-variant ai-variant-2">
-      <div class="boundary-callout">
-        <div class="bc-title">Coaching boundary for this session — L2, Release (consolidation)</div>
-        <div class="boundary-cols">
-          <div>
-            <div class="boundary-col-title ok">Work within</div>
-            <ul>
-              <li>Testing whether Session 1's reframe and anchor are holding</li>
-              <li>One consolidation technique only (Swish, plus a submodality tweak if needed)</li>
-              <li>One refreshed, small, time-bound committed action</li>
-            </ul>
-          </div>
-          <div>
-            <div class="boundary-col-title no">Do not open</div>
-            <ul>
-              <li>Re-running the full Session 1 protocol from scratch</li>
-              <li>Treating the partial follow-through as a new deep problem</li>
-              <li>Expanding into other areas of her life where procrastination shows up</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="leverage-banner">
-        <strong>Primary leverage point — where the 5% tweak sits</strong>
-        Still Belief — but this is consolidation, not installation. The Session 1 reframe is holding for most of the situation; today's tweak is calibrating it against the one new element that showed up (the deadline-clock image), not building a new belief.
-      </div>
-
-      <div class="dilts-grid">
-        <div class="dilts-level">
-          <div class="d-name">Environment <span class="d-status">Not Applicable</span></div>
-          <div class="d-text">Still not the focus — no new place/time context introduced this session.</div>
-        </div>
-        <div class="dilts-level active">
-          <div class="d-name">Behavior <span class="d-status">Active</span></div>
-          <div class="d-text">Partial follow-through (6 of 10 minutes) — the pattern is loosening, not gone. Behavior is the thing being tested today, not re-installed.</div>
-        </div>
-        <div class="dilts-level active">
-          <div class="d-name">Capability <span class="d-status">Active</span></div>
-          <div class="d-text">The strategy already exists from Session 1. Today reinforces it under real-world friction (the deadline pressure) rather than building a new one.</div>
-        </div>
-        <div class="dilts-level primary">
-          <div class="d-name">Belief <span class="d-status">★ Primary Leverage</span></div>
-          <div class="d-text">Same belief from Session 1 ("hesitating means I'm being lazy"), now holding for most of the situation. Today's Swish tests whether it re-engages under time pressure.</div>
-        </div>
-        <div class="dilts-level">
-          <div class="d-name">Identity <span class="d-status">Not Applicable</span></div>
-          <div class="d-text">Still out of scope for Release.</div>
-        </div>
-        <div class="dilts-level">
-          <div class="d-name">Purpose <span class="d-status">Not Applicable</span></div>
-          <div class="d-text">Not raised.</div>
-        </div>
-      </div>
-
-      <h4>Motivation Direction</h4>
-      <div class="info-card">
-        <p>The towards-motivation frame from Session 1 held for most of the week, with some pull back toward away-from under the Sunday-deadline pressure. Today's Swish targets exactly that residual pull.</p>
-      </div>
-
-      <h4>Parts in Conflict</h4>
-      <div class="parts-grid">
-        <div class="part-card">
-          <div class="pc-title">Delay Part</div>
-          <div class="pc-wants">Wants: rest, freedom, protection from shame.</div>
-        </div>
-        <div class="part-card">
-          <div class="pc-title">Achievement Part</div>
-          <div class="pc-wants">Wants: growth, confidence, success / completion.</div>
-        </div>
-      </div>
-      <div class="part-integration">Same two parts as Session 1. The partial follow-through (6 of 10 minutes) is the negotiation working, not failing — worth checking how each part responds to being asked for a bit more this week.</div>
-
-      <h4>Limiting Belief &amp; Limiting Decision</h4>
-      <div class="info-card">
-        <p><span class="ic-title" style="display:inline;">Limiting belief</span> — same as Session 1 ("hesitating means I'm being lazy"), now holding for roughly 60% of the situation rather than driving it entirely.</p>
-        <p><span class="ic-title" style="display:inline;">Limiting decision</span><span class="inference-tag">Coach inference</span> — unchanged from Session 1; being tested today under the added variable of time pressure rather than re-derived.</p>
-      </div>
-
-      <h4>Emotional Themes</h4>
-      <p>Shame — reduced from Session 1's baseline. Mild anxiety, newly showing up around the Sunday deadline.</p>
-
-      <h4>Representation (VAK)</h4>
-      <p>Visual-dominant, same as Session 1 — today's cue is the paused video thumbnail plus a new deadline-clock image. Kinesthetic: <span class="not-captured">Not Captured</span>.</p>
-
-      <div class="technique-callout">
-        <strong>Smallest-tweak technique used</strong>
-        Swish Pattern (primary) — cue picture (the paused-video moment) swished against the Session 1 resourceful-state anchor, 6 fast reps. Single submodality tweak (secondary, fallback only) — pushed the deadline-clock image further away and duller. No new protocol run.
-      </div>
-
-      <h4>NLP Techniques Used</h4>
-      <div class="nlp-tags">
-        <span class="nlp-tag">Swish Pattern</span>
-        <span class="nlp-tag">Submodality Tweak</span>
-        <span class="nlp-tag">Re-anchoring</span>
-        <span class="nlp-tag">Future Pacing</span>
-      </div>
-
-      <h4>Measures</h4>
-      <div class="measure-row"><span class="measure-label">Resistance</span><span class="measure-chip before">4/10</span><span class="measure-arrow">→</span><span class="measure-chip after">1/10</span></div>
-      <div class="measure-row"><span class="measure-label">Confidence</span><span class="measure-chip before">6/10</span><span class="measure-arrow">→</span><span class="measure-chip after">8/10</span></div>
-      <div class="measure-row"><span class="measure-label">Heaviness</span><span class="measure-chip before">3/10</span><span class="measure-arrow">→</span><span class="measure-chip after">2/10</span></div>
-
-      <h4>Exact Next Action</h4>
-      <p>Finish the rest of the first module — watch minutes 10 to 25 of the course video.</p>
-
-      <h4>Context Acknowledged but Not Treated</h4>
-      <p>Same longstanding shame pattern noted in Session 1 — still acknowledged, still not treated at this level. See the boundary check on the Final Measure screen.</p>
-      </div>
+      <div id="aiFormulationBody"><div class="ai-empty-state">Generate a case formulation on the Raw Notes tab first.</div></div>
     </div>
 
-    <!-- Screen 3: prep banner carried into the next session / today's timed session plan -->
+    <!-- Screen 3: what this session committed to, to check at the start of the next one -->
     <div class="ai-panel" id="aiPanelPrep">
-      <div class="ai-variant ai-variant-1">
-      <h4>Carried into Session 2</h4>
-      <div class="prep-banner">
-        <span class="p-label">Prep from Session 1</span>
-        Divya committed to watching the course video for the first 10 minutes (first 3 bullet points only), at the specific time she named for herself. Reframe to carry forward: "I don't need to finish. I only need to begin." If resistance shows up again, the plan was to notice it and repeat that line.
-      </div>
-      <p style="margin-top:14px;">This banner appears at the top of Session 2's raw notes screen so the coach can open by checking whether the committed action happened, before recording anything new.</p>
-      </div>
-
-      <div class="ai-variant ai-variant-2">
-      <h4>Today's Session Plan — L2, Release (consolidation) · 60 min</h4>
-      <div class="technique-callout">
-        <strong>Recommended technique — smallest tweak</strong>
-        Swish Pattern: the fastest, smallest technique for flipping a live stuck-cue back to the resourceful image built in Session 1. Fallback only if static remains: a single submodality tweak (distance/tone) — not a new protocol.
-      </div>
-      <div class="session-plan-list">
-        <div class="sp-row"><span class="sp-time">0–5 min</span><div class="sp-text"><strong>Check-in.</strong> Did the committed action happen? Direct report, no elaboration yet.</div></div>
-        <div class="sp-row"><span class="sp-time">5–10 min</span><div class="sp-text"><strong>Re-measure.</strong> Resistance / Confidence / Heaviness now, against Session 1's close.</div></div>
-        <div class="sp-row"><span class="sp-time">10–15 min</span><div class="sp-text"><strong>Elicit today's cue picture.</strong> The moment just before she'd delay, right now — live submodalities, not reused.</div></div>
-        <div class="sp-row"><span class="sp-time">15–25 min</span><div class="sp-text"><strong>Swish.</strong> Cue picture up full-size → shrink/darken into a corner while the Session 1 resource picture flashes in big and bright → break state → repeat, faster each time, 5–7 reps.</div></div>
-        <div class="sp-row"><span class="sp-time">25–30 min</span><div class="sp-text"><strong>Calibrate.</strong> Think about the task now — what shows up? If clean, move on; if residual static, single submodality tweak only.</div></div>
-        <div class="sp-row"><span class="sp-time">30–40 min</span><div class="sp-text"><strong>This week's commitment.</strong> One small, specific, time-bound action. Future-pace the exact moment and the resistance-return plan.</div></div>
-        <div class="sp-row"><span class="sp-time">40–48 min</span><div class="sp-text"><strong>Re-measure again.</strong> Confirm the numbers moved.</div></div>
-        <div class="sp-row"><span class="sp-time">48–55 min</span><div class="sp-text"><strong>Close: Final Release Measure.</strong> Internal → Emotional → Behavioral, "I am stuck" → "I can move" restated, indirect Milton-model forward-seed.</div></div>
-        <div class="sp-row"><span class="sp-time">55–60 min</span><div class="sp-text"><strong>Buffer.</strong> Consolidation sessions usually finish early — don't manufacture extra work to fill the hour.</div></div>
-      </div>
-      </div>
+      <div id="aiPrepBody"><div class="ai-empty-state">Generate a case formulation on the Raw Notes tab first.</div></div>
     </div>
 
-    <!-- Screen 4: Final Release Measure card, incl. Transform-level boundary flag -->
+    <!-- Screen 4: measures + level-appropriate boundary reminders -->
     <div class="ai-panel" id="aiPanelMeasure">
-      <div class="ai-variant ai-variant-1">
-      <h4>Final Release Measure</h4>
-      <div class="release-measure-card">
-        <div class="release-measure-row"><span class="rm-num">1</span><div><strong>Internal</strong> — the task feels less overwhelming.</div></div>
-        <div class="release-measure-row"><span class="rm-num">2</span><div><strong>Emotional</strong> — resistance, shame, and fear become manageable.</div></div>
-        <div class="release-measure-row"><span class="rm-num">3</span><div><strong>Behavioral</strong> — she begins.</div></div>
-
-        <div class="release-marker">"I am stuck" → "I can move"</div>
-
-        <div class="outcome-ladder">
-          <span class="ladder-step">Heard</span><span class="ladder-arrow">→</span>
-          <span class="ladder-step current">Move</span><span class="ladder-arrow">→</span>
-          <span class="ladder-step">Respond Differently</span><span class="ladder-arrow">→</span>
-          <span class="ladder-step">Lead Myself</span>
-        </div>
-
-        <div class="boundary-flag">
-          <strong>Boundary check</strong>
-          The shame/resistance pattern was described as going back years and may not be limited to this one task. If it reappears in another area of Divya's life, this should be flagged as a possible Transform (L3) conversation — a repeating pattern — rather than silently re-running Release work on it again.
-        </div>
-      </div>
-      </div>
-
-      <div class="ai-variant ai-variant-2">
-      <h4>Final Release Measure — Session 2</h4>
-      <div class="release-measure-card">
-        <div class="release-measure-row"><span class="rm-num">1</span><div><strong>Internal</strong> — the task feels lighter again; partial progress registered as real progress, not failure.</div></div>
-        <div class="release-measure-row"><span class="rm-num">2</span><div><strong>Emotional</strong> — the new deadline-driven anxiety, specifically, becomes manageable.</div></div>
-        <div class="release-measure-row"><span class="rm-num">3</span><div><strong>Behavioral</strong> — she continues; the pattern of stopping mid-task loosens.</div></div>
-
-        <div class="release-marker">"I am stuck" → "I can move" (reconfirmed)</div>
-
-        <div class="outcome-ladder">
-          <span class="ladder-step">Heard</span><span class="ladder-arrow">→</span>
-          <span class="ladder-step current">Move</span><span class="ladder-arrow">→</span>
-          <span class="ladder-step">Respond Differently</span><span class="ladder-arrow">→</span>
-          <span class="ladder-step">Lead Myself</span>
-        </div>
-
-        <div class="milton-seed">"...and you don't have to do anything with this yet, but you might notice, over the next while, whether this same kind of stuck-ness shows up anywhere else... and when you're ready — not now, just whenever that becomes interesting to you — there's a different kind of work for looking at a pattern like that, all the way through."</div>
-
-        <div class="boundary-flag">
-          <strong>Boundary check</strong>
-          Same flag as Session 1, still open: if the shame/resistance pattern reappears in another area of Divya's life, that's a possible Transform (L3) conversation — noticed, not opened here.
-        </div>
-
-        <div class="boundary-checklist">
-          <div class="bc-list-title">Post-session self-audit</div>
-          <label class="bc-item"><input type="checkbox"/> Used the Swish/submodality tweak only — did not re-run the full Session 1 protocol</label>
-          <label class="bc-item"><input type="checkbox"/> Stayed on today's live cue — did not re-litigate why the pattern started</label>
-          <label class="bc-item"><input type="checkbox"/> Did not treat "shows up elsewhere in her life" as active work this session</label>
-          <label class="bc-item"><input type="checkbox"/> Closed with measure + indirect seed — not a direct Transform pitch</label>
-        </div>
-      </div>
-      </div>
+      <div id="aiMeasureBody"><div class="ai-empty-state">Generate a case formulation on the Raw Notes tab first.</div></div>
     </div>
   </div>
 </div>
@@ -1453,6 +1089,13 @@ Closed with the Final Release Measure and the same indirect forward-seed toward 
           </div>
           <div class="session-body">
             <div class="session-field">
+              <label>Confirmed Level <span class="not-captured">(required before AI categorization)</span></label>
+              <select class="inline session-level-select">
+                <option value="">Select level…</option>
+                ${LEVELS.map(l => `<option value="${l.code}" ${s.confirmed_service_level === l.code ? 'selected' : ''}>${l.code} — ${l.name}</option>`).join('')}
+              </select>
+            </div>
+            <div class="session-field">
               <label>Notes</label>
               <textarea class="session-notes-input" rows="2" placeholder="What happened this session…">${escapeHtml(s.notes || '')}</textarea>
             </div>
@@ -1487,6 +1130,7 @@ Closed with the Final Release Measure and the same indirect forward-seed toward 
 
     wrap.querySelectorAll('.session-card').forEach(card => {
       const sessionId = card.dataset.sessionId;
+      card.querySelector('.session-level-select').addEventListener('change', (e) => updateSessionField(sessionId, 'confirmed_service_level', e.target.value || null));
       card.querySelector('.session-notes-input').addEventListener('change', (e) => updateSessionField(sessionId, 'notes', e.target.value));
       card.querySelector('.session-initial-input').addEventListener('change', (e) => updateSessionField(sessionId, 'progress_initial', e.target.value));
       card.querySelector('.session-now-input').addEventListener('change', (e) => updateSessionField(sessionId, 'progress_now', e.target.value));
@@ -1495,32 +1139,256 @@ Closed with the Final Release Measure and the same indirect forward-seed toward 
         const file = e.target.files[0];
         if(file) uploadAttachment(sessionId, file);
       });
-      card.querySelector('.ai-preview-btn').addEventListener('click', () => openAiFormulationModal(Number(card.dataset.sessionNumber)));
+      card.querySelector('.ai-preview-btn').addEventListener('click', () => openAiFormulationModal(sessionId));
     });
   }
 
-  // ---- AI case formulation preview (worked example, mock data — no live AI call) ----
-  // Covers Session 1 (initial Release work) and Session 2 (consolidation) for the
-  // Divya worked example. Any other session number falls back to the Session 1
-  // pattern, labeled as a reference rather than that session's real content.
-  function openAiFormulationModal(sessionNumber){
-    const modal = document.querySelector('#aiModalOverlay .ai-modal');
-    const isSession2 = sessionNumber === 2;
-    modal.dataset.session = isSession2 ? '2' : '1';
-    document.getElementById('aiModalSub').textContent = isSession2
-      ? 'Divya · Session 2 · Confirmed Level: L2 — Release (outcome: MOVE) — consolidation'
-      : 'Divya · Session 1 · Confirmed Level: L2 — Release (outcome: MOVE)' + (sessionNumber && sessionNumber !== 1 ? ' — shown as reference pattern' : '');
+  // ---- AI case formulation — live, calls the categorize-session Edge Function ----
+  // Mirrors the level rules baked into the Edge Function's system prompt, so the
+  // boundary strip / checklist render instantly without waiting on the AI, and stay
+  // consistent with what the AI was actually told its boundaries are.
+  const LEVEL_INFO = {
+    L1: { outcome: 'Heard', workWithin: ['Reflecting, listening, and summarizing what the client said', 'Naming emotional themes and what became clearer'], doNotOpen: ['Belief change', 'Root-cause treatment', 'Capacity installation', 'Identity redesign', 'Values alignment'] },
+    L2: { outcome: 'Move', workWithin: ['The one immediate blocker named this session', 'One relevant intervention', 'One observable next action'], doNotOpen: ['Childhood-root analysis', 'Broad repeating-pattern treatment across other life areas', 'Identity reconstruction', 'Values redesign'] },
+    L3: { outcome: 'Respond Differently', workWithin: ['The one relevant repeating pattern named this session'], doNotOpen: ['Fixing the whole person', 'Redesigning unrelated life areas'] },
+    L4: { outcome: 'Lead Myself', workWithin: ['The agreed areas of evolution for this client'], doNotOpen: ['Creating an idealized "perfect" identity', "Redesigning the client's entire life"] }
+  };
+  const LADDER = ['Heard', 'Move', 'Respond Differently', 'Lead Myself'];
+  let aiCurrentSessionId = null;
+
+  function levelRefStripHtml(confirmedLevel){
+    return '<div class="level-ref-strip">' + LEVELS.map(l => {
+      const info = LEVEL_INFO[l.code];
+      const isThis = l.code === confirmedLevel;
+      return `<div class="level-ref${isThis ? ' this-case' : ''}">
+        <div class="lr-code">${l.code}${isThis ? ' <span class="this-case-tag">This case</span>' : ''}</div>
+        <div class="lr-outcome">${info.outcome}</div>
+        <div class="lr-rule">${escapeHtml(info.doNotOpen.slice(0,3).join(', '))} — out of scope here.</div>
+      </div>`;
+    }).join('') + '</div>';
+  }
+
+  function boundaryCalloutHtml(confirmedLevel){
+    const info = LEVEL_INFO[confirmedLevel];
+    if(!info) return '';
+    return `<div class="boundary-callout">
+      <div class="bc-title">Coaching boundary for this session — ${confirmedLevel}, ${levelName(confirmedLevel)}</div>
+      <div class="boundary-cols">
+        <div><div class="boundary-col-title ok">Work within</div><ul>${info.workWithin.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul></div>
+        <div><div class="boundary-col-title no">Do not open</div><ul>${info.doNotOpen.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul></div>
+      </div>
+    </div>`;
+  }
+
+  function diltsLevelHtml(name, entry){
+    if(!entry) entry = { status: 'Not Applicable', text: 'Not Captured' };
+    return `<div class="dilts-level${entry.status === 'Active' ? ' active' : ''}">
+      <div class="d-name">${name} <span class="d-status">${escapeHtml(entry.status || 'Not Applicable')}</span></div>
+      <div class="d-text">${escapeHtml(entry.text || 'Not Captured')}</div>
+    </div>`;
+  }
+
+  function measureRowHtml(m){
+    if(m.before == null && m.after == null){
+      return `<div class="measure-row"><span class="measure-label">${escapeHtml(m.label)}</span><span class="not-captured">Not Captured</span></div>`;
+    }
+    return `<div class="measure-row"><span class="measure-label">${escapeHtml(m.label)}</span>
+      ${m.before != null ? `<span class="measure-chip before">${escapeHtml(m.before)}</span><span class="measure-arrow">→</span>` : ''}
+      ${m.after != null ? `<span class="measure-chip after">${escapeHtml(m.after)}</span>` : '<span class="not-captured">Not Captured</span>'}
+    </div>`;
+  }
+
+  function renderFormulationTab(f, confirmedLevel){
+    const dilts = f.dilts_levels || {};
+    let diltsHtml = '<div class="dilts-grid">' + ['environment','behavior','capability','belief','identity','purpose'].map(key => {
+      const label = key.charAt(0).toUpperCase() + key.slice(1);
+      const entry = dilts[key];
+      const isPrimary = f.primary_leverage && f.primary_leverage.level && f.primary_leverage.level.toLowerCase() === key;
+      if(isPrimary && entry){
+        return `<div class="dilts-level primary"><div class="d-name">${label} <span class="d-status">★ Primary Leverage</span></div><div class="d-text">${escapeHtml(entry.text || '')}</div></div>`;
+      }
+      return diltsLevelHtml(label, entry);
+    }).join('') + '</div>';
+
+    const partsHtml = f.parts_in_conflict && f.parts_in_conflict.length
+      ? '<h4>Parts in Conflict</h4><div class="parts-grid">' + f.parts_in_conflict.map(p =>
+          `<div class="part-card"><div class="pc-title">${escapeHtml(p.name)}</div><div class="pc-wants">Wants: ${escapeHtml(p.wants)}</div></div>`
+        ).join('') + '</div>' + (f.integration_action ? `<div class="part-integration">Integration action — ${escapeHtml(f.integration_action)}</div>` : '')
+      : '';
+
+    const limitingHtml = (f.limiting_belief || f.limiting_decision)
+      ? `<h4>Limiting Belief &amp; Limiting Decision</h4><div class="info-card">
+          ${f.limiting_belief ? `<p><span class="ic-title" style="display:inline;">Limiting belief</span> — ${escapeHtml(f.limiting_belief)}</p>` : ''}
+          ${f.limiting_decision ? `<p><span class="ic-title" style="display:inline;">Limiting decision</span>${f.limiting_decision.is_inference ? '<span class="inference-tag">Coach inference</span>' : ''} — ${escapeHtml(f.limiting_decision.text)}</p>` : ''}
+        </div>`
+      : '';
+
+    const techniquesHtml = f.nlp_techniques_used && f.nlp_techniques_used.length
+      ? `<h4>NLP Techniques Used</h4><div class="nlp-tags">${f.nlp_techniques_used.map(t => `<span class="nlp-tag">${escapeHtml(t)}</span>`).join('')}</div>`
+      : '';
+
+    const measuresHtml = f.measures && f.measures.length
+      ? `<h4>Measures</h4>${f.measures.map(measureRowHtml).join('')}`
+      : '';
+
+    document.getElementById('aiFormulationBody').innerHTML = `
+      <h4>Presenting Issue</h4>
+      <p>${escapeHtml(f.presenting_issue || 'Not Captured')}</p>
+      <h4>Level Boundaries — what each level is (and isn't) for</h4>
+      ${levelRefStripHtml(confirmedLevel)}
+      ${boundaryCalloutHtml(confirmedLevel)}
+      ${f.primary_leverage && f.primary_leverage.level ? `<div class="leverage-banner"><strong>Primary leverage point — where the 5% tweak sits</strong>${escapeHtml(f.primary_leverage.explanation || f.primary_leverage.level)}</div>` : ''}
+      ${diltsHtml}
+      ${f.motivation_direction ? `<h4>Motivation Direction</h4><div class="info-card"><p>${escapeHtml(f.motivation_direction)}</p></div>` : ''}
+      ${partsHtml}
+      ${limitingHtml}
+      ${f.emotional_themes ? `<h4>Emotional Themes</h4><p>${escapeHtml(f.emotional_themes)}</p>` : ''}
+      ${f.representation_vak ? `<h4>Representation (VAK)</h4><p>${escapeHtml(f.representation_vak)}</p>` : ''}
+      ${techniquesHtml}
+      ${measuresHtml}
+      ${f.exact_next_action ? `<h4>Exact Next Action</h4><p>${escapeHtml(f.exact_next_action)}</p>` : ''}
+      ${f.context_acknowledged_not_treated ? `<h4>Context Acknowledged but Not Treated</h4><p>${escapeHtml(f.context_acknowledged_not_treated)}</p>` : ''}
+    `;
+  }
+
+  function renderPrepTab(f, sessionNumber){
+    document.getElementById('aiPrepBody').innerHTML = f.exact_next_action
+      ? `<h4>Carried into Session ${sessionNumber + 1}</h4>
+         <div class="prep-banner"><span class="p-label">Prep from Session ${sessionNumber}</span>${escapeHtml(f.exact_next_action)}</div>
+         <p style="margin-top:14px;">Check this at the start of the next session before recording anything new.</p>`
+      : `<div class="ai-empty-state">No exact next action was captured this session.</div>`;
+  }
+
+  function renderMeasureTab(f, confirmedLevel){
+    const info = LEVEL_INFO[confirmedLevel];
+    const ladderHtml = LADDER.map(step =>
+      `<span class="ladder-step${info && step === info.outcome ? ' current' : ''}">${step}</span>`
+    ).join('<span class="ladder-arrow">→</span>');
+
+    const checklistHtml = info
+      ? `<div class="boundary-checklist"><div class="bc-list-title">Post-session self-audit</div>
+          ${info.doNotOpen.map(x => `<label class="bc-item"><input type="checkbox"/> Did not open: ${escapeHtml(x)}</label>`).join('')}
+        </div>`
+      : '';
+
+    document.getElementById('aiMeasureBody').innerHTML = `
+      <h4>Final Measure</h4>
+      <div class="release-measure-card">
+        <div class="outcome-ladder">${ladderHtml}</div>
+        ${f.measures && f.measures.length ? f.measures.map(measureRowHtml).join('') : '<div class="ai-empty-state">No measures captured this session.</div>'}
+        ${f.boundary_flag ? `<div class="boundary-flag"><strong>Boundary check</strong>${escapeHtml(f.boundary_flag)}</div>` : ''}
+        ${checklistHtml}
+      </div>
+    `;
+  }
+
+  function setAiStatusBanner(status, errorMsg){
+    const el = document.getElementById('aiStatusBanner');
+    el.classList.remove('status-processing','status-done','status-error');
+    if(status === 'processing'){ el.classList.add('status-processing'); el.innerHTML = '<span class="ai-spinner"></span>Generating…'; }
+    else if(status === 'done'){ el.classList.add('status-done'); el.textContent = 'Generated'; }
+    else if(status === 'error'){ el.classList.add('status-error'); el.textContent = 'Error: ' + (errorMsg || 'AI request failed'); }
+    else { el.textContent = 'Not generated yet'; }
+  }
+
+  function renderAiModalForSession(session){
+    const client = allClients.find(c => String(c.id) === String(session.client_id));
+    const clientName = client ? (client.first_name + ' ' + client.last_name) : 'Client';
+    const levelText = session.confirmed_service_level ? (session.confirmed_service_level + ' — ' + levelName(session.confirmed_service_level)) : 'Not confirmed yet';
+    document.getElementById('aiModalSub').textContent = `${clientName} · Session ${session.session_number} · Confirmed Level: ${levelText}`;
+    document.getElementById('aiRawTextarea').value = session.notes || '';
+
+    setAiStatusBanner(session.ai_status, session.ai_error);
+
+    const genBtn = document.getElementById('aiGenerateBtn');
+    const genNote = document.getElementById('aiGenerateNote');
+    genNote.className = 'ai-generate-note';
+    if(!session.confirmed_service_level){
+      genBtn.disabled = true;
+      genNote.textContent = 'Confirm this session\'s level on the session card first — the AI must know which level it\'s working within.';
+    } else if(!session.notes || !session.notes.trim()){
+      genBtn.disabled = true;
+      genNote.textContent = 'Add raw notes above before generating.';
+    } else {
+      genBtn.disabled = session.ai_status === 'processing';
+      genNote.textContent = session.ai_status === 'error' ? (session.ai_error || 'Last attempt failed — try again.') : '';
+      if(session.ai_status === 'error') genNote.classList.add('err');
+    }
+    genBtn.textContent = session.ai_status === 'done' ? 'Regenerate Case Formulation →' : 'Generate Case Formulation →';
+
+    if(session.ai_status === 'done' && session.ai_formulation){
+      renderFormulationTab(session.ai_formulation, session.confirmed_service_level);
+      renderPrepTab(session.ai_formulation, session.session_number);
+      renderMeasureTab(session.ai_formulation, session.confirmed_service_level);
+    } else {
+      const empty = '<div class="ai-empty-state">Generate a case formulation on the Raw Notes tab first.</div>';
+      document.getElementById('aiFormulationBody').innerHTML = empty;
+      document.getElementById('aiPrepBody').innerHTML = empty;
+      document.getElementById('aiMeasureBody').innerHTML = empty;
+    }
+  }
+
+  function openAiFormulationModal(sessionId){
+    const session = allSessions.find(s => String(s.id) === String(sessionId));
+    if(!session) return;
+    aiCurrentSessionId = sessionId;
+    renderAiModalForSession(session);
     switchAiTab('aiPanelRaw');
     document.getElementById('aiModalOverlay').classList.add('open');
   }
 
   function closeAiFormulationModal(){
     document.getElementById('aiModalOverlay').classList.remove('open');
+    aiCurrentSessionId = null;
   }
 
   function switchAiTab(panelId){
     document.querySelectorAll('.ai-tab').forEach(t => t.classList.toggle('active', t.dataset.panel === panelId));
     document.querySelectorAll('.ai-panel').forEach(p => p.classList.toggle('active', p.id === panelId));
+  }
+
+  async function generateCaseFormulation(){
+    const sessionId = aiCurrentSessionId;
+    const session = allSessions.find(s => String(s.id) === String(sessionId));
+    if(!session) return;
+
+    session.ai_status = 'processing';
+    setAiStatusBanner('processing');
+    document.getElementById('aiGenerateBtn').disabled = true;
+    document.getElementById('aiGenerateNote').textContent = '';
+
+    try{
+      const { data: sessionData } = await sb.auth.getSession();
+      const accessToken = sessionData && sessionData.session ? sessionData.session.access_token : SUPABASE_ANON_KEY;
+
+      const resp = await fetch(SUPABASE_URL + '/functions/v1/categorize-session', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'authorization': 'Bearer ' + accessToken,
+          'apikey': SUPABASE_ANON_KEY
+        },
+        body: JSON.stringify({ session_id: sessionId })
+      });
+      const result = await resp.json();
+
+      if(!resp.ok || result.error){
+        session.ai_status = 'error';
+        session.ai_error = result.error || ('Request failed (' + resp.status + ')');
+        renderAiModalForSession(session);
+        return;
+      }
+
+      session.ai_status = 'done';
+      session.ai_formulation = result.ai_formulation;
+      session.ai_error = null;
+      renderAiModalForSession(session);
+      switchAiTab('aiPanelFormulation');
+    } catch(err){
+      session.ai_status = 'error';
+      session.ai_error = 'Network error: ' + err.message;
+      renderAiModalForSession(session);
+    }
   }
 
   document.querySelectorAll('.ai-tab').forEach(tab => {
@@ -1530,11 +1398,10 @@ Closed with the Final Release Measure and the same indirect forward-seed toward 
   document.getElementById('aiModalOverlay').addEventListener('click', (e) => {
     if(e.target.id === 'aiModalOverlay') closeAiFormulationModal();
   });
-  document.getElementById('aiUploadInput').addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    document.getElementById('aiUploadFilename').textContent = file ? ('Attached: ' + file.name + ' (preview only — not parsed)') : '';
+  document.getElementById('aiRawTextarea').addEventListener('change', (e) => {
+    if(aiCurrentSessionId) updateSessionField(aiCurrentSessionId, 'notes', e.target.value);
   });
-  document.getElementById('aiGenerateBtn').addEventListener('click', () => switchAiTab('aiPanelFormulation'));
+  document.getElementById('aiGenerateBtn').addEventListener('click', generateCaseFormulation);
 
   async function openSessionsModal(clientId, displayName){
     document.getElementById('sessionsModalClient').textContent = displayName;
