@@ -18,11 +18,10 @@ Only fill in a level if the raw notes actually support it — an unworked level 
 | Identity | I am the intelligent, beautiful, successful, spiritual, or unique one. | I am a living person who can experience, choose, create, relate, learn, and rest. | I am the participant, not the image. |
 | Purpose | My purpose is to become special, higher, or unforgettable. | My purpose is to participate consciously and contribute through what is available now. | I allow life to move through me usefully. |
 
-Note: this reference keeps Beliefs and Values as one combined row (the traditional
-6-level Dilts model). The live product currently splits them into two separate rows
-(7 levels total) per an earlier decision in this project, so that a values conflict
-doesn't get flattened into "belief." Applying this table's Old/New/Immediate-words
-*structure* to both rows separately, rather than re-merging them, unless told otherwise.
+Resolved: Dilts stays 6 levels, Beliefs and Values combined as one row — that's
+how Robert Dilts' own model is structured. "Value level" as its own concept is
+Spiral Dynamics (Table 2 below), a separate framework — not a reason to split
+Dilts into 7. The earlier mockup's 7-level split is superseded by this.
 
 ## Table 2 — V2–V8 Conscious Shift
 

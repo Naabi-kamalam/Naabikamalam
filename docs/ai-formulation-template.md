@@ -40,11 +40,11 @@ Field 3 uses **Table 1** and field 4 uses **Table 2** from
 `docs/nlp-reference-tables.md` — same Old→New / Stuck→Shift / Immediate-words
 shape, applied to this client's actual notes.
 
-Note on Dilts levels: this template uses the standard 6-level model (**Beliefs &
-Values** combined), matching Table 1. The live product currently has these split
-into 7 separate levels from an earlier decision. Flagging the conflict here rather
-than silently picking one — tell me which one to keep before this goes into the
-real prompt.
+Dilts levels: standard 6-level model, **Beliefs and Values combined as one
+level** — this is how Robert Dilts' own model is structured. "Value level" as a
+separate concept refers to Spiral Dynamics (Clare Graves) — field 4, V2–V8 — a
+different framework entirely, not a 7th Dilts row. The mockup's earlier 7-level
+split (Values pulled out of Dilts as its own row) is superseded by this.
 
 ---
 
