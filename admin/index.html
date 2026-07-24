@@ -269,6 +269,109 @@
   .boundary-checklist .bc-list-title{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px; }
   .bc-item{ display:flex; align-items:flex-start; gap:8px; padding:6px 0; font-size:12.5px; line-height:1.5; text-transform:none; letter-spacing:normal; color:var(--ink); }
   .bc-item input[type=checkbox]{ margin-top:3px; width:auto; }
+
+  /* ---- AI Formulation Overview / Detail View / Journey Map / Session Plan (v7) ---- */
+  .ai-modal.wide{ max-width:920px; }
+  .stat-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:16px; }
+  .stat-card{ background:var(--card); border:1px solid var(--line); border-radius:10px; padding:11px 12px; }
+  .stat-card .sc-label{ font-family:'IBM Plex Mono',monospace; font-size:8.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); margin-bottom:3px; }
+  .stat-card .sc-val{ font-family:'Fraunces',serif; font-weight:600; font-size:13.5px; }
+
+  .of-two-col{ display:grid; grid-template-columns:1fr; gap:14px; margin-bottom:14px; }
+  .of-card-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:2px; flex-wrap:wrap; }
+  .of-card-head h4{ margin:0 !important; }
+  .validate-note{ font-size:10px; color:var(--danger); font-family:'IBM Plex Mono',monospace; font-weight:700; white-space:nowrap; }
+  .subtext-note{ font-size:10.5px; color:var(--ink-soft); margin:2px 0 12px; }
+
+  .group-tabs{ display:flex; gap:6px; margin-bottom:12px; flex-wrap:wrap; }
+  .gtab{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; padding:5px 10px; border-radius:20px; border:1px solid var(--line); background:none; color:var(--ink-soft); cursor:pointer; }
+  .gtab span{ opacity:.65; margin-left:3px; }
+  .gtab.active{ background:#7a4a8a; color:#fff; border-color:#7a4a8a; }
+
+  .row-item{ display:flex; align-items:flex-start; gap:10px; padding:9px 0; border-bottom:1px solid var(--line); cursor:pointer; }
+  .row-item:last-child{ border-bottom:none; }
+  .row-item:hover{ background:#FFF9F7; }
+  .ri-ic{ width:22px; height:22px; border-radius:6px; background:#F7F1FA; color:#7a4a8a; display:flex; align-items:center; justify-content:center; font-size:11px; flex:0 0 auto; margin-top:1px; }
+  .ri-body{ flex:1; min-width:0; }
+  .ri-label{ font-weight:700; font-size:12px; display:flex; align-items:center; gap:7px; flex-wrap:wrap; }
+  .ri-text{ font-size:11.5px; color:var(--ink-soft); margin-top:2px; line-height:1.5; }
+  .ri-tag{ font-family:'IBM Plex Mono',monospace; font-size:8.5px; text-transform:uppercase; padding:2px 7px; border-radius:8px; background:var(--line); color:var(--ink-soft); display:inline-flex; align-items:center; }
+  .ri-tag.star{ background:#7a4a8a; color:#fff; }
+  .ri-chev{ color:var(--ink-soft); font-size:11px; margin-top:2px; }
+  .conf-dot{ width:6px; height:6px; border-radius:50%; display:inline-block; margin-left:5px; }
+  .conf-dot.high{ background:var(--ok); }
+  .conf-dot.med{ background:#8a6a1f; }
+
+  .dilts-bar-row{ margin-bottom:11px; }
+  .dilts-bar-row:last-child{ margin-bottom:0; }
+  .dbr-top{ display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:4px; }
+  .dbr-name{ font-weight:700; }
+  .dbr-pct{ font-family:'IBM Plex Mono',monospace; color:var(--ink-soft); }
+  .dbr-bar{ height:6px; border-radius:4px; background:var(--line); overflow:hidden; margin-bottom:4px; }
+  .dbr-bar-fill{ height:100%; border-radius:4px; background:#7a4a8a; }
+  .dbr-desc{ font-size:10.5px; color:var(--ink-soft); }
+  .dbr-tag{ font-family:'IBM Plex Mono',monospace; font-size:8px; text-transform:uppercase; padding:1px 7px; border-radius:8px; margin-left:6px; }
+  .dbr-tag.primary{ background:#7a4a8a; color:#fff; }
+  .dbr-tag.support{ background:#FBEFD6; color:#8a6a1f; }
+  .dbr-tag.secondary{ background:var(--line); color:var(--ink-soft); }
+
+  .cap-bar-row{ display:flex; align-items:center; gap:8px; margin-bottom:7px; font-size:10.5px; }
+  .cap-bar-label{ width:130px; flex:0 0 auto; color:var(--ink-soft); }
+  .cap-bar-track{ flex:1; height:5px; background:var(--line); border-radius:4px; overflow:hidden; }
+  .cap-bar-fill{ height:100%; background:var(--gold); border-radius:4px; }
+  .cap-overall{ margin-top:8px; font-size:11.5px; font-weight:700; }
+
+  .fw-card{ margin-bottom:14px; }
+  .fw-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; cursor:pointer; flex-wrap:wrap; }
+  .fw-head h4{ margin:0 !important; }
+  .fw-head-right{ display:flex; align-items:center; gap:8px; flex:0 0 auto; }
+  .vq-pill{ font-family:'IBM Plex Mono',monospace; font-size:8.5px; text-transform:uppercase; padding:3px 8px; border-radius:9px; background:#F7F1FA; color:#7a4a8a; border:1px solid #D9C3E6; white-space:nowrap; }
+  .fw-chev{ color:var(--ink-soft); font-size:12px; transition:transform .15s; }
+  .fw-card.collapsed .fw-chev{ transform:rotate(-90deg); }
+  .fw-card.collapsed .fw-body{ display:none; }
+  .fw-body{ margin-top:10px; }
+  .fw-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .fw-block .fw-label{ font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); margin-bottom:4px; }
+  .fw-block p{ font-size:11.5px !important; margin:0 !important; line-height:1.55; }
+  .vq-box{ margin-top:10px; padding:9px 11px; background:#FBF3EF; border:1px dashed var(--line); border-radius:8px; font-size:11px; }
+  .vq-box b{ color:var(--ink); }
+
+  .cascade{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin:10px 0; }
+  .cascade-step{ text-align:center; flex:1; min-width:78px; }
+  .cascade-step .cs-ic{ width:30px; height:30px; border-radius:50%; background:#F7F1FA; color:#7a4a8a; display:flex; align-items:center; justify-content:center; margin:0 auto 5px; font-size:13px; }
+  .cascade-step .cs-name{ font-size:10px; font-weight:700; }
+  .cascade-step .cs-sub{ font-size:9px; color:var(--ink-soft); }
+  .cascade-arrow{ color:var(--ink-soft); font-size:13px; }
+
+  .movement-flow{ display:flex; align-items:stretch; gap:8px; flex-wrap:wrap; }
+  .movement-block{ flex:1; min-width:150px; background:#FBF3EF; border:1px solid var(--line); border-radius:9px; padding:11px 13px; }
+  .movement-block .mv-label{ font-family:'IBM Plex Mono',monospace; font-size:8.5px; text-transform:uppercase; color:var(--ink-soft); margin-bottom:5px; }
+  .movement-block .mv-text{ font-size:11.5px; line-height:1.5; }
+  .movement-arrow{ display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:15px; }
+
+  .detail-nav{ display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+  .detail-nav .dn-count{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-soft); }
+  .dn-btns{ display:flex; gap:8px; }
+  .dn-btn{ font-family:inherit; font-weight:600; font-size:11px; padding:6px 13px; border-radius:8px; border:1px solid var(--line); background:var(--card); color:var(--ink); cursor:pointer; }
+  .dn-btn:disabled{ opacity:.4; cursor:default; }
+  .dn-btn.primary{ background:#7a4a8a; color:#fff; border-color:#7a4a8a; }
+
+  .journey-picker-row{ display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
+  .journey-stepper{ display:flex; align-items:center; gap:0; margin:14px 0 6px; }
+  .js-line{ flex:1; height:3px; background:var(--line); }
+  .js-line.done{ background:#7a4a8a; }
+  .js-dot{ width:10px; height:10px; border-radius:50%; background:var(--line); flex:0 0 auto; }
+  .js-dot.done{ background:#7a4a8a; }
+  .js-dot.current{ background:#7a4a8a; box-shadow:0 0 0 3px #F7F1FA; }
+  .journey-labels{ display:flex; justify-content:space-between; font-size:10.5px; color:var(--ink-soft); }
+  .journey-labels .current{ color:#7a4a8a; font-weight:700; }
+  .focus-row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin-top:16px; }
+  .focus-item{ background:#FBF3EF; border:1px solid var(--line); border-radius:9px; padding:10px 11px; }
+  .focus-item .fi-label{ font-family:'IBM Plex Mono',monospace; font-size:8px; text-transform:uppercase; color:var(--ink-soft); margin-bottom:2px; }
+  .focus-item .fi-val{ font-size:10.5px; font-weight:700; line-height:1.35; }
+  .conf-badge{ font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; padding:3px 8px; border-radius:10px; white-space:nowrap; }
+  .conf-badge.high{ background:#DCEFE0; color:var(--ok); }
+  .conf-badge.med{ background:#FBEFD6; color:#8a6a1f; }
 </style>
 </head>
 <body>
@@ -457,7 +560,7 @@
 
 <!-- AI CASE FORMULATION — live, calls the categorize-session Edge Function for whichever session was opened -->
 <div class="sessions-modal-overlay" id="aiModalOverlay">
-  <div class="ai-modal">
+  <div class="ai-modal wide">
     <button class="sessions-modal-close" id="aiModalCloseBtn" aria-label="Close">×</button>
     <div class="ai-mock-banner" id="aiStatusBanner">Not generated yet</div>
     <h3>AI Case Formulation</h3>
@@ -465,9 +568,10 @@
 
     <div class="ai-tabs">
       <button class="ai-tab active" type="button" data-panel="aiPanelRaw">1. Raw Notes</button>
-      <button class="ai-tab" type="button" data-panel="aiPanelFormulation">2. Case Formulation</button>
-      <button class="ai-tab" type="button" data-panel="aiPanelPrep">3. Carried Forward</button>
-      <button class="ai-tab" type="button" data-panel="aiPanelMeasure">4. Final Measure</button>
+      <button class="ai-tab" type="button" data-panel="aiPanelOverview">2. Formulation Overview</button>
+      <button class="ai-tab" type="button" data-panel="aiPanelDetail">3. Detail View</button>
+      <button class="ai-tab" type="button" data-panel="aiPanelJourney">4. Journey Map</button>
+      <button class="ai-tab" type="button" data-panel="aiPanelPlan">5. Session Plan</button>
     </div>
 
     <!-- Screen 1: raw notes, real session data, editable and saved back to the DB -->
@@ -486,18 +590,23 @@
     </div>
 
     <!-- Screen 2: dynamically rendered from ai_formulation JSON returned by the categorize-session Edge Function -->
-    <div class="ai-panel" id="aiPanelFormulation">
-      <div id="aiFormulationBody"><div class="ai-empty-state">Generate a case formulation on the Raw Notes tab first.</div></div>
+    <div class="ai-panel" id="aiPanelOverview">
+      <div id="aiOverviewBody"><div class="ai-empty-state">Generate a case formulation on the Raw Notes tab first.</div></div>
     </div>
 
-    <!-- Screen 3: what this session committed to, to check at the start of the next one -->
-    <div class="ai-panel" id="aiPanelPrep">
-      <div id="aiPrepBody"><div class="ai-empty-state">Generate a case formulation on the Raw Notes tab first.</div></div>
+    <!-- Screen 3: sequential Previous/Next drill-through across all 16 fields -->
+    <div class="ai-panel" id="aiPanelDetail">
+      <div id="aiDetailBody"><div class="ai-empty-state">Generate a case formulation on the Raw Notes tab first.</div></div>
     </div>
 
-    <!-- Screen 4: measures + level-appropriate boundary reminders -->
-    <div class="ai-panel" id="aiPanelMeasure">
-      <div id="aiMeasureBody"><div class="ai-empty-state">Generate a case formulation on the Raw Notes tab first.</div></div>
+    <!-- Screen 4: this client's real level progress + this session's focus recap -->
+    <div class="ai-panel" id="aiPanelJourney">
+      <div id="aiJourneyBody"><div class="ai-empty-state">Generate a case formulation on the Raw Notes tab first.</div></div>
+    </div>
+
+    <!-- Screen 5: what carries into next session, plus measures + boundary self-audit -->
+    <div class="ai-panel" id="aiPanelPlan">
+      <div id="aiPlanBody"><div class="ai-empty-state">Generate a case formulation on the Raw Notes tab first.</div></div>
     </div>
   </div>
 </div>
@@ -1180,14 +1289,6 @@
     </div>`;
   }
 
-  function diltsLevelHtml(name, entry){
-    if(!entry) entry = { status: 'Not Applicable', text: 'Not Captured' };
-    return `<div class="dilts-level${entry.status === 'Active' ? ' active' : ''}">
-      <div class="d-name">${name} <span class="d-status">${escapeHtml(entry.status || 'Not Applicable')}</span></div>
-      <div class="d-text">${escapeHtml(entry.text || 'Not Captured')}</div>
-    </div>`;
-  }
-
   function measureRowHtml(m){
     if(m.before == null && m.after == null){
       return `<div class="measure-row"><span class="measure-label">${escapeHtml(m.label)}</span><span class="not-captured">Not Captured</span></div>`;
@@ -1198,69 +1299,356 @@
     </div>`;
   }
 
-  function renderFormulationTab(f, confirmedLevel){
-    const dilts = f.dilts_levels || {};
-    let diltsHtml = '<div class="dilts-grid">' + ['environment','behavior','capability','belief','identity','purpose'].map(key => {
-      const label = key.charAt(0).toUpperCase() + key.slice(1);
-      const entry = dilts[key];
-      const isPrimary = f.primary_leverage && f.primary_leverage.level && f.primary_leverage.level.toLowerCase() === key;
-      if(isPrimary && entry){
-        return `<div class="dilts-level primary"><div class="d-name">${label} <span class="d-status">★ Primary Leverage</span></div><div class="d-text">${escapeHtml(entry.text || '')}</div></div>`;
-      }
-      return diltsLevelHtml(label, entry);
-    }).join('') + '</div>';
+  function toggleFwCard(id){
+    document.getElementById(id).classList.toggle('collapsed');
+  }
 
-    const partsHtml = f.parts_in_conflict && f.parts_in_conflict.length
-      ? '<h4>Parts in Conflict</h4><div class="parts-grid">' + f.parts_in_conflict.map(p =>
-          `<div class="part-card"><div class="pc-title">${escapeHtml(p.name)}</div><div class="pc-wants">Wants: ${escapeHtml(p.wants)}</div></div>`
-        ).join('') + '</div>' + (f.integration_action ? `<div class="part-integration">Integration action — ${escapeHtml(f.integration_action)}</div>` : '')
-      : '';
+  // The 16-field contract the categorize-session Edge Function returns (see
+  // docs/ai-formulation-template.md). Shared by the Core Formulation list and
+  // the Detail View drill-through so both always agree on order and grouping.
+  const FIELD_DEFS = [
+    { key:'trigger', label:'Trigger', icon:'⚡', tag:'Internal', group:'core' },
+    { key:'motivation', label:'Motivation', icon:'◐', tag:'Mixed', group:'core' },
+    { key:'emotion_protecting', label:'What Is the Emotion Protecting Them From?', icon:'◒', tag:'Emotion', group:'core' },
+    { key:'old_behavior_protection', label:'Old Behavior Protection', icon:'◱', tag:'Protection', group:'core' },
+    { key:'parts_conflict', label:'Parts Conflict', icon:'⚭', tag:'Internal Parts', group:'core' },
+    { key:'unmet_expectation', label:'Unmet Expectation', icon:'☆', tag:'Expectation', group:'core' },
+    { key:'underlying_need', label:'Underlying Need', icon:'♡', tag:'Need', group:'inner' },
+    { key:'resources', label:'Old Resource → New Resource', icon:'↻', tag:'Resources', group:'inner' },
+    { key:'value_level', label:'Predominant Value Level', icon:'◆', tag:'Values', group:'inner' },
+    { key:'dilts', label:'Robert Dilts Alignment', icon:'◎', tag:'Alignment', group:'inner' },
+    { key:'capacity', label:'Capacity Level', icon:'◈', tag:'Capacity', group:'inner' },
+    { key:'tweak_2pct', label:'2% Tweak (This Session)', icon:'%', tag:'Open', group:'align' },
+    { key:'highest_leverage', label:'Highest-Leverage Alignment', icon:'⟡', tag:'Open', group:'align' },
+    { key:'session_movement', label:'Session Movement', icon:'→', tag:'Open', group:'align' },
+    { key:'techniques_used', label:'Techniques Used', icon:'⚙', tag:'Session Record', group:'resource' },
+    { key:'evidence_of_change', label:'Evidence of Change', icon:'✓', tag:'Evidence', group:'resource' },
+  ];
+  const GROUP_LABELS = { core:'Core Pattern', inner:'Inner Dynamics', align:'Alignment', resource:'Resources' };
 
-    const limitingHtml = (f.limiting_belief || f.limiting_decision)
-      ? `<h4>Limiting Belief &amp; Limiting Decision</h4><div class="info-card">
-          ${f.limiting_belief ? `<p><span class="ic-title" style="display:inline;">Limiting belief</span> — ${escapeHtml(f.limiting_belief)}</p>` : ''}
-          ${f.limiting_decision ? `<p><span class="ic-title" style="display:inline;">Limiting decision</span>${f.limiting_decision.is_inference ? '<span class="inference-tag">Coach inference</span>' : ''} — ${escapeHtml(f.limiting_decision.text)}</p>` : ''}
-        </div>`
-      : '';
+  // Reduces whatever shape a field's raw JSON is (an {text,confidence} object,
+  // an array, or a richer nested object) to one line for the list/drill-through.
+  // Never fabricates — anything missing renders literally as "Not Captured".
+  function fieldSummary(def, f){
+    const v = f ? f[def.key] : null;
+    switch(def.key){
+      case 'parts_conflict':
+        if(!v || !v.parts || !v.parts.length) return { text: 'Not Captured', confidence: null };
+        return { text: v.parts.map(p => `${p.name} (wants: ${p.wants})`).join(' vs. '), confidence: v.confidence };
+      case 'resources':
+        if(!v) return { text: 'Not Captured', confidence: null };
+        return { text: `${v.old || 'Not Captured'} → ${v.new || 'Not Captured'}`, confidence: v.confidence };
+      case 'value_level':
+        if(!v || !v.name) return { text: 'Not Captured', confidence: null };
+        return { text: (v.code ? v.code + ' — ' : '') + v.name, confidence: v.confidence };
+      case 'dilts':
+        if(!v || !v.highest_leverage_level) return { text: 'Not Captured', confidence: null };
+        return { text: `Highest leverage: ${v.highest_leverage_level}${v.highest_leverage_note ? '. ' + v.highest_leverage_note : ''}`, confidence: 'High' };
+      case 'capacity':
+        if(!v || !v.overall) return { text: 'Not Captured', confidence: null };
+        return { text: v.overall, confidence: 'Medium' };
+      case 'tweak_2pct':
+        if(!v || !v.action) return { text: 'Not Captured', confidence: null };
+        return { text: v.action, confidence: 'High' };
+      case 'highest_leverage':
+        if(!v || !v.level) return { text: 'Not Captured', confidence: null };
+        return { text: `${v.level}-level tweak${v.quote ? ' — "' + v.quote + '"' : ''}`, confidence: 'High' };
+      case 'session_movement':
+        if(!v || !v.now) return { text: 'Not Captured', confidence: null };
+        return { text: `${v.now} → ${v.this_session || ''}`, confidence: 'Medium' };
+      case 'techniques_used':
+        if(!v || !v.length) return { text: 'Not Captured', confidence: null };
+        return { text: v.join(', '), confidence: 'High' };
+      default:
+        if(!v || !v.text) return { text: 'Not Captured', confidence: null };
+        return { text: v.text, confidence: v.confidence };
+    }
+  }
 
-    const techniquesHtml = f.nlp_techniques_used && f.nlp_techniques_used.length
-      ? `<h4>NLP Techniques Used</h4><div class="nlp-tags">${f.nlp_techniques_used.map(t => `<span class="nlp-tag">${escapeHtml(t)}</span>`).join('')}</div>`
-      : '';
+  function rowItemHtml(def, f){
+    const s = fieldSummary(def, f);
+    const confClass = s.confidence === 'High' ? 'high' : (s.confidence === 'Medium' ? 'med' : '');
+    const dot = s.confidence ? `<span class="conf-dot ${confClass}"></span>` : '';
+    return `<div class="row-item" data-group="${def.group}" data-key="${def.key}">
+      <div class="ri-ic">${def.icon}</div>
+      <div class="ri-body">
+        <div class="ri-label">${escapeHtml(def.label)} <span class="ri-tag${def.tag === 'Open' ? ' star' : ''}">${escapeHtml(def.tag)}${dot}</span></div>
+        <div class="ri-text">${escapeHtml(s.text)}</div>
+      </div>
+      <div class="ri-chev">›</div>
+    </div>`;
+  }
 
-    const measuresHtml = f.measures && f.measures.length
-      ? `<h4>Measures</h4>${f.measures.map(measureRowHtml).join('')}`
-      : '';
+  function statRowHtml(ss){
+    ss = ss || {};
+    const items = [
+      ['Primary Stuck Level', ss.primary_stuck_level],
+      ['Predominant Value Level', ss.predominant_value_level],
+      ['Motivation Style', ss.motivation_style],
+      ['Overall Capacity', ss.overall_capacity],
+      ['Readiness for Change', ss.readiness_for_change],
+      ['Confidence in Analysis', ss.confidence_in_analysis],
+    ];
+    return '<div class="stat-row">' + items.map(([label, val]) =>
+      `<div class="stat-card"><div class="sc-label">${escapeHtml(label)}</div><div class="sc-val">${escapeHtml(val || 'Not Captured')}</div></div>`
+    ).join('') + '</div>';
+  }
 
-    document.getElementById('aiFormulationBody').innerHTML = `
+  function diltsBarRow(name, entry){
+    if(!entry) entry = { pct: null, status: 'Not in scope yet', text: 'Not Captured' };
+    const pct = entry.pct != null ? entry.pct : 0;
+    const tagClass = entry.status === 'Primary' ? 'primary' : entry.status === 'Highest leverage' ? 'support' : 'secondary';
+    return `<div class="dilts-bar-row">
+      <div class="dbr-top"><span class="dbr-name">${escapeHtml(name)}</span><span class="dbr-pct">${entry.pct != null ? entry.pct + '%' : '—'}</span></div>
+      <div class="dbr-bar"><div class="dbr-bar-fill" style="width:${pct}%;"></div></div>
+      <div class="dbr-desc">${escapeHtml(entry.text || 'Not Captured')} <span class="dbr-tag ${tagClass}">${escapeHtml(entry.status || 'Not in scope yet')}</span></div>
+    </div>`;
+  }
+
+  function capBarRow(label, val){
+    const v = val != null ? val : 0;
+    return `<div class="cap-bar-row"><span class="cap-bar-label">${escapeHtml(label)}</span><div class="cap-bar-track"><div class="cap-bar-fill" style="width:${v}%;"></div></div><span>${val != null ? val + '%' : '—'}</span></div>`;
+  }
+
+  function cascadeHtml(steps){
+    if(!steps || !steps.length) return '';
+    return '<div class="cascade">' + steps.map((c, i) =>
+      (i > 0 ? '<div class="cascade-arrow">→</div>' : '') +
+      `<div class="cascade-step"><div class="cs-ic">◆</div><div class="cs-name">${escapeHtml(c.name)}</div><div class="cs-sub">${escapeHtml(c.sub || '')}</div></div>`
+    ).join('') + '</div>';
+  }
+
+  // ---- Screen 2: AI Formulation Overview ----
+  function renderOverviewTab(f, session){
+    const confirmedLevel = session.confirmed_service_level;
+    const dilts = f.dilts || {};
+    const diltsOrder = [['environment','Environment'],['behavior','Behavior'],['capability','Capabilities'],['belief_values','Beliefs & Values'],['identity','Identity'],['purpose','Purpose / Spiritual']];
+    const diltsHtml = diltsOrder.map(([key, label]) => diltsBarRow(label, dilts[key])).join('');
+
+    const capacity = f.capacity || {};
+    const cap = capacity.breakdown || {};
+    const capOrder = [['awareness','Awareness'],['emotional_regulation','Emotional Regulation'],['agency_choice','Agency / Choice'],['resource_access','Resource Access'],['action_capacity','Action Capacity'],['recovery_return','Recovery / Return'],['identity_flexibility','Identity Flexibility'],['integration','Integration']];
+    const capHtml = capOrder.map(([key, label]) => capBarRow(label, cap[key])).join('');
+
+    const rows = FIELD_DEFS.map(def => rowItemHtml(def, f)).join('');
+    const needsValidation = FIELD_DEFS.filter(def => fieldSummary(def, f).confidence !== 'High').length;
+
+    const tweak = f.tweak_2pct;
+    const leverage = f.highest_leverage;
+    const movement = f.session_movement;
+    const value = f.value_level;
+
+    document.getElementById('aiOverviewBody').innerHTML = `
       <h4>Presenting Issue</h4>
       <p>${escapeHtml(f.presenting_issue || 'Not Captured')}</p>
+      ${f.history ? `<h4>History</h4><p>${escapeHtml(f.history)}</p>` : ''}
+
       <h4>Level Boundaries — what each level is (and isn't) for</h4>
       ${levelRefStripHtml(confirmedLevel)}
       ${boundaryCalloutHtml(confirmedLevel)}
-      ${f.primary_leverage && f.primary_leverage.level ? `<div class="leverage-banner"><strong>Primary leverage point — where the 5% tweak sits</strong>${escapeHtml(f.primary_leverage.explanation || f.primary_leverage.level)}</div>` : ''}
-      ${diltsHtml}
-      ${f.motivation_direction ? `<h4>Motivation Direction</h4><div class="info-card"><p>${escapeHtml(f.motivation_direction)}</p></div>` : ''}
-      ${partsHtml}
-      ${limitingHtml}
-      ${f.emotional_themes ? `<h4>Emotional Themes</h4><p>${escapeHtml(f.emotional_themes)}</p>` : ''}
-      ${f.representation_vak ? `<h4>Representation (VAK)</h4><p>${escapeHtml(f.representation_vak)}</p>` : ''}
-      ${techniquesHtml}
-      ${measuresHtml}
-      ${f.exact_next_action ? `<h4>Exact Next Action</h4><p>${escapeHtml(f.exact_next_action)}</p>` : ''}
-      ${f.context_acknowledged_not_treated ? `<h4>Context Acknowledged but Not Treated</h4><p>${escapeHtml(f.context_acknowledged_not_treated)}</p>` : ''}
+
+      ${statRowHtml(f.stat_summary)}
+
+      <div class="card" style="margin-bottom:14px;">
+        <div class="of-card-head"><h4>Core Formulation</h4><span class="validate-note">${needsValidation ? 'Validation needed: ' + needsValidation + ' items' : 'All items high confidence'}</span></div>
+        <div class="subtext-note">Click a section to open it in Detail View.</div>
+        <div class="group-tabs">
+          <button class="gtab active" type="button" data-group="all">All <span>16</span></button>
+          <button class="gtab" type="button" data-group="core">Core Pattern <span>6</span></button>
+          <button class="gtab" type="button" data-group="inner">Inner Dynamics <span>5</span></button>
+          <button class="gtab" type="button" data-group="align">Alignment <span>3</span></button>
+          <button class="gtab" type="button" data-group="resource">Resources <span>2</span></button>
+        </div>
+        <div id="overviewRows">${rows}</div>
+      </div>
+
+      <div class="card" style="margin-bottom:14px;">
+        <h4>Robert Dilts Alignment Map</h4>
+        ${diltsHtml}
+        ${dilts.highest_leverage_level ? `<div class="vq-box" style="margin-top:12px;"><b>Highest leverage point:</b> ${escapeHtml(dilts.highest_leverage_level)}${dilts.highest_leverage_note ? ' — ' + escapeHtml(dilts.highest_leverage_note) : ''}</div>` : ''}
+      </div>
+
+      ${value ? `<div class="card" style="margin-bottom:14px;">
+        <h4>Value Level Snapshot (Spiral Dynamics)</h4>
+        <div style="font-family:'Fraunces',serif; font-weight:600; font-size:16px; color:#7a4a8a;">${escapeHtml((value.code ? value.code + ' — ' : '') + (value.name || 'Not Captured'))}</div>
+        ${value.why && value.why.length ? `<ul style="margin:8px 0; padding-left:16px; font-size:11px; color:var(--ink-soft);">${value.why.map(w => `<li>${escapeHtml(w)}</li>`).join('')}</ul>` : ''}
+        ${value.resource_needed ? `<div style="font-size:11px; margin-top:6px;"><b>Healthy resource needed:</b> ${escapeHtml(value.resource_needed)}</div>` : ''}
+      </div>` : ''}
+
+      ${capacity.overall ? `<div class="card" style="margin-bottom:14px;">
+        <h4>Capacity Breakdown</h4>
+        ${capHtml}
+        <div class="cap-overall">Overall Capacity: ${escapeHtml(capacity.overall)}</div>
+      </div>` : ''}
+
+      ${tweak ? `<div class="card fw-card" id="fwTweak">
+        <div class="fw-head" onclick="toggleFwCard('fwTweak')"><h4>2% Tweak Details</h4><div class="fw-head-right">${tweak.validation_question ? '<span class="vq-pill">Validation Question</span>' : ''}<span class="fw-chev">▾</span></div></div>
+        <div class="fw-body">
+          <div class="fw-grid">
+            <div class="fw-block"><div class="fw-label">Action</div><p>${escapeHtml(tweak.action || 'Not Captured')}</p></div>
+            <div class="fw-block"><div class="fw-label">When</div><p>${escapeHtml(tweak.when || 'Not Captured')}</p></div>
+            <div class="fw-block"><div class="fw-label">Measure</div><p>${escapeHtml(tweak.measure || 'Not Captured')}</p></div>
+            <div class="fw-block"><div class="fw-label">Success Signal</div><p>${escapeHtml(tweak.success_signal || 'Not Captured')}</p></div>
+          </div>
+          ${tweak.why ? `<div class="vq-box"><b>Why this 2% matters:</b> ${escapeHtml(tweak.why)}</div>` : ''}
+          ${tweak.validation_question ? `<div class="vq-box"><b>Validation Question for Coach:</b> ${escapeHtml(tweak.validation_question)}</div>` : ''}
+        </div>
+      </div>` : ''}
+
+      ${leverage ? `<div class="card fw-card" id="fwLeverage">
+        <div class="fw-head" onclick="toggleFwCard('fwLeverage')"><div><h4>Highest-Leverage Alignment</h4>${leverage.level ? `<div class="subtext-note" style="margin:2px 0 0;">Where the biggest shift happens: <b style="color:var(--ink);">${escapeHtml(leverage.level)}</b>${leverage.quote ? ' — "' + escapeHtml(leverage.quote) + '"' : ''}</div>` : ''}</div><div class="fw-head-right">${leverage.validation_question ? '<span class="vq-pill">Validation Question</span>' : ''}<span class="fw-chev">▾</span></div></div>
+        <div class="fw-body">
+          ${cascadeHtml(leverage.cascade)}
+          ${leverage.note ? `<div class="vq-box"><b>Note:</b> ${escapeHtml(leverage.note)}</div>` : ''}
+          ${leverage.evidence_question ? `<div class="vq-box"><b>Evidence to validate:</b> ${escapeHtml(leverage.evidence_question)}</div>` : ''}
+          ${leverage.validation_question ? `<div class="vq-box"><b>Validation Question for Coach:</b> ${escapeHtml(leverage.validation_question)}</div>` : ''}
+        </div>
+      </div>` : ''}
+
+      ${movement ? `<div class="card fw-card" id="fwMovement">
+        <div class="fw-head" onclick="toggleFwCard('fwMovement')"><h4>Session Movement</h4><div class="fw-head-right">${movement.validation_question ? '<span class="vq-pill">Validation Question</span>' : ''}<span class="fw-chev">▾</span></div></div>
+        <div class="fw-body">
+          <div class="movement-flow">
+            <div class="movement-block"><div class="mv-label">Where Client Is Now</div><div class="mv-text">${escapeHtml(movement.now || 'Not Captured')}</div></div>
+            <div class="movement-arrow">→</div>
+            <div class="movement-block"><div class="mv-label">Movement in This Session</div><div class="mv-text">${escapeHtml(movement.this_session || 'Not Captured')}</div></div>
+            <div class="movement-arrow">→</div>
+            <div class="movement-block"><div class="mv-label">Where Client Can Be</div><div class="mv-text">${escapeHtml(movement.can_be || 'Not Captured')}</div></div>
+          </div>
+          ${movement.validation_question ? `<div class="vq-box"><b>Validation Question for Coach:</b> ${escapeHtml(movement.validation_question)}</div>` : ''}
+        </div>
+      </div>` : ''}
+
+      ${f.boundary_flag ? `<div class="boundary-flag"><strong>Boundary check</strong>${escapeHtml(f.boundary_flag)}</div>` : ''}
+      ${f.context_acknowledged_not_treated ? `<div class="info-card" style="margin-top:12px;"><div class="ic-title">Context Acknowledged but Not Treated</div><p>${escapeHtml(f.context_acknowledged_not_treated)}</p></div>` : ''}
+    `;
+
+    document.querySelectorAll('#aiOverviewBody .gtab').forEach(g => {
+      g.addEventListener('click', () => {
+        document.querySelectorAll('#aiOverviewBody .gtab').forEach(x => x.classList.remove('active'));
+        g.classList.add('active');
+        const group = g.dataset.group;
+        document.querySelectorAll('#overviewRows .row-item').forEach(row => {
+          row.style.display = (group === 'all' || row.dataset.group === group) ? '' : 'none';
+        });
+      });
+    });
+    document.querySelectorAll('#overviewRows .row-item').forEach(row => {
+      row.addEventListener('click', () => {
+        const idx = FIELD_DEFS.findIndex(d => d.key === row.dataset.key);
+        if(idx >= 0){ aiDetailIndex = idx; renderDetailStep(); }
+        switchAiTab('aiPanelDetail');
+      });
+    });
+  }
+
+  // ---- Screen 3: Detail View — sequential Previous/Next across all 16 fields ----
+  let aiCurrentFormulation = null;
+  let aiDetailIndex = 0;
+
+  function detailExtraHtml(def, f){
+    const v = f[def.key];
+    if(def.key === 'parts_conflict' && v && v.parts && v.parts.length){
+      return '<div class="parts-grid">' + v.parts.map(p => `<div class="part-card"><div class="pc-title">${escapeHtml(p.name)}</div><div class="pc-wants">Wants: ${escapeHtml(p.wants)}</div></div>`).join('') + '</div>';
+    }
+    if(def.key === 'techniques_used' && v && v.length){
+      return `<div class="nlp-tags">${v.map(t => `<span class="nlp-tag">${escapeHtml(t)}</span>`).join('')}</div>`;
+    }
+    if(def.key === 'highest_leverage' && v && v.cascade){
+      return cascadeHtml(v.cascade);
+    }
+    return '';
+  }
+
+  function renderDetailStep(){
+    const f = aiCurrentFormulation;
+    if(!f) return;
+    const def = FIELD_DEFS[aiDetailIndex];
+    const s = fieldSummary(def, f);
+    const confClass = s.confidence === 'High' ? 'high' : (s.confidence === 'Medium' ? 'med' : '');
+    const v = f[def.key];
+    const question = (v && v.validation_question) ? v.validation_question : 'Review this against your own read of the session.';
+
+    document.getElementById('aiDetailBody').innerHTML = `
+      <div class="detail-nav">
+        <span class="dn-count">Field ${aiDetailIndex + 1} of ${FIELD_DEFS.length}</span>
+        <div class="dn-btns">
+          <button class="dn-btn" type="button" id="aiDetailPrev" ${aiDetailIndex === 0 ? 'disabled' : ''}>‹ Previous</button>
+          <button class="dn-btn primary" type="button" id="aiDetailNext" ${aiDetailIndex === FIELD_DEFS.length - 1 ? 'disabled' : ''}>Next ›</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="of-card-head"><h4>${escapeHtml(def.label)}</h4>${s.confidence ? `<span class="conf-badge ${confClass}">${escapeHtml(s.confidence)} confidence</span>` : ''}</div>
+        <div class="subtext-note">${escapeHtml(GROUP_LABELS[def.group])} — field ${aiDetailIndex + 1} of ${FIELD_DEFS.length} on Formulation Overview.</div>
+        <p style="margin-top:6px;">${escapeHtml(s.text)}</p>
+        ${detailExtraHtml(def, f)}
+        <div class="vq-box" style="margin-top:12px;"><b>Validation Question for Coach:</b> ${escapeHtml(question)}</div>
+      </div>
+    `;
+    const prevBtn = document.getElementById('aiDetailPrev');
+    const nextBtn = document.getElementById('aiDetailNext');
+    if(prevBtn) prevBtn.addEventListener('click', () => { if(aiDetailIndex > 0){ aiDetailIndex--; renderDetailStep(); } });
+    if(nextBtn) nextBtn.addEventListener('click', () => { if(aiDetailIndex < FIELD_DEFS.length - 1){ aiDetailIndex++; renderDetailStep(); } });
+  }
+
+  function renderDetailTab(f){
+    aiCurrentFormulation = f;
+    aiDetailIndex = 0;
+    renderDetailStep();
+  }
+
+  // ---- Screen 4: Journey Map — this client's real level history + this session's focus ----
+  function renderJourneyTab(session){
+    const currentLevel = session.confirmed_service_level;
+    const currentIdx = LEVELS.findIndex(l => l.code === currentLevel);
+
+    const stepCards = LEVELS.map((l, i) => {
+      const isCurrent = l.code === currentLevel;
+      const state = isCurrent ? 'In Progress' : (currentIdx >= 0 && i < currentIdx ? 'Completed' : 'Upcoming');
+      return `<div class="stat-card" style="text-align:center; ${isCurrent ? 'border-color:#7a4a8a; background:#F7F1FA;' : ''}">
+        <div class="sc-label">${l.code} · ${state}</div>
+        <div class="sc-val" style="${isCurrent ? 'color:#7a4a8a;' : ''}">${escapeHtml(levelName(l.code))}</div>
+      </div>`;
+    }).join('');
+
+    const stepperHtml = LEVELS.map((l, i) => {
+      const done = currentIdx >= 0 && i < currentIdx;
+      const current = i === currentIdx;
+      return `<div class="js-dot ${done || current ? 'done' : ''} ${current ? 'current' : ''}"></div>` +
+        (i < LEVELS.length - 1 ? `<div class="js-line ${done ? 'done' : ''}"></div>` : '');
+    }).join('');
+
+    const labelsHtml = LEVELS.map((l, i) => {
+      const state = currentIdx < 0 ? 'Upcoming' : (i < currentIdx ? 'Completed' : (i === currentIdx ? 'In Progress' : 'Upcoming'));
+      return `<span class="${i === currentIdx ? 'current' : ''}">${escapeHtml(levelName(l.code))} — ${state}</span>`;
+    }).join('');
+
+    const f = session.ai_formulation || {};
+    const focusHtml = (session.ai_status === 'done' && session.ai_formulation) ? `
+      <div class="subtext-note" style="margin-top:20px; margin-bottom:2px;">Session Focus — Session ${session.session_number}</div>
+      <div class="focus-row">
+        <div class="focus-item"><div class="fi-label">2% Tweak</div><div class="fi-val">${escapeHtml(f.tweak_2pct && f.tweak_2pct.action ? f.tweak_2pct.action : 'Not Captured')}</div></div>
+        <div class="focus-item"><div class="fi-label">Dilts Alignment</div><div class="fi-val">${escapeHtml(f.dilts && f.dilts.highest_leverage_level ? f.dilts.highest_leverage_level : 'Not Captured')}</div></div>
+        <div class="focus-item"><div class="fi-label">Value Level</div><div class="fi-val">${escapeHtml(f.value_level ? ((f.value_level.code ? f.value_level.code + ' — ' : '') + (f.value_level.name || 'Not Captured')) : 'Not Captured')}</div></div>
+        <div class="focus-item"><div class="fi-label">Capacity Level</div><div class="fi-val">${escapeHtml(f.capacity && f.capacity.overall ? f.capacity.overall : 'Not Captured')}</div></div>
+        <div class="focus-item"><div class="fi-label">Evidence of Change</div><div class="fi-val">${escapeHtml(f.evidence_of_change && f.evidence_of_change.text ? f.evidence_of_change.text : 'Not Captured')}</div></div>
+      </div>` : '';
+
+    document.getElementById('aiJourneyBody').innerHTML = `
+      <div class="stat-row" style="grid-template-columns:repeat(4,1fr);">${stepCards}</div>
+      <div class="card">
+        <h4>Progress in This Journey</h4>
+        <div class="journey-stepper">${stepperHtml}</div>
+        <div class="journey-labels">${labelsHtml}</div>
+        ${focusHtml}
+      </div>
     `;
   }
 
-  function renderPrepTab(f, sessionNumber){
-    document.getElementById('aiPrepBody').innerHTML = f.exact_next_action
-      ? `<h4>Carried into Session ${sessionNumber + 1}</h4>
-         <div class="prep-banner"><span class="p-label">Prep from Session ${sessionNumber}</span>${escapeHtml(f.exact_next_action)}</div>
-         <p style="margin-top:14px;">Check this at the start of the next session before recording anything new.</p>`
-      : `<div class="ai-empty-state">No exact next action was captured this session.</div>`;
-  }
-
-  function renderMeasureTab(f, confirmedLevel){
-    const info = LEVEL_INFO[confirmedLevel];
+  // ---- Screen 5: Session Plan — next-session prep + measures + boundary self-audit ----
+  function renderPlanTab(f, session){
+    const next = f.next_session || {};
+    const info = LEVEL_INFO[session.confirmed_service_level];
     const ladderHtml = LADDER.map(step =>
       `<span class="ladder-step${info && step === info.outcome ? ' current' : ''}">${step}</span>`
     ).join('<span class="ladder-arrow">→</span>');
@@ -1271,9 +1659,18 @@
         </div>`
       : '';
 
-    document.getElementById('aiMeasureBody').innerHTML = `
-      <h4>Final Measure</h4>
-      <div class="release-measure-card">
+    document.getElementById('aiPlanBody').innerHTML = `
+      <div class="card" style="margin-bottom:14px;">
+        <h4>Next Session Plan (AI Recommended)</h4>
+        <div class="fw-grid" style="margin-top:10px; grid-template-columns:1fr 1fr 1fr;">
+          <div class="fw-block"><div class="fw-label">Goal for Next Session</div><p>${escapeHtml(next.goal || 'Not Captured')}</p></div>
+          <div class="fw-block"><div class="fw-label">Recommended Techniques</div><p>${next.recommended_techniques && next.recommended_techniques.length ? escapeHtml(next.recommended_techniques.join(', ')) : 'Not Captured'}</p></div>
+          <div class="fw-block"><div class="fw-label">Held for Later</div><p>${next.held_for_later && next.held_for_later.length ? escapeHtml(next.held_for_later.join(', ')) : 'None flagged'}</p></div>
+        </div>
+        ${f.session_arc_note ? `<div class="vq-box" style="margin-top:12px;"><b>Session arc —</b> ${escapeHtml(f.session_arc_note)}</div>` : ''}
+      </div>
+      <div class="card release-measure-card">
+        <h4>Final Measure</h4>
         <div class="outcome-ladder">${ladderHtml}</div>
         ${f.measures && f.measures.length ? f.measures.map(measureRowHtml).join('') : '<div class="ai-empty-state">No measures captured this session.</div>'}
         ${f.boundary_flag ? `<div class="boundary-flag"><strong>Boundary check</strong>${escapeHtml(f.boundary_flag)}</div>` : ''}
@@ -1316,15 +1713,16 @@
     }
     genBtn.textContent = session.ai_status === 'done' ? 'Regenerate Case Formulation →' : 'Generate Case Formulation →';
 
+    renderJourneyTab(session);
     if(session.ai_status === 'done' && session.ai_formulation){
-      renderFormulationTab(session.ai_formulation, session.confirmed_service_level);
-      renderPrepTab(session.ai_formulation, session.session_number);
-      renderMeasureTab(session.ai_formulation, session.confirmed_service_level);
+      renderOverviewTab(session.ai_formulation, session);
+      renderDetailTab(session.ai_formulation);
+      renderPlanTab(session.ai_formulation, session);
     } else {
       const empty = '<div class="ai-empty-state">Generate a case formulation on the Raw Notes tab first.</div>';
-      document.getElementById('aiFormulationBody').innerHTML = empty;
-      document.getElementById('aiPrepBody').innerHTML = empty;
-      document.getElementById('aiMeasureBody').innerHTML = empty;
+      document.getElementById('aiOverviewBody').innerHTML = empty;
+      document.getElementById('aiDetailBody').innerHTML = empty;
+      document.getElementById('aiPlanBody').innerHTML = empty;
     }
   }
 
@@ -1383,7 +1781,7 @@
       session.ai_formulation = result.ai_formulation;
       session.ai_error = null;
       renderAiModalForSession(session);
-      switchAiTab('aiPanelFormulation');
+      switchAiTab('aiPanelOverview');
     } catch(err){
       session.ai_status = 'error';
       session.ai_error = 'Network error: ' + err.message;
