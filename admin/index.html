@@ -1730,7 +1730,13 @@
     el.classList.remove('status-processing','status-done','status-error');
     if(status === 'processing'){ el.classList.add('status-processing'); el.innerHTML = '<span class="ai-spinner"></span>Generating…'; }
     else if(status === 'done'){ el.classList.add('status-done'); el.textContent = 'Generated'; }
-    else if(status === 'error'){ el.classList.add('status-error'); el.textContent = 'Error: ' + (errorMsg || 'AI request failed'); }
+    else if(status === 'error'){
+      el.classList.add('status-error');
+      // The banner is a short mono/uppercase pill — long guidance belongs in
+      // the Generate note below the button instead, not shouted in full here.
+      const short = errorMsg && errorMsg.length > 60 ? 'AI service unreachable' : (errorMsg || 'AI request failed');
+      el.textContent = 'Error: ' + short;
+    }
     else { el.textContent = 'Not generated yet'; }
   }
 
@@ -1830,7 +1836,16 @@
       switchAiTab('aiPanelOverview');
     } catch(err){
       session.ai_status = 'error';
-      session.ai_error = 'Network error: ' + err.message;
+      // A fetch() that fails before any response arrives (browser reports
+      // "Failed to fetch" / "Load failed") almost always means the
+      // categorize-session Edge Function isn't deployed yet — a real HTTP
+      // error (bad request, wrong level, etc.) would still reach the
+      // `!resp.ok` branch above with a status code. Point at the fix
+      // instead of surfacing the raw browser message.
+      const looksUndeployed = /failed to fetch|load failed|networkerror/i.test(err.message || '');
+      session.ai_error = looksUndeployed
+        ? 'Can\'t reach the AI service. This almost always means the categorize-session Edge Function hasn\'t been deployed to Supabase yet (or the ANTHROPIC_API_KEY secret isn\'t set). Ask whoever manages the Supabase project to run: supabase functions deploy categorize-session'
+        : 'Network error: ' + err.message;
       renderAiModalForSession(session);
     }
   }
