@@ -1202,14 +1202,24 @@
   // is enforced by the storage bucket + RLS policies on the Supabase side,
   // outside this file — this only adds the client-side type/size/count gate.
   const ATTACHMENT_TYPES = {
-    jpg:{kind:'image'}, jpeg:{kind:'image'}, png:{kind:'image'}, gif:{kind:'image'}, webp:{kind:'image'},
-    pdf:{kind:'pdf', badge:'PDF'},
-    doc:{kind:'doc', badge:'DOC'}, docx:{kind:'doc', badge:'DOC'},
-    xls:{kind:'sheet', badge:'XLS'}, xlsx:{kind:'sheet', badge:'XLS'},
-    ppt:{kind:'slide', badge:'PPT'}, pptx:{kind:'slide', badge:'PPT'},
-    txt:{kind:'text', badge:'TXT'}
+    jpg:{kind:'image', mime:'image/jpeg'}, jpeg:{kind:'image', mime:'image/jpeg'},
+    png:{kind:'image', mime:'image/png'}, gif:{kind:'image', mime:'image/gif'}, webp:{kind:'image', mime:'image/webp'},
+    pdf:{kind:'pdf', badge:'PDF', mime:'application/pdf'},
+    doc:{kind:'doc', badge:'DOC', mime:'application/msword'},
+    docx:{kind:'doc', badge:'DOC', mime:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'},
+    xls:{kind:'sheet', badge:'XLS', mime:'application/vnd.ms-excel'},
+    xlsx:{kind:'sheet', badge:'XLS', mime:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},
+    ppt:{kind:'slide', badge:'PPT', mime:'application/vnd.ms-powerpoint'},
+    pptx:{kind:'slide', badge:'PPT', mime:'application/vnd.openxmlformats-officedocument.presentationml.presentation'},
+    txt:{kind:'text', badge:'TXT', mime:'text/plain'}
   };
-  const ATTACHMENT_ACCEPT = '.' + Object.keys(ATTACHMENT_TYPES).join(',.');
+  // Mobile browsers (Android Chrome especially) decide which system picker
+  // to surface — Photos-only vs. a full "Browse files" chooser — largely
+  // from the MIME types in `accept`, not the extensions. Extensions alone
+  // (the previous version of this) made some devices default straight into
+  // the Photos app with no way to reach PDFs/Office files at all.
+  const ATTACHMENT_ACCEPT = '.' + Object.keys(ATTACHMENT_TYPES).join(',.') + ',' +
+    Array.from(new Set(Object.values(ATTACHMENT_TYPES).map(t => t.mime))).join(',');
   const ATTACHMENT_BLOCKED_EXT = ['exe','bat','cmd','sh','msi','apk','com','scr','jar','js','vbs','ps1','dll','app'];
   const ATTACHMENT_MAX_BYTES = 15 * 1024 * 1024;
   const ATTACHMENT_MAX_COUNT = 15;
